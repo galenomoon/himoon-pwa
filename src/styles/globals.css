@@ -31,3 +31,6 @@ body {
     text-wrap: balance;
   }
 }
+.myshadow {
+  filter: drop-shadow(1px 6px 0px #00000020);
+}
