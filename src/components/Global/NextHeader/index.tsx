@@ -1,5 +1,5 @@
-import Head from "next/head"
-import React from "react"
+import Head from "next/head";
+import React from "react";
 
 export default function NextHeader({
   title = "Hi, Moon Store 🌙💖 - Sua papelaria criativa!",
@@ -8,21 +8,28 @@ export default function NextHeader({
 }) {
   return (
     <Head>
+      <meta name="viewport" content="width=device-width,initial-scale=1" />
       <meta charSet="utf-8" />
-      <link rel="icon" href="/favicon.ico" />
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="og:title" content={title} />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <meta name="theme-color" content="#ffffff" />
+      <link rel="apple-touch-icon" href="/384x384.png" />
+      <link rel="apple-touch-icon" sizes="152x152" href="/384x384.png" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/384x384.png" />
+      <link rel="apple-touch-icon" sizes="167x167" href="/384x384.png" />
+      <link rel="manifest" href="/manifest.json" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:site_name" content={title} />
+      <meta property="og:url" content="https://www.himoonstore.com/" />
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta name="og:site_name" content="Hi, Moon Store 🌙💖" />
-      <meta name="og:type" content="website" />
-      <meta name="og:description" content={description} />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:description" content={description} />
-      <meta name="theme-color" content="#000000" />
     </Head>
-  )
+  );
 }
