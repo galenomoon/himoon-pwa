@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
 
+//next
+import Link from "next/link";
+
 //components
+import Logo from "@/components/Global/Logo";
 import Button from "@/components/Global/Button";
 import ProductGrid from "@/components/Global/ProductGrid";
+import CategoriesList from "@/components/SearchPage/CategoriesList";
+
+//icons
+import { PiSpinner } from "react-icons/pi";
+import { FaBasketShopping } from "react-icons/fa6";
 
 //admoon
 import { getProducts, IProduct } from "admoon";
@@ -10,6 +19,8 @@ import { getProducts, IProduct } from "admoon";
 export default function SearchPage() {
   const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchAll();
@@ -17,17 +28,23 @@ export default function SearchPage() {
 
   async function fetchAll() {
     try {
-      const response = await getProducts();
+      setIsLoading(true);
+      const response = await getProducts({
+        query: search,
+      });
       setProducts(response.results);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
+      setIsFocused(false)
     }
   }
 
   return (
     <main className="flex flex-col h-fit w-screen text-typography-primary">
-      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col justify-between min-h-[90vh] bg-white relative">
-        <header className="flex w-full justify-between items-center sticky top-0 bg-white pt-6 pb- z-20 rounded-t-[36px]">
+      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90vh] bg-white relative">
+        <header className="flex w-full justify-between items-center  top-0 bg-white pt-6 pb- z-20 rounded-t-[36px]">
           <Link href="/" className="flex justify-center itemx-center w-fit">
             <Logo size={74} />
           </Link>
@@ -39,11 +56,25 @@ export default function SearchPage() {
             </data>
           </button>
         </header>
-        <div className="flex gap-2 sticky top-[64px] py-2  bg-white z-10">
-          <SearchBar />
-          <Button className="font-medium px-5 text-lg">Buscar</Button>
-        </div>
-        <CategoriesList isRow />
+        <section className="bg-white sticky top-[0px] z-20 pb-3">
+          <div className="flex gap-2 py-2  bg-white z-10">
+            <SearchBar 
+              onFocus={() => setIsFocused(true)}
+              onChange={(e) => setSearch(e.target.value)} 
+            />
+            <Button
+              onClick={fetchAll}
+              disabled={isLoading}
+              className="font-medium min-w-[108px] px-5 text-lg"
+            >
+              {isLoading 
+              ? <PiSpinner className="animate-spin" size={24} />
+              : <span>Buscar</span>
+              }
+            </Button>
+          </div>
+          <CategoriesList isRow={!isFocused} />
+        </section>
         <ProductGrid products={products} />
       </section>
     </main>
@@ -51,17 +82,21 @@ export default function SearchPage() {
 }
 
 import { IoSearchOutline } from "react-icons/io5";
-import CategoriesList from "@/components/SearchPage/CategoriesList";
-import Logo from "@/components/Global/Logo";
-import { FaBasketShopping } from "react-icons/fa6";
-import Link from "next/link";
 
-export function SearchBar() {
+export function SearchBar({
+  onChange,
+  onFocus,
+}: {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus: () => void;
+}) {
   return (
     <div className="flex w-full items-center text-lg gap-2 p-3 rounded-full border-typography-primary/20 border-2 text-typography-primary">
       <IoSearchOutline size={24} />
       <input
         type="text"
+        onFocus={onFocus}
+        onChange={onChange}
         placeholder="Buscar produtos..."
         className="w-full h-full outline-none"
       />

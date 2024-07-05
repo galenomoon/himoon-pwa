@@ -8,6 +8,7 @@ interface ButtonProps {
   className?: string;
   invert?: boolean;
   href?: string;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -16,10 +17,11 @@ export default function Button({
   onClick,
   className,
   invert,
+  disabled,
   href,
 }: ButtonProps) {
   const Element = href ? Link : ("button" as React.ElementType);
-  const props = href ? { href } : { onClick, type };
+  const props = href ? { href } : { onClick, type, disabled };
   const color = invert
     ? "bg-typography-secondary text-typography-primary"
     : "bg-background-black text-typography-yellow";
