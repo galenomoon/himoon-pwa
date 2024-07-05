@@ -1,7 +1,7 @@
 import React from "react";
-
-//mocks
 import { IProduct } from "admoon";
+
+//components
 import { ProductCard } from "../ProductCard";
 
 interface ProductGridProps {

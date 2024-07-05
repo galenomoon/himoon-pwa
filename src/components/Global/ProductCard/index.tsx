@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 //next
 import Link from "next/link";
@@ -17,7 +16,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <Link
       key={product.id}
       href={`/produtos/${product.category?.slug}/${product.slug}`}
-      className="flex flex-shrink-0 flex-col gap-3 rounded-2xl shadow-md"
+      className="flex flex-shrink-0 flex-col gap-3 rounded-2xl"
     >
       <figure className="relative flex h-48 w-full flex-shrink-0 items-center justify-center rounded-xl">
         <Image
@@ -37,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
             {product.name}
           </h1>
           <span className="flex items-center gap-2">
-            <h1 className="font-bold whitespace-nowrap text-typography-black text-2xl">
+            <h1 className="font-bold whitespace-nowrap text-2xl">
               {product.price.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",

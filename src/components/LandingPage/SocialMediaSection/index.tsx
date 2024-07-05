@@ -14,12 +14,8 @@ import footer from "@/assets/landing-page-products-footer.png";
 
 export default function SocialMediaSection() {
   return (
-    <section className="flex flex-col justify-between items-center gap-8 h-[98vh] bg-background-purple relative">
-      <Image
-        src={header}
-        alt="header"
-        objectFit="fill"
-      />
+    <section className="flex flex-col justify-between items-center gap-8 h-[98dvh] bg-background-purple relative">
+      <Image src={header} alt="header" objectFit="fill" className="w-full" />
       <div className="flex flex-col px-4 items-center w-full justify-center gap-4">
         <div className="flex gap-6 items-center">
           <FaInstagram size={70} className="myshadow" />
@@ -32,13 +28,14 @@ export default function SocialMediaSection() {
             nossas novidades!
           </h1>
         </article>
-        <Button className="font-bold w-full">NOS SIGA!</Button>
+        <Button
+          href="https://gatree.vercel.app/tree/himoon"
+          className="font-bold w-full"
+        >
+          NOS SIGA!
+        </Button>
       </div>
-      <Image
-        src={footer}
-        alt="footer"
-        objectFit="fill"
-      />
+      <Image src={footer} alt="footer" objectFit="fill" />
     </section>
   );
 }

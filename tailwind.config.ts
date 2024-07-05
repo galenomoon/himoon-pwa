@@ -16,12 +16,14 @@ const config: Config = {
       colors: {
         background: {
           purple: "#D6CBFF",
+          purpleLight: "#EDE8FF",
           black: "#000000"
         },
         typography: {
           primary: "#000000",
           secondary: "#FFFFFF",
-          yellow: "#F9F1B2"
+          yellow: "#F9F1B2",
+          purple: "#7B62D3",
         }
       }
     },
