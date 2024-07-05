@@ -6,6 +6,7 @@ import Link from "next/link";
 //components
 import Logo from "@/components/Global/Logo";
 import Button from "@/components/Global/Button";
+import NextHeader from "@/components/Global/NextHeader";
 import ProductGrid from "@/components/Global/ProductGrid";
 import CategoriesList from "@/components/SearchPage/CategoriesList";
 
@@ -43,7 +44,12 @@ export default function SearchPage() {
 
   return (
     <main className="flex flex-col h-fit w-screen text-typography-primary">
-      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90vh] bg-white relative">
+      <NextHeader
+        statusColorType="default"
+        title="Buscar produtos"
+        description="Encontre os melhores produtos para você"
+      />
+      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
         <header className="flex w-full justify-between items-center  top-0 bg-white pt-6 pb- z-20 rounded-t-[36px]">
           <Link href="/" className="flex justify-center itemx-center w-fit">
             <Logo size={74} />
@@ -65,7 +71,7 @@ export default function SearchPage() {
             <Button
               onClick={fetchAll}
               disabled={isLoading}
-              className="font-medium min-w-[108px] px-5 text-lg"
+              className="font-medium min-w-[100px] px-5 text-lg"
             >
               {isLoading 
               ? <PiSpinner className="animate-spin" size={24} />

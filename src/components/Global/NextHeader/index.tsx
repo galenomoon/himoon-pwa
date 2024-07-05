@@ -5,6 +5,7 @@ export default function NextHeader({
   title = "Hi, Moon Store 🌙💖 - Sua papelaria criativa!",
   description = "A Moon Store é uma papelaria criativa que tem como objetivo trazer produtos de qualidade e com um preço acessível para você!",
   image = "/banner.png",
+  statusColorType = "black-translucent",
 }) {
   return (
     <Head>
@@ -19,7 +20,7 @@ export default function NextHeader({
       <link rel="apple-touch-icon" sizes="180x180" href="/384x384.png" />
       <link rel="apple-touch-icon" sizes="167x167" href="/384x384.png" />
       <meta name="apple-mobile-web-app-capable" content="yes"/>
-      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+      <meta name="apple-mobile-web-app-status-bar-style" content={statusColorType}/>
       <link rel="manifest" href="/manifest.json" />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
