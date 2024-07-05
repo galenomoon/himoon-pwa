@@ -26,8 +26,8 @@ export default function SearchPage() {
 
   return (
     <main className="flex flex-col h-fit w-screen text-typography-primary">
-      <section className="mt-8 rounded-t-[36px] px-3 text-typography-primary pt-8 pb-12 flex flex-col justify-between gap-3 min-h-[90vh] bg-white relative">
-        <header className="flex w-full justify-between items-center">
+      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col justify-between min-h-[90vh] bg-white relative">
+        <header className="flex w-full justify-between items-center sticky top-0 bg-white pt-6 pb- z-20 rounded-t-[36px]">
           <Link href="/" className="flex justify-center itemx-center w-fit">
             <Logo size={74} />
           </Link>
@@ -39,7 +39,7 @@ export default function SearchPage() {
             </data>
           </button>
         </header>
-        <div className="flex gap-2">
+        <div className="flex gap-2 sticky top-[64px] py-2  bg-white z-10">
           <SearchBar />
           <Button className="font-medium px-5 text-lg">Buscar</Button>
         </div>
