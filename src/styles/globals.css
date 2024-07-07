@@ -28,3 +28,12 @@ body {
 .myshadow {
   filter: drop-shadow(1px 6px 0px #00000020);
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

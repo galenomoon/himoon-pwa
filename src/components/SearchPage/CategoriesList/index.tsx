@@ -3,6 +3,7 @@ import { getCategories, ICategory } from "admoon";
 
 export default function CategoriesList({ isRow = false, isCenter = false, categoriesIds = [] }) {
   const [categories, setCategories] = useState<ICategory[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<
     ICategory["id"][]
   >([]);
@@ -15,14 +16,17 @@ export default function CategoriesList({ isRow = false, isCenter = false, catego
     if (categoriesIds?.length) {
       setCategories(categories.filter((category) => categoriesIds.includes(category.id as never)));
     }
-  }, [categoriesIds]);
+  }, [categoriesIds, isLoading]);
 
   async function fetchAll() {
     try {
+      setIsLoading(true);
       const response = await getCategories();
       setCategories(response);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -46,7 +50,6 @@ export default function CategoriesList({ isRow = false, isCenter = false, catego
     >
       {categories.map((category) => {
         const isSelected = selectedCategoryIds.includes(category.id);
-
         return (
           <button
             onClick={() => (isCenter ? {} : handleSelectCategory(category.id))}

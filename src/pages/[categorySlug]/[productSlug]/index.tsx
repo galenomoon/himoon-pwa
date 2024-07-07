@@ -14,6 +14,8 @@ import { PiSpinner } from "react-icons/pi";
 
 //admoon
 import { getProduct, getProducts, IProduct } from "admoon";
+import Skeleton from "@/components/Global/Skeleton";
+import Image from "next/image";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -62,6 +64,8 @@ export default function ProductPage() {
     }
   }
 
+  console.log({ currentProduct });
+
   return (
     <main className="flex flex-col h-fit w-screen text-typography-primary">
       <NextHeader
@@ -69,39 +73,68 @@ export default function ProductPage() {
         title={currentProduct?.name || "Produto não encontrado"}
         description={currentProduct?.description}
       />
-      <section className="mt-4 px-3 text-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
-        <Header backTo="/buscar" />
-        <img
-          src={
-            currentProduct?.images?.[1]?.url ||
-            "https://via.placeholder.com/800x800.png"
-          }
-          className="rounded-[42px] max-h-[400px] mt-4 mb-4 border-2 border-light-gray overflow-hidden w-full object-cover "
-          alt="product"
-        />
-        <p className="text-3xl font-light">
-          {currentProduct?.price.toLocaleString("pt-br", {
-            style: "currency",
-            currency: "BRL",
-          })}
-        </p>
-        <h1 className="text-2xl font-semibold mb-1">{currentProduct?.name}</h1>
-        <h1 className="text-sm font-light">{currentProduct?.description}</h1>
-        <div className="flex flex-col py-3">
-          <CategoriesList isRow isCenter categoriesIds={[currentProduct?.category?.id as never]} />
+      <section className="mt-4 px- text-center items-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
+        <div className="px-3 flex w-full">
+          <Header backTo="/buscar" />
+        </div>
+        <figure className="my-4 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
+          {currentProduct?.images?.map((image) => (
+            <img
+              src={image.url || "https://via.placeholder.com/800x800.png"}
+              className="first:ml-4 rounded-[42px] max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
+              alt="product"
+            />
+          ))}
+        </figure>
+
+        <article className="flex flex-col gap-1 items-center px-3">
+          <Skeleton conditional={!isLoading} className="w-[128px] rounded-xl">
+            <p className="text-3xl font-light">
+              {(currentProduct?.price || 0).toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </p>
+          </Skeleton>
+          <Skeleton
+            conditional={!isLoading}
+            className="w-[256px] h-[24px] rounded-lg"
+          >
+            <h1 className="text-2xl font-semibold">{currentProduct?.name}</h1>
+          </Skeleton>
+          <Skeleton
+            conditional={!isLoading}
+            className="w-[300px] h-[16px] rounded-md"
+          >
+            <h1 className="text-sm font-light">
+              {currentProduct?.description}
+            </h1>
+          </Skeleton>
+        </article>
+
+        <div className="flex flex-col p-3 w-full">
+          <CategoriesList
+            isRow
+            isCenter
+            categoriesIds={[currentProduct?.category?.id as never]}
+          />
           <div className="flex gap-2 my-4">
-            <Button className="w-full uppercase font-bold">
-              Adicionar ao carrinho
+            <Button className="w-full uppercase font-bold" disabled={isLoading}>
+              {isLoading ? (
+                <PiSpinner size={24} className="animate-spin" />
+              ) : (
+                "Adicionar ao carrinho"
+              )}
             </Button>
             <button className="rounded-full h-12 w-12 flex items-center justify-center bg-background-gray flex-shrink-0">
               <GoShare size={24} />
             </button>
           </div>
         </div>
-        <p className="font-light text-xl text-start mb-4">
-          Veja também:
-        </p>
+        <div className="flex flex-col px-3">
+        <p className="font-light text-xl self-start mb-4">Veja também:</p>
         <ProductGrid products={products} />
+        </div>
       </section>
     </main>
   );
