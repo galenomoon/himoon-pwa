@@ -26,6 +26,7 @@ export default function ProductPage() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState<boolean>(false);
+  const url = `https://himoonstore.com/${categorySlug}/${productSlug}`;
 
   useEffect(() => {
     getCurrentProduct(productSlug);
@@ -68,18 +69,16 @@ export default function ProductPage() {
   }
 
   function copyURL(type: "whatsapp" | "link") {
-    if (!window) return;
-    let url = window?.location?.href;
 
-    if (type === "whatsapp") {
-      url = `https://api.whatsapp.com/send?text=${window?.location?.href}`;
-      window?.open(url, "_blank");
-      return
+    if (type === "whatsapp" && window !== undefined) {
+      const whatsAppUrl = `https://api.whatsapp.com/send?text=${url}`;
+      window?.open(whatsAppUrl, "_blank");
+      return;
     }
 
     navigator.clipboard.writeText(url);
-    toast('Link copiado com sucesso!', {
-      icon: '🔗'
+    toast("Link copiado com sucesso!", {
+      icon: "🔗",
     });
   }
 
@@ -175,7 +174,7 @@ export default function ProductPage() {
             <input
               disabled
               type="text"
-              value={window?.location?.href}
+              value={url}
               className="w-full outline-none select-text text-center bg-transparent"
             />
             <Button
