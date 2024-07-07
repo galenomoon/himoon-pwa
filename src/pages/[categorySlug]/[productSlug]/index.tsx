@@ -80,6 +80,7 @@ export default function ProductPage() {
         <figure className="my-4 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
           {currentProduct?.images?.map((image) => (
             <img
+              key={image.id}
               src={image.url || "https://via.placeholder.com/800x800.png"}
               className="first:ml-4 rounded-[42px] max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
               alt="product"
