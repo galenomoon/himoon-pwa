@@ -68,11 +68,12 @@ export default function ProductPage() {
   }
 
   function copyURL(type: "whatsapp" | "link") {
-    let url = window.location.href;
+    if (!window) return;
+    let url = window?.location?.href;
 
     if (type === "whatsapp") {
-      url = `https://api.whatsapp.com/send?text=${window.location.href}`;
-      window.open(url, "_blank");
+      url = `https://api.whatsapp.com/send?text=${window?.location?.href}`;
+      window?.open(url, "_blank");
       return
     }
 
@@ -174,7 +175,7 @@ export default function ProductPage() {
             <input
               disabled
               type="text"
-              value={window.location.href}
+              value={window?.location?.href}
               className="w-full outline-none select-text text-center bg-transparent"
             />
             <Button
