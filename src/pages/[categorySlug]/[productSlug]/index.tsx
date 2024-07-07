@@ -6,14 +6,14 @@ import Header from "@/components/Global/Header";
 import Button from "@/components/Global/Button";
 import NextHeader from "@/components/Global/NextHeader";
 import ProductGrid from "@/components/Global/ProductGrid";
+import CategoriesList from "@/components/SearchPage/CategoriesList";
 
 //icons
+import { GoShare } from "react-icons/go";
 import { PiSpinner } from "react-icons/pi";
 
 //admoon
 import { getProduct, getProducts, IProduct } from "admoon";
-import CategoriesList from "@/components/SearchPage/CategoriesList";
-import { GoShare } from "react-icons/go";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -35,7 +35,6 @@ export default function ProductPage() {
     try {
       setIsLoading(true);
       const result = await getProduct(product_slug as string);
-      console.log(result);
 
       setCurrentProduct(result as unknown as IProduct);
     } catch (error) {
