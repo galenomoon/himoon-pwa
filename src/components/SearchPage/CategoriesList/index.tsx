@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, ICategory } from "admoon";
 
-export default function CategoriesList({ isRow = false, isCenter = false }) {
+export default function CategoriesList({ isRow = false, isCenter = false, categoriesIds = [] }) {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<
     ICategory["id"][]
@@ -10,6 +10,12 @@ export default function CategoriesList({ isRow = false, isCenter = false }) {
   useEffect(() => {
     fetchAll();
   }, []);
+
+  useEffect(() => {
+    if (categoriesIds?.length) {
+      setCategories(categories.filter((category) => categoriesIds.includes(category.id as never)));
+    }
+  }, [categoriesIds]);
 
   async function fetchAll() {
     try {

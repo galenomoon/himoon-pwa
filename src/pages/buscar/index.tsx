@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 
-//next
-import Link from "next/link";
-
 //components
-import Logo from "@/components/Global/Logo";
+import Header from "@/components/Global/Header";
 import Button from "@/components/Global/Button";
 import NextHeader from "@/components/Global/NextHeader";
 import ProductGrid from "@/components/Global/ProductGrid";
@@ -12,7 +9,6 @@ import CategoriesList from "@/components/SearchPage/CategoriesList";
 
 //icons
 import { PiSpinner } from "react-icons/pi";
-import { FaBasketShopping } from "react-icons/fa6";
 
 //admoon
 import { getProducts, IProduct } from "admoon";
@@ -50,18 +46,7 @@ export default function SearchPage() {
         description="Encontre os melhores produtos para você"
       />
       <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
-        <header className="flex w-full justify-between items-center  top-0 bg-white pt-6 pb- z-20 rounded-t-[36px]">
-          <Link href="/" className="flex justify-center itemx-center w-fit">
-            <Logo size={74} />
-          </Link>
-          <button className="relative flex items-center justify-center">
-            <div className="bg-typography-yellow w-[20px] h-[16px] z-10 bottom-1 absolute" />
-            <FaBasketShopping size={40} className="z-20" />
-            <data className="absolute z-30 -top-1 -right-1 bg-background-black text-typography-yellow border border-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
-              12
-            </data>
-          </button>
-        </header>
+        <Header />
         <section className="bg-white sticky top-[0px] z-20 pb-3">
           <div className="flex gap-2 py-2  bg-white z-10">
             <SearchBar 

@@ -40,7 +40,7 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       key={product.id}
-      href={`/produtos/${product.category?.slug}/${product.slug}`}
+      href={`/${product.category?.slug}/${product.slug}`}
       className="flex flex-shrink-0 flex-col gap-3 rounded-2xl"
     >
       <figure className="relative flex h-48 w-full flex-shrink-0 items-center justify-center rounded-xl">

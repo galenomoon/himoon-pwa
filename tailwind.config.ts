@@ -17,7 +17,8 @@ const config: Config = {
         background: {
           purple: "#D6CBFF",
           purpleLight: "#EDE8FF",
-          black: "#000000"
+          black: "#000000",
+          gray: "#ECECEC"
         },
         typography: {
           primary: "#000000",
