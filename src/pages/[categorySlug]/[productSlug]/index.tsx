@@ -2,20 +2,22 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 //components
+import Modal from "@/components/Global/Modal";
 import Header from "@/components/Global/Header";
 import Button from "@/components/Global/Button";
+import Skeleton from "@/components/Global/Skeleton";
 import NextHeader from "@/components/Global/NextHeader";
 import ProductGrid from "@/components/Global/ProductGrid";
 import CategoriesList from "@/components/SearchPage/CategoriesList";
 
-//icons
+//styles
+import toast from "react-hot-toast";
 import { GoShare } from "react-icons/go";
 import { PiSpinner } from "react-icons/pi";
+import { SiWhatsapp } from "react-icons/si";
 
 //admoon
 import { getProduct, getProducts, IProduct } from "admoon";
-import Skeleton from "@/components/Global/Skeleton";
-import Image from "next/image";
 
 export default function ProductPage() {
   const router = useRouter();
@@ -23,6 +25,7 @@ export default function ProductPage() {
   const [currentProduct, setCurrentProduct] = useState<IProduct>();
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOpenShareModal, setIsOpenShareModal] = useState<boolean>(false);
 
   useEffect(() => {
     getCurrentProduct(productSlug);
@@ -64,7 +67,20 @@ export default function ProductPage() {
     }
   }
 
-  console.log({ currentProduct });
+  function copyURL(type: "whatsapp" | "link") {
+    let url = window.location.href;
+
+    if (type === "whatsapp") {
+      url = `https://api.whatsapp.com/send?text=${window.location.href}`;
+      window.open(url, "_blank");
+      return
+    }
+
+    navigator.clipboard.writeText(url);
+    toast('Link copiado com sucesso!', {
+      icon: '🔗'
+    });
+  }
 
   return (
     <main className="flex flex-col h-fit w-screen text-typography-primary">
@@ -127,16 +143,49 @@ export default function ProductPage() {
                 "Adicionar ao carrinho"
               )}
             </Button>
-            <button className="rounded-full h-12 w-12 flex items-center justify-center bg-background-gray flex-shrink-0">
+            <button
+              onClick={() => setIsOpenShareModal(true)}
+              className="rounded-full h-12 w-12 flex items-center justify-center bg-background-gray flex-shrink-0"
+            >
               <GoShare size={24} />
             </button>
           </div>
         </div>
         <div className="flex flex-col px-3">
-        <p className="font-light text-xl self-start mb-4">Veja também:</p>
-        <ProductGrid products={products} />
+          <p className="font-light text-xl self-start mb-4">Veja também:</p>
+          <ProductGrid products={products} />
         </div>
       </section>
+      <Modal
+        title="Compartilhar"
+        isOpen={isOpenShareModal}
+        className="!h-fit self-center m-2 !rounded-3xl"
+        onClose={() => setIsOpenShareModal(false)}
+      >
+        <section className="flex flex-col gap-4">
+          <button
+            onClick={() => copyURL("whatsapp")}
+            className="rounded-full flex gap-2 items-center justify-center w-full py-3 bg-[#25D366] text-white"
+          >
+            <SiWhatsapp size={20} />
+            <p className="font-bold">Compartilhar no WhatsApp</p>
+          </button>
+          <div className="flex items-center justify-center gap-3 rounded-2xl border border-background-black/20 p-2">
+            <input
+              disabled
+              type="text"
+              value={window.location.href}
+              className="w-full outline-none select-text text-center bg-transparent"
+            />
+            <Button
+              onClick={() => copyURL("link")}
+              className="flex-shrink-0 w-[80px] font-bold !py-2 !text-sm"
+            >
+              <p>Copiar</p>
+            </Button>
+          </div>
+        </section>
+      </Modal>
     </main>
   );
 }
