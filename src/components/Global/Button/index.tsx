@@ -9,6 +9,7 @@ interface ButtonProps {
   invert?: boolean;
   href?: string;
   disabled?: boolean;
+  passHref?: boolean;
 }
 
 export default function Button({
@@ -19,9 +20,10 @@ export default function Button({
   invert,
   disabled,
   href,
+  passHref
 }: ButtonProps) {
   const Element = href ? Link : ("button" as React.ElementType);
-  const props = href ? { href } : { onClick, type, disabled };
+  const props = href ? { href, passHref } : { onClick, type, disabled };
   const color = invert
     ? "bg-typography-secondary text-typography-primary"
     : "bg-background-black text-typography-yellow";

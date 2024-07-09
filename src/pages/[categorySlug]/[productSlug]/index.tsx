@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 //components
@@ -19,8 +19,12 @@ import { SiWhatsapp } from "react-icons/si";
 //admoon
 import { getProduct, getProducts, IProduct } from "admoon";
 
+//context
+import { CartContext } from "@/contexts/cartContext";
+
 export default function ProductPage() {
   const router = useRouter();
+  const { addCartItem } = useContext(CartContext);
   const { productSlug, categorySlug } = router.query;
   const [currentProduct, setCurrentProduct] = useState<IProduct>();
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -140,7 +144,16 @@ export default function ProductPage() {
             categoriesIds={[currentProduct?.category?.id as never]}
           />
           <div className="flex gap-2 my-4">
-            <Button className="w-full uppercase font-bold" disabled={isLoading}>
+            <Button
+              onClick={() => {
+                addCartItem(currentProduct as IProduct, 1);
+                toast("Produto adicionado ao carrinho!", {
+                  icon: "🛒",
+                });
+              }}
+              className="w-full uppercase font-bold"
+              disabled={isLoading}
+            >
               {isLoading ? (
                 <PiSpinner size={24} className="animate-spin" />
               ) : (
