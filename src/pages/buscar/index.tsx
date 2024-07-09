@@ -11,13 +11,14 @@ import CategoriesList from "@/components/SearchPage/CategoriesList";
 import { PiSpinner } from "react-icons/pi";
 
 //admoon
-import { getProducts, IProduct } from "admoon";
+import { getProducts, ICategory, IProduct } from "admoon";
 
 export default function SearchPage() {
   const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<IProduct[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [category_slug, setCategorySlug] = useState<ICategory["slug"]>();
 
   useEffect(() => {
     fetchAll();
@@ -28,43 +29,49 @@ export default function SearchPage() {
       setIsLoading(true);
       const response = await getProducts({
         query: search,
+        category_slug,
       });
       setProducts(response.results);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
-      setIsFocused(false)
+      setIsFocused(false);
     }
   }
 
   return (
-    <main className="flex flex-col h-fit w-screen text-typography-primary">
+    <main className="flex flex-col min-h-screen justify-end w-screen bg-red-400 text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
         description="Encontre os melhores produtos para você"
       />
-      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
+      <section className="mt-4 px-3 rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[95dvh] bg-white relative">
         <Header />
         <section className="bg-white sticky top-[0px] z-20 pb-3">
           <div className="flex gap-2 py-2  bg-white z-10">
-            <SearchBar 
+            <SearchBar
               onFocus={() => setIsFocused(true)}
-              onChange={(e) => setSearch(e.target.value)} 
+              onChange={(e) => setSearch(e.target.value)}
             />
             <Button
               onClick={fetchAll}
               disabled={isLoading}
               className="font-medium min-w-[100px] px-5 text-lg"
             >
-              {isLoading 
-              ? <PiSpinner className="animate-spin" size={24} />
-              : <span>Buscar</span>
-              }
+              {isLoading ? (
+                <PiSpinner className="animate-spin" size={24} />
+              ) : (
+                <span>Buscar</span>
+              )}
             </Button>
           </div>
-          <CategoriesList isRow={!isFocused} />
+          <CategoriesList
+            onSelectCategory={setCategorySlug}
+            isRow={!isFocused}
+            selectUnique
+          />
         </section>
         <ProductGrid products={products} />
       </section>

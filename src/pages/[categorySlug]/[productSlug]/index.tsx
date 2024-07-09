@@ -69,7 +69,6 @@ export default function ProductPage() {
   }
 
   function copyURL(type: "whatsapp" | "link") {
-
     if (type === "whatsapp" && window !== undefined) {
       const whatsAppUrl = `https://api.whatsapp.com/send?text=${url}`;
       window?.open(whatsAppUrl, "_blank");
@@ -86,24 +85,29 @@ export default function ProductPage() {
     <main className="flex flex-col h-fit w-screen text-typography-primary">
       <NextHeader
         statusColorType="default"
-        title={currentProduct?.name || "Produto não encontrado"}
+        title={currentProduct?.name}
         description={currentProduct?.description}
       />
       <section className="mt-4 px- text-center items-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
         <div className="px-3 flex w-full">
           <Header backTo="/buscar" />
         </div>
-        <figure className="my-4 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
-          {currentProduct?.images?.map((image) => (
-            <img
-              key={image.id}
-              src={image.url || "https://via.placeholder.com/800x800.png"}
-              className="first:ml-4 rounded-[42px] max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
-              alt="product"
-            />
-          ))}
+        <figure className="my-4 scrollbar-hide overflow-auto min-h-[300px] flex gap-2 snap-x snap-mandatory">
+          <Skeleton
+            length={4}
+            conditional={!isLoading || !currentProduct?.images.length}
+            className="first:ml-4 last:mr-8 rounded-[42px] h-[300px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 !w-[80%] object-cover"
+          >
+            {currentProduct?.images?.map((image) => (
+              <img
+                key={image.id}
+                src={image.url || "https://via.placeholder.com/800x800.png"}
+                className="first:ml-4 last:mr-8 rounded-[42px] max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
+                alt="product"
+              />
+            ))}
+          </Skeleton>
         </figure>
-
         <article className="flex flex-col gap-1 items-center px-3">
           <Skeleton conditional={!isLoading} className="w-[128px] rounded-xl">
             <p className="text-3xl font-light">

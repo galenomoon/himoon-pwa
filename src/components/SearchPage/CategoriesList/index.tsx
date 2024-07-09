@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, ICategory } from "admoon";
 
-export default function CategoriesList({ isRow = false, isCenter = false, categoriesIds = [] }) {
+export default function CategoriesList({ 
+  isRow = false, 
+  isCenter = false, 
+  categoriesIds = [],
+  onSelectCategory = (slug: string | undefined) => {},
+  selectUnique = false,
+}) {
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedCategoryIds, setSelectedCategoryIds] = useState<
@@ -30,21 +36,26 @@ export default function CategoriesList({ isRow = false, isCenter = false, catego
     }
   }
 
-  function handleSelectCategory(categoryId: ICategory["id"]) {
-    const isSelected = selectedCategoryIds.includes(categoryId);
+  function handleSelectCategory(category: ICategory) {
+    const isSelected = selectedCategoryIds.includes(category.id);
+
+    if (selectUnique) {
+      onSelectCategory(isSelected ? undefined : category.slug);
+      setSelectedCategoryIds(isSelected ? [] : [category.id]);
+      return
+    }
 
     if (isSelected) {
-      setSelectedCategoryIds(
-        selectedCategoryIds.filter((id) => id !== categoryId)
-      );
-    } else {
-      setSelectedCategoryIds([...selectedCategoryIds, categoryId]);
+      setSelectedCategoryIds(selectedCategoryIds.filter((id) => id !== category.id));
+      return
     }
+    
+    setSelectedCategoryIds([...selectedCategoryIds, category.id]);
   }
 
   return (
     <section
-      className={`flex gap-2 w-full ${
+      className={`flex gap-2 w-full scrollbar-hide ${
         isRow ? "!flex-no-wrap overflow-x-auto" : "flex-wrap !h-fit"
       } ${isCenter ? "justify-center" : "justify-start"}`}
     >
@@ -52,7 +63,7 @@ export default function CategoriesList({ isRow = false, isCenter = false, catego
         const isSelected = selectedCategoryIds.includes(category.id);
         return (
           <button
-            onClick={() => (isCenter ? {} : handleSelectCategory(category.id))}
+            onClick={() => (isCenter ? {} : handleSelectCategory(category))}
             key={category.id}
             className={
               "border-2 font-semibold rounded-full h-fit text-nowrap whitespace-nowrap px-3 py-0.5 " +
