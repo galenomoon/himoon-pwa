@@ -12,6 +12,7 @@ import { TbBasketCheck, TbBasketPlus } from "react-icons/tb";
 import { CartContext } from "@/contexts/cartContext";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { LuTrash2 } from "react-icons/lu";
+import toast from "react-hot-toast";
 
 interface ProductCardProps {
   product: IProduct;
@@ -39,6 +40,15 @@ export function ProductCard({
           e.stopPropagation();
           setIsAddedToCart(!isAddedToCart);
           addCartItem(product, isAddedToCart ? -1 : 1);
+          if (!isAddedToCart){
+            toast("Produto adicionado ao carrinho", {
+              icon: "🛒",
+            });
+          } else {
+            toast.error("Produto removido do carrinho", {
+              icon: "🗑️",
+            });
+          }
         }}
         className={
           "rounded-full self-end h-fit w-fit flex items-center justify-center px-2 py-1 border " +
