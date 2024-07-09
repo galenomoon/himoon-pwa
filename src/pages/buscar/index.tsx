@@ -41,7 +41,7 @@ export default function SearchPage() {
   }
 
   return (
-    <main className="flex flex-col min-h-screen justify-end w-screen bg-red-400 text-typography-primary">
+    <main className="flex flex-col min-h-screen justify-end w-screen text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
