@@ -31,7 +31,7 @@ export default function FirstSection() {
           </h1>
         </article>
       </div>
-      <Button className="font-bold">EXPLORAR</Button>
+      <Button href="buscar" className="font-bold">EXPLORAR</Button>
     </section>
   );
 }

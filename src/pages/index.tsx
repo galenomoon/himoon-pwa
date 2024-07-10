@@ -7,6 +7,7 @@ import SocialMediaSection from "@/components/LandingPage/SocialMediaSection";
 
 //admoon
 import { getProducts, IProduct } from "admoon";
+import Header from "@/components/Global/Header";
 
 export default function LandingPage() {
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -25,7 +26,8 @@ export default function LandingPage() {
   }
 
   return (
-    <main className="flex flex-col h-fit w-screen text-typography-primary">
+    <main className="flex flex-col h-fit w-screen relative text-typography-primary">
+      <Header className="sticky top-0 px-2 !bg-transparent !justify-end" showLogo={false} />
       <FirstSection />
       <ProductsSection products={products} />
       <SocialMediaSection />

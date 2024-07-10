@@ -19,18 +19,28 @@ export default function SearchPage() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [category_slug, setCategorySlug] = useState<ICategory["slug"]>();
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   useEffect(() => {
     fetchAll();
   }, []);
 
-  async function fetchAll() {
+  async function fetchAll(nextPage?: number) {
     try {
       setIsLoading(true);
       const response = await getProducts({
         query: search,
         category_slug,
+        page: nextPage || 1,
       });
+
+      setPage(response.currentPage);
+      setHasMore(response.currentPage < response.totalPages);
+      // if (Number(nextPage) > 1) {
+      //   setProducts((products) => [...products, ...response.results]);
+      //   return;
+      // }
       setProducts(response.results);
     } catch (error) {
       console.error(error);
@@ -47,33 +57,48 @@ export default function SearchPage() {
         title="Buscar produtos"
         description="Encontre os melhores produtos para você"
       />
-        <section className="bg-white sticky top-[0px] z-10 pb-3 px-3 mt-4 rounded-t-[36px]">
-          <Header />
-          <div className="flex gap-2 py-2  bg-white z-10">
-            <SearchBar
-              onFocus={() => setIsFocused(true)}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <Button
-              onClick={fetchAll}
-              disabled={isLoading}
-              className="font-medium min-w-[100px] px-5 text-lg"
-            >
+      <section className="bg-white sticky top-[0px] z-10 pb-3 px-3 mt-4 rounded-t-[36px]">
+        <Header />
+        <div className="flex gap-2 py-2  bg-white z-10">
+          <SearchBar
+            onFocus={() => setIsFocused(true)}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <Button
+            onClick={fetchAll}
+            disabled={isLoading}
+            className="font-medium min-w-[100px] px-5 text-lg"
+          >
+            {isLoading ? (
+              <PiSpinner className="animate-spin" size={24} />
+            ) : (
+              <span>Buscar</span>
+            )}
+          </Button>
+        </div>
+        <CategoriesList
+          onSelectCategory={setCategorySlug}
+          isRow={!isFocused}
+          selectUnique
+        />
+      </section>
+      <section className="px-3 text-typography-primary pb-12 flex flex-col min-h-[95dvh] bg-white relative">
+        <ProductGrid products={products} />
+        {hasMore ? (
+          <Button onClick={() => fetchAll(page + 1)} className="mt-6">
+            <p>
               {isLoading ? (
                 <PiSpinner className="animate-spin" size={24} />
               ) : (
-                <span>Buscar</span>
+                <span>Carregar mais</span>
               )}
-            </Button>
-          </div>
-          <CategoriesList
-            onSelectCategory={setCategorySlug}
-            isRow={!isFocused}
-            selectUnique
-          />
-        </section>
-      <section className="px-3 text-typography-primary pb-12 flex flex-col min-h-[95dvh] bg-white relative">
-        <ProductGrid products={products} />
+            </p>
+          </Button>
+        ) : (
+          <p>
+            {products.length > 0 ? "Fim da lista" : "Nenhum produto encontrado"}
+          </p>
+        )}
       </section>
     </main>
   );
