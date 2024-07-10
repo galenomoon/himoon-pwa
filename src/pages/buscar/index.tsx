@@ -37,10 +37,10 @@ export default function SearchPage() {
 
       setPage(response.currentPage);
       setHasMore(response.currentPage < response.totalPages);
-      // if (Number(nextPage) > 1) {
-      //   setProducts((products) => [...products, ...response.results]);
-      //   return;
-      // }
+      if (Number(nextPage) > 1) {
+        setProducts((products) => [...products, ...response.results]);
+        return;
+      }
       setProducts(response.results);
     } catch (error) {
       console.error(error);
