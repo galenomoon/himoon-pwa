@@ -22,7 +22,7 @@ export default function SearchPage() {
   );
 
   return (
-    <main className="flex flex-col h-[100dvh] justify-start w-screen bg-white text-typography-primary">
+    <main className="flex flex-col h-[100vh] justify-start w-screen bg-white text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
