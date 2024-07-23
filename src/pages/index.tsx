@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 
 //components
+import Header from "@/components/Global/Header";
 import FirstSection from "@/components/LandingPage/FirstSection";
 import ProductsSection from "@/components/LandingPage/ProductsSection";
 import SocialMediaSection from "@/components/LandingPage/SocialMediaSection";
 
 //admoon
 import { getProducts, IProduct } from "admoon";
-import Header from "@/components/Global/Header";
 
 export default function LandingPage() {
+  const [search, setSearch] = useState<string>("");
   const [products, setProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
@@ -27,7 +28,11 @@ export default function LandingPage() {
 
   return (
     <main className="flex flex-col h-fit w-screen relative text-typography-primary">
-      <Header className="sticky top-0 px-2 !bg-transparent !justify-end" showLogo={false} />
+      <Header
+        className="sticky top-0"
+        searchTerm={search}
+        onChange={setSearch}
+      />
       <FirstSection />
       <ProductsSection products={products} />
       <SocialMediaSection />

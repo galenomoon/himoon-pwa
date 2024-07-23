@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, ICategory } from "admoon";
 
-export default function CategoriesList({ 
-  isRow = false, 
-  isCenter = false, 
+export default function CategoriesList({
+  isRow = false,
+  isCenter = false,
   categoriesIds = [],
   onSelectCategory = (slug: string | undefined) => {},
   selectUnique = false,
@@ -20,7 +20,11 @@ export default function CategoriesList({
 
   useEffect(() => {
     if (categoriesIds?.length) {
-      setCategories(categories.filter((category) => categoriesIds.includes(category.id as never)));
+      setCategories(
+        categories.filter((category) =>
+          categoriesIds.includes(category.id as never)
+        )
+      );
     }
   }, [categoriesIds, isLoading]);
 
@@ -42,20 +46,22 @@ export default function CategoriesList({
     if (selectUnique) {
       onSelectCategory(isSelected ? undefined : category.slug);
       setSelectedCategoryIds(isSelected ? [] : [category.id]);
-      return
+      return;
     }
 
     if (isSelected) {
-      setSelectedCategoryIds(selectedCategoryIds.filter((id) => id !== category.id));
-      return
+      setSelectedCategoryIds(
+        selectedCategoryIds.filter((id) => id !== category.id)
+      );
+      return;
     }
-    
+
     setSelectedCategoryIds([...selectedCategoryIds, category.id]);
   }
 
   return (
     <section
-      className={`flex gap-2 w-full scrollbar-hide ${
+      className={`flex gap-2 w-full pb-3 scrollbar-hide ${
         isRow ? "!flex-no-wrap overflow-x-auto" : "flex-wrap !h-fit"
       } ${isCenter ? "justify-center" : "justify-start"}`}
     >
@@ -66,9 +72,9 @@ export default function CategoriesList({
             onClick={() => (isCenter ? {} : handleSelectCategory(category))}
             key={category.id}
             className={
-              "border-2 font-semibold rounded-full h-fit text-nowrap whitespace-nowrap px-3 py-0.5 " +
+              "first:ml-3 border-2 font-semibold rounded-full h-fit text-nowrap bg-white whitespace-nowrap px-3 py-0.5 " +
               (isSelected
-                ? "border-typography-purple/40 text-typography-purple bg-background-purpleLight font-bold"
+                ? "border-typography-purpleDark/40 text-typography-purpleDark font-bold"
                 : "")
             }
           >

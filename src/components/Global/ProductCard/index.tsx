@@ -40,7 +40,7 @@ export function ProductCard({
           e.stopPropagation();
           setIsAddedToCart(!isAddedToCart);
           addCartItem(product, isAddedToCart ? -1 : 1);
-          if (!isAddedToCart){
+          if (!isAddedToCart) {
             toast("Produto adicionado ao carrinho", {
               icon: "🛒",
             });
@@ -64,22 +64,25 @@ export function ProductCard({
     <Link
       key={product.id}
       href={`/${product.category?.slug}/${product.slug}`}
-      className={`flex flex-shrink-0 gap-3 rounded-2xl ${
+      className={`flex flex-shrink-0 gap-3 m-1 rounded-2xl ${
         isCartItem ? "flex-row" : "flex-col"
       }`}
     >
       <figure
-        className={`relative flex flex-shrink-0 items-center justify-center overflow-hidden ${
+        className={`relative flex scrollbar-hide overflow-auto flex-shrink-0 snap-x snap-mandatory items-center justify-start ${
           isCartItem ? "h-20 w-20 rounded-[16px]" : "h-48 w-full rounded-[32px]"
         }`}
       >
-        <Image
-          alt={product.name}
-          width={264}
-          height={264}
-          className="h-full w-full flex-shrink-0 object-cover"
-          src={product.images?.[0]?.url}
-        />
+        {product.images.map((image) => (
+          <Image
+            width={264}
+            height={264}
+            key={image.id}
+            src={image?.url}
+            alt={product.name}
+            className="h-full w-full flex-shrink-0 object-cover snap-always snap-center"
+          />
+        ))}
       </figure>
       <div className="flex h-full w-full flex-col items-start justify-between text-start">
         <article className="flex w-full h-full justify-between flex-col">
@@ -137,7 +140,11 @@ export function ProductCartCounter({
   return (
     <section className="rounded-lg flex items-center justify-center border-background-black/20 overflow-hidden">
       <button
-        onClick={() => cartItem?.quantity === 1 ? removeCartItem(product.id) : decrementCartItem(product)}
+        onClick={() =>
+          cartItem?.quantity === 1
+            ? removeCartItem(product.id)
+            : decrementCartItem(product)
+        }
         className="flex items-center rounded-l-lg justify-center px-2 py-1 w-full h-full bg-background-gray"
       >
         {cartItem?.quantity === 1 ? (

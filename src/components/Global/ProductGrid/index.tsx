@@ -1,19 +1,65 @@
-import React from "react";
+import React, { forwardRef, useMemo } from "react";
 import { IProduct } from "admoon";
 
 //components
+import { VirtuosoGrid } from "react-virtuoso";
+import { PiSpinner } from "react-icons/pi";
 import { ProductCard } from "../ProductCard";
 
 interface ProductGridProps {
+  hasMore?: boolean;
+  isLoading?: boolean;
   products: IProduct[];
+  endReached?: () => void;
 }
 
-export default function ProductGrid({ products = [] }: ProductGridProps) {
+const gridComponents = {
+  List: forwardRef(
+    ({ style, children, ...props }: { style: any; children: any }, ref) => (
+      <div
+        {...props}
+        ref={ref as any}
+        className="grid grid-cols-2 space scrollbar-hide"
+        style={{ ...style }}
+      >
+        {children}
+      </div>
+    )
+  ),
+  Footer: forwardRef(({ ...props }) => (
+    <div {...props} className="flex justify-center items-center">
+      <PiSpinner size={24} className="animate-spin" />
+    </div>
+  )),
+};
+
+export default function ProductGrid({
+  hasMore,
+  isLoading,
+  products = [],
+  endReached = () => {},
+}: ProductGridProps) {
   return (
-    <section className="grid grid-cols-2 w-full overflow-ato gap-2 gap-y-6 rounded-3xl scrollbar-hide">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
+    <section
+      className={`w-full rounded-3xl scrollbar-hide ${
+        isLoading ? "animate-[pulse_600ms_ease-in-out_infinite]" : ""
+      }`}
+    >
+      <VirtuosoGrid
+        data={products}
+        style={{ height: "74dvh" }}
+        endReached={endReached}
+        overscan={5}
+        components={
+          {
+            ...gridComponents,
+            Footer: hasMore ? gridComponents.Footer : () => <br />,
+          } as any
+        }
+        itemContent={(_, product) => {
+          return <ProductCard key={product.id} product={product} />;
+        }}
+      />
     </section>
   );
 }

@@ -92,10 +92,8 @@ export default function ProductPage() {
         title={currentProduct?.name}
         description={currentProduct?.description}
       />
-      <section className="mt-4 px- text-center items-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
-        <div className="px-3 flex w-full">
-          <Header backTo="/buscar" />
-        </div>
+      <section className="text-center items-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
+        <Header backTo="/buscar" />
         <figure className="my-4 scrollbar-hide overflow-auto min-h-[300px] flex gap-2 snap-x snap-mandatory">
           <Skeleton
             length={4}
@@ -168,7 +166,7 @@ export default function ProductPage() {
             </button>
           </div>
         </div>
-        <div className="flex flex-col px-3">
+        <div className="flex w-full flex-col px-3">
           <p className="font-light text-xl self-start mb-4">Veja também:</p>
           <ProductGrid products={products} />
         </div>
