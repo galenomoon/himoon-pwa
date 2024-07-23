@@ -13,8 +13,7 @@ interface ProductGridProps {
   endReached?: () => void;
 }
 
-const gridComponents = {
-  List: forwardRef(
+const List = forwardRef(
     ({ style, children, ...props }: { style: any; children: any }, ref) => (
       <div
         {...props}
@@ -25,12 +24,17 @@ const gridComponents = {
         {children}
       </div>
     )
-  ),
-  Footer: forwardRef(({ ...props }) => (
+  );
+
+const Footer = forwardRef(({ ...props }) => (
     <div {...props} className="flex justify-center items-center">
       <PiSpinner size={24} className="animate-spin" />
     </div>
-  )),
+  ));
+
+const gridComponents = {
+  List,
+  Footer,
 };
 
 export default function ProductGrid({
