@@ -22,29 +22,27 @@ export default function SearchPage() {
   );
 
   return (
-    <main className="flex flex-col h-[100dvh] justify-start w-screen text-typography-primary">
+    <main className="flex flex-col h-[100dvh] justify-start w-screen bg-white text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
         description="Encontre os melhores produtos para você"
       />
-      <section className="bg-white z-10 pb-3">
-        <Header
-          onSelectCategory={setCategorySlug}
-          isCategoryListOpen={isFocused}
-          onFocus={setIsFocused}
-          onChange={setSearch}
-          searchTerm={search}
-          showCategories
-          backTo="/"
-        />
-        <ProductGrid
-          hasMore={hasMore}
-          products={products}
-          isLoading={isLoading}
-          endReached={loadMore}
-        />
-      </section>
+      <Header
+        onSelectCategory={setCategorySlug}
+        isCategoryListOpen={isFocused}
+        onFocus={setIsFocused}
+        onChange={setSearch}
+        searchTerm={search}
+        showCategories
+        backTo="/"
+      />
+      <ProductGrid
+        hasMore={hasMore}
+        products={products}
+        isLoading={isLoading}
+        endReached={loadMore}
+      />
     </main>
   );
 }

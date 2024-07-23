@@ -7,7 +7,6 @@ export function useProducts(
   callback?: () => void
 ) {
 
-  console.log({ categorySlug })
   const [products, setProducts] = useState<IProduct[]>([]);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);

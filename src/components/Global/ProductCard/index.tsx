@@ -64,7 +64,7 @@ export function ProductCard({
     <Link
       key={product.id}
       href={`/${product.category?.slug}/${product.slug}`}
-      className={`flex flex-shrink-0 gap-3 m-1 rounded-2xl ${
+      className={`flex flex-shrink-0 gap-3 rounded-2xl ${
         isCartItem ? "flex-row" : "flex-col"
       }`}
     >
@@ -86,7 +86,7 @@ export function ProductCard({
       </figure>
       <div className="flex h-full w-full flex-col items-start justify-between text-start">
         <article className="flex w-full h-full justify-between flex-col">
-          <h1 title={product.name} className="font-semibold w-full leading-5">
+          <h1 title={product.name} className="font-semibold line-clamp-1 w-full leading-5">
             {product.name}
           </h1>
           <span className="flex items-center gap-2">
