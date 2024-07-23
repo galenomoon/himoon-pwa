@@ -50,10 +50,6 @@ export default function ProductGrid({
         endReached={endReached}
         overscan={5}
         components={
-          // {
-          //   ...gridComponents,
-          //   Footer: hasMore ? gridComponents.Footer : () => <br />,
-          // } as any
           {
             List,
           } as any
@@ -65,3 +61,5 @@ export default function ProductGrid({
     </section>
   );
 }
+
+ProductGrid.displayName = "ProductGrid";
