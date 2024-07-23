@@ -14,28 +14,23 @@ interface ProductGridProps {
 }
 
 const List = forwardRef(
-    ({ style, children, ...props }: { style: any; children: any }, ref) => (
-      <div
-        {...props}
-        ref={ref as any}
-        className="grid grid-cols-2 space scrollbar-hide"
-        style={{ ...style }}
-      >
-        {children}
-      </div>
-    )
-  );
-
-const Footer = forwardRef(({ ...props }) => (
-    <div {...props} className="flex justify-center items-center">
-      <PiSpinner size={24} className="animate-spin" />
+  ({ style, children, ...props }: { style: any; children: any }, ref) => (
+    <div
+      {...props}
+      ref={ref as any}
+      className="grid grid-cols-2 space scrollbar-hide"
+      style={{ ...style }}
+    >
+      {children}
     </div>
-  ));
+  )
+);
 
-const gridComponents = {
-  List,
-  Footer,
-};
+// const Footer = forwardRef(({ ...props }) => (
+//     <div {...props} className="flex justify-center items-center">
+//       <PiSpinner size={24} className="animate-spin" />
+//     </div>
+//   ));
 
 export default function ProductGrid({
   hasMore,
@@ -55,9 +50,12 @@ export default function ProductGrid({
         endReached={endReached}
         overscan={5}
         components={
+          // {
+          //   ...gridComponents,
+          //   Footer: hasMore ? gridComponents.Footer : () => <br />,
+          // } as any
           {
-            ...gridComponents,
-            Footer: hasMore ? gridComponents.Footer : () => <br />,
+            List,
           } as any
         }
         itemContent={(_, product) => {
