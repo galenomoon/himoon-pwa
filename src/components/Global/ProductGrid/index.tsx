@@ -26,6 +26,9 @@ const List = forwardRef(
   )
 );
 
+List.displayName = "List";
+
+
 // const Footer = forwardRef(({ ...props }) => (
 //     <div {...props} className="flex justify-center items-center">
 //       <PiSpinner size={24} className="animate-spin" />
@@ -61,5 +64,3 @@ export default function ProductGrid({
     </section>
   );
 }
-
-ProductGrid.displayName = "ProductGrid";
