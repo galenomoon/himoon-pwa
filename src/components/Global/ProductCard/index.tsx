@@ -64,7 +64,7 @@ export function ProductCard({
     <Link
       key={product.id}
       href={`/${product.category?.slug}/${product.slug}`}
-      className={`flex flex-shrink-0 gap-3 rounded-2xl ${
+      className={`flex flex-shrink-0 gap-3 relative min-h-[300px] rounded-2xl ${
         isCartItem ? "flex-row" : "flex-col"
       }`}
     >
@@ -86,14 +86,14 @@ export function ProductCard({
       </figure>
       <div className="flex h-full w-full flex-col items-start justify-between text-start">
         <article className="flex w-full h-full justify-between flex-col">
-          <h1 title={product.name} className="font-semibold line-clamp-1 w-full leading-5">
+          <h1 title={product.name} className="text-sm font-medium w-full leading-5 line-clamp-2">
             {product.name}
           </h1>
           <span className="flex items-center gap-2">
             {isCartItem ? (
               <></>
             ) : (
-              <h1 className="font-bold whitespace-nowrap text-xl">
+              <h1 className="font-light whitespace-nowrap text-2xl">
                 {product.price.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
@@ -101,13 +101,13 @@ export function ProductCard({
               </h1>
             )}
           </span>
-          <div className="flex gap-2">
-            <p
+            {/* <p
               title={product.description}
-              className="font-regular line-clamp-2 text-xs opacity-80"
+              className="font-regular line-clamp-1 w-[85%] text-xs opacity-60"
             >
               {product.description}
-            </p>
+            </p> */}
+          <div className="flex gap-2 absolute bottom-3 right-0">
             {isCartItem ? <></> : <AddCartButton />}
           </div>
           {isCartItem ? (
