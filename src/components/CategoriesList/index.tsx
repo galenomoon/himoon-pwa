@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, ICategory } from "admoon";
+import { categoriesEmojis } from "@/constants/categoriesEmojis";
 
 export default function CategoriesList({
   isRow = false,
@@ -61,8 +62,10 @@ export default function CategoriesList({
 
   return (
     <section
-      className={`flex gap-2 w-full pb-3 scrollbar-hide ${
-        isRow ? "!flex-no-wrap overflow-x-auto" : "flex-wrap !h-fit"
+      className={`flex gap-2 w-full pb-3 snap-x snap-mandatory scrollbar-hide ${
+        isRow
+          ? "!flex-no-wrap overflow-x-auto"
+          : "flex-wrap items-baseline justify-center text-center !h-fit"
       } ${isCenter ? "justify-center" : "justify-start"}`}
     >
       {categories.map((category) => {
@@ -71,14 +74,30 @@ export default function CategoriesList({
           <button
             onClick={() => (isCenter ? {} : handleSelectCategory(category))}
             key={category.id}
-            className={
-              "first:ml-3 border-2 font-semibold rounded-full h-fit text-nowrap bg-white whitespace-nowrap px-3 py-0.5 " +
-              (isSelected
-                ? "border-typography-purpleDark/40 text-typography-purpleDark font-bold"
-                : "")
-            }
+            className={`${
+              isRow ? "first:ml-3 last:mr-4" : ""
+            } snap-center flex flex-col gap-1 items-center justify-center h-fit text- p-0.5`}
           >
-            {category.name}
+            <div
+              className={
+                "text-2xl border-2 w-12 h-12 flex items-center justify-center rounded-full bg-white " +
+                (isSelected ? "border-typography-purpleDark/60" : "")
+              }
+            >
+              {categoriesEmojis[
+                category.slug as keyof typeof categoriesEmojis
+              ] || "📦"}
+            </div>
+            <span
+              className={
+                "text-[10px] leading-[12px] w-12 text-center flex flex-col items-center justify-center " +
+                (isSelected
+                  ? "text-typography-purpleDark font-light"
+                  : "font-normal")
+              }
+            >
+              {category.name}
+            </span>
           </button>
         );
       })}

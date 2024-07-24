@@ -11,6 +11,9 @@ interface ProductGridProps {
   isLoading?: boolean;
   products: IProduct[];
   endReached?: () => void;
+  className?: string;
+  useWindowScroll?: boolean;
+  itemWrapperClassName?: string;
 }
 
 const List = forwardRef(
@@ -36,6 +39,7 @@ const Item = forwardRef(({ children, ...props }: any, ref) => (
   <div
     ref={ref as any}
     {...props}
+    className="bg-white"
     style={{
       width: "100%",
       display: "flex",
@@ -50,7 +54,7 @@ const Item = forwardRef(({ children, ...props }: any, ref) => (
 
 const ItemWrapper = ({ children, ...props }: any) => (
   <div
-    className="w-full"
+    className="w-full bg-white"
     {...props}
     style={{
       padding: "0.25rem",
@@ -75,15 +79,19 @@ export default function ProductGrid({
   isLoading,
   products = [],
   endReached = () => {},
+  className = "",
+  useWindowScroll = false,
+  itemWrapperClassName = "",
 }: ProductGridProps) {
   return (
     <section
-      className={`w-full h-full px-2 rounded-3xl scrollbar-hide ${
+      className={`w-full h-full ${className} ${
         isLoading ? "animate-[pulse_600ms_ease-in-out_infinite]" : ""
       }`}
     >
       <VirtuosoGrid
         data={products}
+        useWindowScroll={useWindowScroll}
         style={{ height: "100%" }}
         endReached={endReached}
         totalCount={products.length / 2}
@@ -96,7 +104,7 @@ export default function ProductGrid({
         }
         itemContent={(_, product) => {
           return (
-            <ItemWrapper>
+            <ItemWrapper className={itemWrapperClassName}>
               <ProductCard key={product.id} product={product} />
             </ItemWrapper>
           );

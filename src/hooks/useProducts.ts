@@ -4,7 +4,8 @@ import { getProducts, ICategory, IProduct } from "admoon";
 export function useProducts(
   search: string,
   categorySlug: ICategory["slug"],
-  callback?: () => void
+  callback?: () => void,
+  perPage?: number
 ) {
 
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -21,17 +22,18 @@ export function useProducts(
     if (categorySlug !== selectedCategory) {
       setSelectedCategory(categorySlug);
       fetchProducts(1);
+      setHasMore(true);
     }
   }, [categorySlug]);
 
   async function fetchProducts(nextPage: number) {
-
     try {
       setIsLoading(true);
       const response = await getProducts({
         query: search,
         category_slug: categorySlug,
         page: nextPage,
+        perPage: perPage || 10,
       });
 
       setPage(response.currentPage);
@@ -53,7 +55,7 @@ export function useProducts(
   return {
     products,
     hasMore,
-    isLoading,
+    isLoading: isLoading && hasMore,
     loadMore: () => fetchProducts(page + 1),
   };
 }

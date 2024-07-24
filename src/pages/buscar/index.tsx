@@ -18,11 +18,12 @@ export default function SearchPage() {
   const { products, hasMore, isLoading, loadMore } = useProducts(
     search,
     categorySlug,
-    () => setIsFocused(false)
+    () => setIsFocused(false),
+    10
   );
 
   return (
-    <main className="flex flex-col h-[100vh] justify-start w-screen bg-white text-typography-primary">
+    <main className="flex flex-col h-fit relative w-full bg-white text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
@@ -38,9 +39,11 @@ export default function SearchPage() {
         backTo="/"
       />
       <ProductGrid
+        useWindowScroll
         hasMore={hasMore}
         products={products}
         isLoading={isLoading}
+        className="bg-white pb-3"
         endReached={loadMore}
       />
     </main>

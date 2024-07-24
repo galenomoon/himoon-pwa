@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { useContext } from "react";
 
 import Button from "../Button";
 import { motion } from "framer-motion";
@@ -72,9 +72,9 @@ export default function Cart() {
         {cartItems.length > 0 ? (
           <section className="flex h-full gap-2 w-full flex-col items-center overflow-auto">
             {cartItems.map((cartItem, index) => (
-              <Fragment key={index}>
+              <div key={index} className="w-full">
                 <ProductCard product={cartItem.product} isCartItem cartItem={cartItem} />
-              </Fragment>
+              </div>
             ))}
           </section>
         ) : (

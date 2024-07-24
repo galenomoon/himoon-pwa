@@ -13,7 +13,7 @@ export default function ProductsSection({ products }: { products: IProduct[] }) 
         <h1 className="text-3xl font-bold">Vela algum dos nossos produtos</h1>
       </article>
       <div className="!h-[70vh]">
-      <ProductGrid products={products} />
+      <ProductGrid itemWrapperClassName="bg-black" products={products} />
       </div>
       <Button href="/buscar" invert className="font-bold">
         VER MAIS PRODUTOS

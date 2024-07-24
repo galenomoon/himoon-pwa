@@ -8,7 +8,7 @@ import Button from "@/components/Global/Button";
 import Skeleton from "@/components/Global/Skeleton";
 import NextHeader from "@/components/Global/NextHeader";
 import ProductGrid from "@/components/Global/ProductGrid";
-import CategoriesList from "@/components/SearchPage/CategoriesList";
+import CategoriesList from "@/components/CategoriesList";
 
 //styles
 import toast from "react-hot-toast";

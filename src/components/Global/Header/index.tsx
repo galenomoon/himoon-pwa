@@ -11,7 +11,7 @@ import { CartContext } from "@/contexts/cartContext";
 
 //components
 import { SearchBar } from "@/components/SearchBar";
-import CategoriesList from "@/components/SearchPage/CategoriesList";
+import CategoriesList from "@/components/CategoriesList";
 
 //next
 import Link from "next/link";
@@ -40,24 +40,24 @@ export default function Header({
 
   return (
     <header
-      className={`flex flex-col w-full relative justify-between items-center top-0 bg-background-purple pt-6 z-20 ${className}`}
+      className={`flex flex-col w-full justify-between items-center bg-background-purple pt-6 z-20 ${className}`}
     >
-      <div className="flex w-full gap-2 px-3">
+      <div className="flex w-full gap-2 z-40 px-3 pt-3 sticky top-0 pb-1 bg-background-purple">
         {backTo && (
           <Link
             href={backTo}
-            className="flex items-center justify-center flex-shrink-0"
+            className="flex items-center w-[22px] justify-center flex-shrink-0"
           >
-            <RxCaretLeft size={45} />
+            <RxCaretLeft size={45} className="flex-shrink-0" />
           </Link>
         )}
         <SearchBar
-          onFocus={() => onFocus(true)}
-          searchTerm={searchTerm}
           onSubmit={() => {
             onSearch();
             onFocus(false);
           }}
+          searchTerm={searchTerm}
+          onFocus={() => onFocus(true)}
           onChange={(e) => onChange(e.target.value)}
         />
         <button
@@ -80,7 +80,7 @@ export default function Header({
         </button>
       </div>
       {showAddress && (
-        <p className="font-light py-2 sticky top-[2px]">
+        <p className="font-light pb-2 z-10 bg-background-purple w-full text-center">
           Seja bem vindo a Hi, Moon 🌙
         </p>
       )}
