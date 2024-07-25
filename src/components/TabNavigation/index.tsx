@@ -75,7 +75,7 @@ export default function TabNavigator() {
   ];
 
   return (
-    <nav className="flex items-center shadow-2xl tabnavigation-shadow justify-around h-16 w-full fixed bottom-0 bg-white">
+    <nav className="flex items-center shadow-2xl tabnavigation-shadow justify-around h-24 w-full fixed bottom-0 bg-white">
       {tabs.map((tab, index) => {
         const isActive =
           (pathname === "/buscar" || pathname === "/") &&
@@ -88,7 +88,7 @@ export default function TabNavigator() {
           <Link
             key={index}
             href={tab.href}
-            className="flex text-center h-full min-w-16 flex-col py-2 items-center justify-between "
+            className="flex text-center h-full min-w-16 flex-col pt-2 pb-10 items-center justify-between"
           >
             <div className="h-12 flex items-center justify-center">
               <Icon {...props} className="flex-shrink-0" />

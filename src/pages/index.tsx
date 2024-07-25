@@ -2,6 +2,8 @@ import { useState } from "react";
 
 //components
 import Header from "@/components/Header";
+import ProductGrid from "@/components/ProductGrid";
+import CategoriesList from "@/components/CategoriesList";
 
 //assets
 import canetas from "@/assets/banners/canetas.png";
@@ -11,8 +13,6 @@ import marcaTextos from "@/assets/banners/marca-textos.png";
 
 //admoon
 import Image from "next/image";
-import CategoriesList from "@/components/CategoriesList";
-import ProductGrid from "@/components/ProductGrid";
 import { useProducts } from "@/hooks/useProducts";
 
 export default function LandingPage() {
