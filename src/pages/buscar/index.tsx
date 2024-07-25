@@ -12,9 +12,9 @@ import { useProducts } from "@/hooks/useProducts";
 export default function SearchPage() {
   const router = useRouter();
   const { query } = router;
-  const [search, setSearch] = useState<string>(query.search as string);
+  const [search, setSearch] = useState<string>(query?.search as string);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [categorySlug, setCategorySlug] = useState<string | undefined>();
+  const [categorySlug, setCategorySlug] = useState<string | undefined>(query?.category as string);
   const { products, hasMore, isLoading, loadMore } = useProducts(
     search,
     categorySlug,

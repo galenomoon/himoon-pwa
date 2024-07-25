@@ -85,7 +85,7 @@ export default function Header({
         </button>
       </div>
       {showAddress && (
-        <p className="font-light pb-2 z-10 bg-background-purple w-full text-center">
+        <p className="font-medium pb-2 z-10 bg-background-purple w-full text-center">
           Seja bem vindo a Hi, Moon 🌙
         </p>
       )}

@@ -4,8 +4,10 @@ import { categoriesEmojis } from "@/constants/categoriesEmojis";
 
 export default function CategoriesList({
   isRow = false,
+  className = "",
   isCenter = false,
   categoriesIds = [],
+  useSearchMode = false,
   onSelectCategory = (slug: string | undefined) => {},
   selectUnique = false,
 }) {
@@ -66,13 +68,19 @@ export default function CategoriesList({
         isRow
           ? "!flex-no-wrap overflow-x-auto"
           : "flex-wrap items-baseline justify-center text-center !h-fit"
-      } ${isCenter ? "justify-center" : "justify-start"}`}
+      } ${isCenter ? "justify-center" : "justify-start"} ${className}`}
     >
       {categories.map((category) => {
         const isSelected = selectedCategoryIds.includes(category.id);
+        const Element = useSearchMode ? "a" : "button";
+        const props = useSearchMode
+          ? { href: `/buscar?category=${category.slug}` }
+          : {
+              onClick: () => (isCenter ? {} : handleSelectCategory(category)),
+            };
         return (
-          <button
-            onClick={() => (isCenter ? {} : handleSelectCategory(category))}
+          <Element
+            {...props}
             key={category.id}
             className={`${
               isRow ? "first:ml-3 last:mr-4" : ""
@@ -100,7 +108,7 @@ export default function CategoriesList({
             >
               {category.name}
             </span>
-          </button>
+          </Element>
         );
       })}
     </section>

@@ -85,7 +85,7 @@ export default function ProductGrid({
 }: ProductGridProps) {
   return (
     <section
-      className={`w-full h-full ${className} ${
+      className={`w-full h-full pb-[72px] ${className} ${
         isLoading ? "animate-[pulse_600ms_ease-in-out_infinite]" : ""
       }`}
     >
