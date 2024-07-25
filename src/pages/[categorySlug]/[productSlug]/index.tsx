@@ -136,11 +136,11 @@ export default function ProductPage() {
         </article>
 
         <div className="flex flex-col p-3 w-full">
-          <CategoriesList
+          {/* <CategoriesList
             isRow
             isCenter
             categoriesIds={[currentProduct?.category?.id as never]}
-          />
+          /> */}
           <div className="flex gap-2 my-4">
             <Button
               onClick={() => {
