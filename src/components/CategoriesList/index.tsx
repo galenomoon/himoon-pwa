@@ -62,7 +62,7 @@ export default function CategoriesList({
 
   return (
     <section
-      className={`flex gap-2 w-full pb-3 snap-x snap-mandatory scrollbar-hide ${
+      className={`flex gap-2 w-full pb-3 bg-background-purple snap-x snap-mandatory scrollbar-hide ${
         isRow
           ? "!flex-no-wrap overflow-x-auto"
           : "flex-wrap items-baseline justify-center text-center !h-fit"
@@ -81,7 +81,9 @@ export default function CategoriesList({
             <div
               className={
                 "text-2xl border-2 w-12 h-12 flex items-center justify-center rounded-full bg-white " +
-                (isSelected ? "border-typography-purpleDark/60" : "")
+                (isSelected
+                  ? "border-typography-purpleDark/60 bg-typography-yellow"
+                  : "")
               }
             >
               {categoriesEmojis[
@@ -92,7 +94,7 @@ export default function CategoriesList({
               className={
                 "text-[10px] leading-[12px] w-12 text-center flex flex-col items-center justify-center " +
                 (isSelected
-                  ? "text-typography-purpleDark font-light"
+                  ? "text-typography-purpleDark font-semibold"
                   : "font-normal")
               }
             >

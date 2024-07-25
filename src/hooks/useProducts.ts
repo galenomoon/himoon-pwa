@@ -23,8 +23,13 @@ export function useProducts(
       setSelectedCategory(categorySlug);
       fetchProducts(1);
       setHasMore(true);
+      scrollToTop()
     }
   }, [categorySlug]);
+
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
   async function fetchProducts(nextPage: number) {
     try {

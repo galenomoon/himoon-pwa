@@ -5,8 +5,8 @@ import Image from "next/image";
 import moon from "@/assets/512x512.png";
 
 //components
-import Logo from "@/components/Global/Logo";
-import Button from "@/components/Global/Button";
+import Logo from "@/components/Logo";
+import Button from "@/components/Button";
 
 export default function FirstSection() {
   return (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 //components
-import Header from "@/components/Global/Header";
+import Header from "@/components/Header";
 import FirstSection from "@/components/LandingPage/FirstSection";
 import ProductsSection from "@/components/LandingPage/ProductsSection";
 import SocialMediaSection from "@/components/LandingPage/SocialMediaSection";

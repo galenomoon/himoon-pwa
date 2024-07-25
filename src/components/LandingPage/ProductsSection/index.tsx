@@ -3,8 +3,8 @@
 import { IProduct } from "admoon";
 
 //components
-import Button from "@/components/Global/Button";
-import ProductGrid from "@/components/Global/ProductGrid";
+import Button from "@/components/Button";
+import ProductGrid from "@/components/ProductGrid";
 
 export default function ProductsSection({ products }: { products: IProduct[] }) {
   return (

@@ -17,8 +17,10 @@ import CategoriesList from "@/components/CategoriesList";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+//hooks
+import { useScrollHeader } from "@/hooks/useScrollHeader";
+
 export default function Header({
-  className = "",
   backTo = "",
   showAddress = true,
   showCategories = false,
@@ -29,6 +31,7 @@ export default function Header({
   onSelectCategory = (value?: string) => {},
 }) {
   const router = useRouter();
+  const showHeader = useScrollHeader();
   const { openCart = () => {}, totalCartQuantity } = useContext(CartContext);
 
   function onSearch() {
@@ -39,10 +42,12 @@ export default function Header({
   }
 
   return (
-    <header
-      className={`flex flex-col w-full justify-between items-center bg-background-purple pt-6 z-20 ${className}`}
-    >
-      <div className="flex w-full gap-2 z-40 px-3 pt-3 sticky top-0 pb-1 bg-background-purple">
+    <div className={`transition-transform sticky top-0 z-40 duration-500 ${
+      showHeader ? "transform translate-y-0" : "transform -translate-y-full"
+    }`}>
+      <div
+        className="flex w-full gap-2 px-3 pt-3  pb-1 bg-background-purple"
+      >
         {backTo && (
           <Link
             href={backTo}
@@ -92,6 +97,6 @@ export default function Header({
         />
       )}
       <Cart />
-    </header>
+    </div>
   );
 }

@@ -10,9 +10,11 @@ import { TbBasketCheck, TbBasketPlus } from "react-icons/tb";
 
 //contexts
 import { CartContext } from "@/contexts/cartContext";
-import { FaMinus, FaPlus } from "react-icons/fa6";
-import { LuTrash2 } from "react-icons/lu";
+
+//styles
 import toast from "react-hot-toast";
+import { LuTrash2 } from "react-icons/lu";
+import { FaMinus, FaPlus } from "react-icons/fa6";
 
 interface ProductCardProps {
   product: IProduct;
@@ -70,7 +72,9 @@ export function ProductCard({
     >
       <figure
         className={`relative flex scrollbar-hide overflow-auto flex-shrink-0 snap-x snap-mandatory items-center justify-start ${
-          isCartItem ? "h-20 w-20 rounded-[16px]" : "h-48 w-full rounded-[32px]"
+          isCartItem
+            ? "h-20 w-20 rounded-[16px]"
+            : "h-48 w-full min-w-44 rounded-[32px]"
         }`}
       >
         {product.images.map((image) => (
@@ -86,7 +90,10 @@ export function ProductCard({
       </figure>
       <div className="flex h-full w-full flex-col items-start justify-between text-start">
         <article className="flex w-full h-full justify-between flex-col">
-          <h1 title={product.name} className="text-sm font-medium w-full leading-5 line-clamp-2">
+          <h1
+            title={product.name}
+            className="text-sm font-medium w-full leading-5 line-clamp-2"
+          >
             {product.name}
           </h1>
           <span className="flex items-center gap-2">
@@ -101,12 +108,14 @@ export function ProductCard({
               </h1>
             )}
           </span>
-            {/* <p
+          {/* 
+            <p
               title={product.description}
               className="font-regular line-clamp-1 w-[85%] text-xs opacity-60"
             >
               {product.description}
-            </p> */}
+            </p> 
+          */}
           <div className="flex gap-2 absolute bottom-3 right-0">
             {isCartItem ? <></> : <AddCartButton />}
           </div>

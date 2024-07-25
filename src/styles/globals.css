@@ -17,7 +17,7 @@
 }
 
 body {
-  background-color: #D6CBFF;
+  background-color: #fff;
 }
 
 @layer utilities {
@@ -36,4 +36,8 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.tabnavigation-shadow {
+  box-shadow: 0px -2px 12px rgba(0, 0, 0, 0.10);
 }

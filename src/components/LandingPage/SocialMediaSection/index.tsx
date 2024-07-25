@@ -6,7 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 
 //components
-import Button from "@/components/Global/Button";
+import Button from "@/components/Button";
 
 //assets
 import header from "@/assets/landing-page-products-header.png";

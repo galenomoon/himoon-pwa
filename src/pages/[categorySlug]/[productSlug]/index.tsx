@@ -2,12 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 //components
-import Modal from "@/components/Global/Modal";
-import Header from "@/components/Global/Header";
-import Button from "@/components/Global/Button";
-import Skeleton from "@/components/Global/Skeleton";
-import NextHeader from "@/components/Global/NextHeader";
-import ProductGrid from "@/components/Global/ProductGrid";
+import Modal from "@/components/Modal";
+import Header from "@/components/Header";
+import Button from "@/components/Button";
+import Skeleton from "@/components/Skeleton";
+import NextHeader from "@/components/NextHeader";
+import ProductGrid from "@/components/ProductGrid";
 import CategoriesList from "@/components/CategoriesList";
 
 //styles

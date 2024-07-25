@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 //components
-import Header from "@/components/Global/Header";
-import NextHeader from "@/components/Global/NextHeader";
-import ProductGrid from "@/components/Global/ProductGrid";
+import Header from "@/components/Header";
+import NextHeader from "@/components/NextHeader";
+import ProductGrid from "@/components/ProductGrid";
 
 //hooks
 import { useProducts } from "@/hooks/useProducts";
@@ -43,7 +43,7 @@ export default function SearchPage() {
         hasMore={hasMore}
         products={products}
         isLoading={isLoading}
-        className="bg-white pb-3"
+        className="bg-white min-h-[75dvh] pb-3 px-2"
         endReached={loadMore}
       />
     </main>
