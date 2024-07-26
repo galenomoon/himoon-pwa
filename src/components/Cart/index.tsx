@@ -69,19 +69,17 @@ export default function Cart() {
             <IoMdClose size={28} className="opacity-80" />
           </button>
         </header>
-        <div className="flex flex-col items-center w-full">
+        <section className="flex gap-2 h-full w-full flex-col items-center overflow-auto">
           {cartItems.length > 0 ? (
-            <section className="flex h-full gap-2 w-full flex-col items-center overflow-auto">
-              {cartItems.map((cartItem, index) => (
-                <div key={index} className="w-full">
-                  <ProductCard
-                    product={cartItem.product}
-                    isCartItem
-                    cartItem={cartItem}
-                  />
-                </div>
-              ))}
-            </section>
+            cartItems.map((cartItem, index) => (
+              <div key={index} className="w-full">
+                <ProductCard
+                  product={cartItem.product}
+                  isCartItem
+                  cartItem={cartItem}
+                />
+              </div>
+            ))
           ) : (
             <section className="flex h-full flex-col items-center justify-center text-4xl">
               <h1>Seu carrinho está vazio</h1>
@@ -98,7 +96,8 @@ export default function Cart() {
               </Button>
             </section>
           )}
-        </div>
+        </section>
+
         <footer className=" bottom-0 bg-white left-0 w-full flex flex-col border-t-2 border-background-gray p-3 gap-2">
           <div className="flex justify-between">
             <p className="text-2xl font-light">Total</p>
