@@ -69,30 +69,36 @@ export default function Cart() {
             <IoMdClose size={28} className="opacity-80" />
           </button>
         </header>
-        {cartItems.length > 0 ? (
-          <section className="flex h-full gap-2 w-full flex-col items-center overflow-auto">
-            {cartItems.map((cartItem, index) => (
-              <div key={index} className="w-full">
-                <ProductCard product={cartItem.product} isCartItem cartItem={cartItem} />
-              </div>
-            ))}
-          </section>
-        ) : (
-          <section className="flex h-full flex-col items-center justify-center text-4xl">
-            <h1>Seu carrinho está vazio</h1>
-            <p className="font-regular text-xl text-typography-black/60">
-              Adicione produtos para continuar
-            </p>
-            <Button
-              href="/buscar"
-              passHref
-              onClick={closeCart}
-              className="font-regular mt-6 flex w-[300px] flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-typography-primary px-6 py-2 text-white duration-200 hover:bg-opacity-90 text-xl"
-            >
-              Ver produtos
-            </Button>
-          </section>
-        )}
+        <div className="flex flex-col items-center w-full">
+          {cartItems.length > 0 ? (
+            <section className="flex h-full gap-2 w-full flex-col items-center overflow-auto">
+              {cartItems.map((cartItem, index) => (
+                <div key={index} className="w-full">
+                  <ProductCard
+                    product={cartItem.product}
+                    isCartItem
+                    cartItem={cartItem}
+                  />
+                </div>
+              ))}
+            </section>
+          ) : (
+            <section className="flex h-full flex-col items-center justify-center text-4xl">
+              <h1>Seu carrinho está vazio</h1>
+              <p className="font-regular text-xl text-typography-black/60">
+                Adicione produtos para continuar
+              </p>
+              <Button
+                href="/buscar"
+                passHref
+                onClick={closeCart}
+                className="font-regular mt-6 flex w-[300px] flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-typography-primary px-6 py-2 text-white duration-200 hover:bg-opacity-90 text-xl"
+              >
+                Ver produtos
+              </Button>
+            </section>
+          )}
+        </div>
         <footer className=" bottom-0 bg-white left-0 w-full flex flex-col border-t-2 border-background-gray p-3 gap-2">
           <div className="flex justify-between">
             <p className="text-2xl font-light">Total</p>
