@@ -8,23 +8,21 @@ import Button from "@/components/Button";
 import Skeleton from "@/components/Skeleton";
 import NextHeader from "@/components/NextHeader";
 import ProductGrid from "@/components/ProductGrid";
-import CategoriesList from "@/components/CategoriesList";
+// import CategoriesList from "@/components/CategoriesList";
 
 //styles
 import toast from "react-hot-toast";
 import { GoShare } from "react-icons/go";
-import { PiSpinner } from "react-icons/pi";
 import { SiWhatsapp } from "react-icons/si";
 
 //admoon
 import { getProduct, getProducts, IProduct } from "admoon";
 
 //context
-import { CartContext } from "@/contexts/cartContext";
+import TabNavigator from "@/components/TabNavigation";
 
 export default function ProductPage() {
   const router = useRouter();
-  const { addCartItem } = useContext(CartContext);
   const { productSlug, categorySlug } = router.query;
   const [currentProduct, setCurrentProduct] = useState<IProduct>();
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -92,25 +90,31 @@ export default function ProductPage() {
         title={currentProduct?.name}
         description={currentProduct?.description}
       />
-      <section className="text-center items-center rounded-t-[36px] text-typography-primary pb-12 flex flex-col min-h-[90dvh] bg-white relative">
-        <Header backTo="/buscar" />
-        <figure className="my-4 scrollbar-hide overflow-auto min-h-[300px] flex gap-2 snap-x snap-mandatory">
+      <Header backTo="/buscar" />
+      <section className="text-center items-center bg-background-purple text-typography-primary pb-12 flex flex-col min-h-[90dvh] relative">
+        <figure className="py-4 scrollbar-hide overflow-auto min-h-[300px] flex gap-2 snap-x snap-mandatory">
           <Skeleton
             length={4}
             conditional={!isLoading || !currentProduct?.images.length}
-            className="first:ml-4 last:mr-8 rounded-[42px] h-[300px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 !w-[80%] object-cover"
+            className="first:ml-4 last:mr-8 rounded-3xl h-[300px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 !w-[80%] object-cover"
           >
             {currentProduct?.images?.map((image) => (
               <img
                 key={image.id}
                 src={image.url || "https://via.placeholder.com/800x800.png"}
-                className="first:ml-4 last:mr-8 rounded-[42px] max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
+                className="first:ml-4 last:mr-8 rounded-3xl max-h-[400px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 w-[90%] object-cover"
                 alt="product"
               />
             ))}
           </Skeleton>
         </figure>
-        <article className="flex flex-col gap-1 items-center px-3">
+        <article className="flex flex-col gap-1 items-center relative p-3 mb-16 bg-white rounded-3xl">
+          <button
+            onClick={() => setIsOpenShareModal(true)}
+            className="rounded-full absolute right-3 top-3 h-9 w-9 flex items-center justify-center bg-background-gray flex-shrink-0"
+          >
+            <GoShare size={22} />
+          </button>
           <Skeleton conditional={!isLoading} className="w-[128px] rounded-xl">
             <p className="text-3xl font-light">
               {(currentProduct?.price || 0).toLocaleString("pt-br", {
@@ -133,43 +137,22 @@ export default function ProductPage() {
               {currentProduct?.description}
             </h1>
           </Skeleton>
-        </article>
-
-        <div className="flex flex-col p-3 w-full">
           {/* <CategoriesList
             isRow
             isCenter
             categoriesIds={[currentProduct?.category?.id as never]}
           /> */}
-          <div className="flex gap-2 my-4">
-            <Button
-              onClick={() => {
-                addCartItem(currentProduct as IProduct, 1);
-                toast("Produto adicionado ao carrinho!", {
-                  icon: "🛒",
-                });
-              }}
-              className="w-full uppercase font-bold"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <PiSpinner size={24} className="animate-spin" />
-              ) : (
-                "Adicionar ao carrinho"
-              )}
-            </Button>
-            <button
-              onClick={() => setIsOpenShareModal(true)}
-              className="rounded-full h-12 w-12 flex items-center justify-center bg-background-gray flex-shrink-0"
-            >
-              <GoShare size={24} />
-            </button>
-          </div>
-        </div>
-        <div className="flex w-full flex-col px-3">
-          <p className="font-light text-xl self-start mb-4">Veja também:</p>
-          <ProductGrid products={products} />
-        </div>
+          {products.length > 0 && (
+            <div className="flex w-full flex-col pt-4">
+              <p className="font-light text-xl self-start mb-4">Veja também:</p>
+              <ProductGrid
+                useWindowScroll
+                products={products}
+                className="!pb-0"
+              />
+            </div>
+          )}
+        </article>
       </section>
       <Modal
         title="Compartilhar"
@@ -201,6 +184,7 @@ export default function ProductPage() {
           </div>
         </section>
       </Modal>
+      <TabNavigator product={currentProduct} />
     </main>
   );
 }

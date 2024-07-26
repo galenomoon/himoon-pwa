@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Header from "@/components/Header";
 import NextHeader from "@/components/NextHeader";
 import ProductGrid from "@/components/ProductGrid";
+import TabNavigator from "@/components/TabNavigation";
 
 //hooks
 import { useProducts } from "@/hooks/useProducts";
@@ -46,6 +47,7 @@ export default function SearchPage() {
         className="bg-white min-h-[75dvh] pb-3 px-2"
         endReached={loadMore}
       />
+      <TabNavigator />
     </main>
   );
 }

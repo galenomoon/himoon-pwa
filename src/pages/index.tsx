@@ -14,6 +14,7 @@ import marcaTextos from "@/assets/banners/marca-textos.png";
 //admoon
 import Image from "next/image";
 import { useProducts } from "@/hooks/useProducts";
+import TabNavigator from "@/components/TabNavigation";
 
 export default function LandingPage() {
   const [search, setSearch] = useState<string>("");
@@ -62,6 +63,7 @@ export default function LandingPage() {
       {/* <FirstSection /> */}
       {/* <ProductsSection products={products} /> */}
       {/* <SocialMediaSection /> */}
+      <TabNavigator />
     </main>
   );
 }

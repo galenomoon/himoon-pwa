@@ -1,4 +1,5 @@
 import React from "react";
+import TabNavigator from "@/components/TabNavigation";
 
 export default function Notifications() {
   return (
@@ -6,6 +7,7 @@ export default function Notifications() {
       <h1 className="text-4xl text-center">
         Em breve você poderá ver suas notificações aqui!
       </h1>
+      <TabNavigator />
     </main>
   );
 }
