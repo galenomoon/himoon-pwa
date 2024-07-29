@@ -92,11 +92,11 @@ export default function ProductPage() {
       />
       <Header backTo="/buscar" />
       <section className="text-center items-center bg-background-purple text-typography-primary pb-12 flex flex-col min-h-[90dvh] relative">
-        <figure className="py-4 scrollbar-hide overflow-auto min-h-[300px] flex gap-2 snap-x snap-mandatory">
+        <figure className="py-4 scrollbar-hide overflow-auto min-h-[300px] w-full flex gap-2 snap-x snap-mandatory">
           <Skeleton
             length={4}
             conditional={!isLoading || !currentProduct?.images.length}
-            className="first:ml-4 last:mr-8 rounded-3xl h-[300px] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 !w-[80%] object-cover"
+            className="first:ml-4 last:mr-8 rounded-3xl !h-[300px] !w-[80%] border-2 border-light-gray overflow-hidden snap-always snap-center flex-shrink-0 object-cover"
           >
             {currentProduct?.images?.map((image) => (
               <img
@@ -108,14 +108,14 @@ export default function ProductPage() {
             ))}
           </Skeleton>
         </figure>
-        <article className="flex flex-col gap-1 items-center relative p-3 mb-16 bg-white rounded-3xl">
+        <article className="flex w-full flex-col gap-1 items-center relative p-3 mb-16 bg-white rounded-3xl">
           <button
             onClick={() => setIsOpenShareModal(true)}
             className="rounded-full absolute right-3 top-3 h-9 w-9 flex items-center justify-center bg-background-gray flex-shrink-0"
           >
             <GoShare size={22} />
           </button>
-          <Skeleton conditional={!isLoading} className="w-[128px] rounded-xl">
+          <Skeleton conditional={!isLoading} className="!w-[128px] !h-[32px] rounded-xl">
             <p className="text-3xl font-light">
               {(currentProduct?.price || 0).toLocaleString("pt-br", {
                 style: "currency",
@@ -125,13 +125,14 @@ export default function ProductPage() {
           </Skeleton>
           <Skeleton
             conditional={!isLoading}
-            className="w-[256px] h-[24px] rounded-lg"
+            className="!w-[256px] !h-[24px] rounded-lg"
           >
             <h1 className="text-2xl font-semibold">{currentProduct?.name}</h1>
           </Skeleton>
           <Skeleton
+            length={5}
             conditional={!isLoading}
-            className="w-[300px] h-[16px] rounded-md"
+            className="!w-[80%] !h-[16px] rounded-md"
           >
             <h1 className="text-sm font-light">
               {currentProduct?.description}

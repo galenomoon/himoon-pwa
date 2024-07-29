@@ -16,64 +16,6 @@ interface ProductGridProps {
   itemWrapperClassName?: string;
 }
 
-const List = forwardRef(
-  ({ style, children, ...props }: { style: any; children: any }, ref) => (
-    <div
-      {...props}
-      ref={ref as any}
-      className="grid grid-cols-2 scrollbar-hide"
-      style={{ ...style }}
-    >
-      {children}
-    </div>
-  )
-);
-
-const Footer = forwardRef(({ ...props }, ref) => (
-  <div ref={ref as any} {...props} className="flex justify-center items-center">
-    <PiSpinner size={24} className="animate-spin" />
-  </div>
-));
-
-const Item = forwardRef(({ children, ...props }: any, ref) => (
-  <div
-    ref={ref as any}
-    {...props}
-    className="bg-white"
-    style={{
-      width: "100%",
-      display: "flex",
-      flex: "none",
-      alignContent: "stretch",
-      boxSizing: "border-box",
-    }}
-  >
-    {children}
-  </div>
-));
-
-const ItemWrapper = ({ children, ...props }: any) => (
-  <div
-    className="w-full bg-white"
-    {...props}
-    style={{
-      padding: "0.25rem",
-    }}
-  >
-    {children}
-  </div>
-);
-
-List.displayName = "List";
-Footer.displayName = "Footer";
-Item.displayName = "Item";
-
-const gridComponents = {
-  List,
-  Footer,
-  Item,
-};
-
 export default function ProductGrid({
   hasMore,
   isLoading,
@@ -113,3 +55,50 @@ export default function ProductGrid({
     </section>
   );
 }
+
+const List = forwardRef(
+  ({ style, children, ...props }: { style: any; children: any }, ref) => (
+    <div
+      {...props}
+      ref={ref as any}
+      className="flex flex-wrap justify-center bg-white scrollbar-hide"
+      style={{ ...style }}
+    >
+      {children}
+    </div>
+  )
+);
+
+const Footer = forwardRef(({ ...props }, ref) => (
+  <div ref={ref as any} {...props} className="flex justify-center items-center">
+    <PiSpinner size={24} className="animate-spin" />
+  </div>
+));
+
+const Item = forwardRef(({ children, ...props }: any, ref) => (
+  <div ref={ref as any} {...props}>
+    {children}
+  </div>
+));
+
+const ItemWrapper = ({ children, ...props }: any) => (
+  <div
+    className="w-full"
+    {...props}
+    style={{
+      padding: "0.25rem",
+    }}
+  >
+    {children}
+  </div>
+);
+
+List.displayName = "List";
+Footer.displayName = "Footer";
+Item.displayName = "Item";
+
+const gridComponents = {
+  List,
+  Footer,
+  Item,
+};

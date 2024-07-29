@@ -72,7 +72,7 @@ export default function Cart() {
         <section className="flex gap-2 h-full w-full flex-col items-center overflow-auto">
           {cartItems.length > 0 ? (
             cartItems.map((cartItem, index) => (
-              <div key={index} className="w-full">
+              <div key={index} className="w-full h-fit">
                 <ProductCard
                   product={cartItem.product}
                   isCartItem
