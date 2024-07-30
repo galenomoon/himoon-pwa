@@ -27,7 +27,7 @@ export default function ProductGrid({
 }: ProductGridProps) {
   return (
     <section
-      className={`w-full h-full pb-[72px] ${className} ${
+      className={`w-full h-full pb-[128px] ${className} ${
         isLoading ? "animate-[pulse_600ms_ease-in-out_infinite]" : ""
       }`}
     >
@@ -61,7 +61,7 @@ const List = forwardRef(
     <div
       {...props}
       ref={ref as any}
-      className="flex flex-wrap justify-center bg-white scrollbar-hide"
+      className="grid grid-cols-2 bg-white scrollbar-hide"
       style={{ ...style }}
     >
       {children}
