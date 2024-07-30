@@ -67,7 +67,7 @@ export function ProductCard({
       key={product.id}
       href={`/${product.category?.slug}/${product.slug}`}
       className={`flex flex-shrink-0 gap-3 relative rounded-2xl ${
-        isCartItem ? "flex-row" : "max-w-[160px] flex-col min-h-[300px]"
+        isCartItem ? "flex-row" : "max-w-[180px] flex-col min-h-[300px]"
       }`}
     >
       <figure
