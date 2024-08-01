@@ -18,12 +18,7 @@ import TabNavigator from "@/components/TabNavigation";
 
 export default function LandingPage() {
   const [search, setSearch] = useState<string>("");
-  const { products, hasMore, isLoading, loadMore } = useProducts(
-    search,
-    "",
-    () => {},
-    10
-  );
+  const { products, hasMore, isLoading, loadMore } = useProducts(search, "", () => {},10);
   const banners = [sketchbooks, allProducts, marcaTextos, canetas];
 
   return (

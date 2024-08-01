@@ -43,7 +43,7 @@ export default function Header({
 
   return (
     <div className={`transition-transform sticky top-0 z-40 duration-500 ${
-      showHeader ? "transform translate-y-0" : "transform -translate-y-full"
+      showHeader ? "transform translate-y-0" : "transform -translate-y-[100dvh]"
     }`}>
       <div
         className="flex w-full gap-2 px-3 pt-3  pb-1 bg-background-purple"
