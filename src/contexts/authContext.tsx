@@ -71,12 +71,12 @@ export default function AuthContextProvider({
       setIsOpened(false);
       push("/perfil");
       setIsOpened(false);
-      toast.custom("Você entrou na sua conta", {
+      toast("Você entrou na sua conta", {
         icon: "🎉",
       });
     } catch (error) {
       console.error(error);
-      toast.custom("Ocorreu um erro ao entrar na sua conta", {
+      toast("Ocorreu um erro ao entrar na sua conta", {
         icon: "❌",
       });
     }
@@ -86,7 +86,7 @@ export default function AuthContextProvider({
     setCurrentUser(null as unknown as IUser);
     destroySession();
     push("/");
-    toast.custom("Você saiu da sua conta", {
+    toast("Você saiu da sua conta", {
       icon: "👋",
     });
   };

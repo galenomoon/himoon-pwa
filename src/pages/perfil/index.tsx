@@ -92,8 +92,8 @@ export default function Profile() {
           return (
             <Link
               key={title}
-              href={href}
-              className="flex w-full items-center h-fit gap-3"
+              href={"#"}
+              className="flex w-full items-center h-fit gap-3 opacity-40 cursor-not-allowed"
             >
               <section className="flex w-full gap-3">
                 <div className="w-10 h-10 rounded-full flex-shrink-0 bg-background-purple border-[1.2px] border-typography-primary/10 flex items-center justify-center">
