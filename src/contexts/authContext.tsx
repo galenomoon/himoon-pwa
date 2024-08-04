@@ -67,6 +67,14 @@ export default function AuthContextProvider({
 
     try {
       const response = await auth(user);
+
+      if (!response?.id) {
+        toast("Ocorreu um erro ao entrar na sua conta", {
+          icon: "❌",
+        });
+        return;
+      }
+
       setCurrentUser(response as IUser);
       setIsOpened(false);
       push("/perfil");
