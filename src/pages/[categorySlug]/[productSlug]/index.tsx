@@ -19,60 +19,61 @@ import { SiWhatsapp } from "react-icons/si";
 import { PiHeart, PiSpinner } from "react-icons/pi";
 
 //admoon
-import { getProduct, getProducts, IProduct } from "admoon";
+import { getProduct, getProducts, getProductSlugs, IProduct } from "admoon";
 
 //context
 import { CartContext } from "@/contexts/cartContext";
 
-export default function ProductPage() {
+export async function getStaticProps({
+  params,
+}: {
+  params: { productSlug: string; categorySlug: string };
+}) {
+  if (!params || !params?.productSlug) return { props: {} };
+  try {
+    const currentProduct = await getProduct(params.productSlug);
+    const { results: products } = await getProducts({
+      category_slug: params?.categorySlug as string,
+    });
+    return { props: { currentProduct, products } };
+  } catch (error) {
+    return { props: {} };
+  }
+}
+
+export async function getStaticPaths() {
+  const slugs = (await getProductSlugs()) as {
+    productSlug: string;
+    categorySlug: string;
+  }[];
+  const paths = slugs?.map(
+    ({
+      productSlug,
+      categorySlug,
+    }: {
+      productSlug: string;
+      categorySlug: string;
+    }) => ({
+      params: { productSlug, categorySlug },
+    })
+  );
+
+  return { paths, fallback: "blocking" };
+}
+
+export default function ProductPage({
+  products = [],
+  currentProduct,
+}: {
+  products: IProduct[];
+  currentProduct: IProduct;
+}) {
   const router = useRouter();
   const { addCartItem } = useContext(CartContext);
   const { productSlug, categorySlug } = router.query;
-  const [currentProduct, setCurrentProduct] = useState<IProduct>();
-  const [products, setProducts] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState<boolean>(false);
   const url = `https://himoonstore.com/${categorySlug}/${productSlug}`;
-
-  useEffect(() => {
-    getCurrentProduct(productSlug);
-    fetchProductsByCategory(categorySlug);
-  }, [productSlug, categorySlug]);
-
-  async function getCurrentProduct(
-    product_slug: string | string[] | undefined
-  ) {
-    if (!product_slug) return;
-
-    try {
-      setIsLoading(true);
-      const result = await getProduct(product_slug as string);
-
-      setCurrentProduct(result as unknown as IProduct);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchProductsByCategory(
-    category_slug: string | string[] | undefined
-  ) {
-    if (!category_slug) return;
-
-    try {
-      setIsLoading(true);
-      const response = await getProducts({
-        category_slug: category_slug as string,
-      });
-      setProducts(response.results);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   function copyURL(type: "whatsapp" | "link") {
     if (type === "whatsapp" && window !== undefined) {
@@ -92,6 +93,7 @@ export default function ProductPage() {
       <NextHeader
         statusColorType="default"
         title={currentProduct?.name}
+        image={currentProduct?.images?.[0]?.url}
         description={currentProduct?.description}
       />
       <Header backTo="/buscar" />
@@ -123,7 +125,9 @@ export default function ProductPage() {
               conditional={!isLoading}
               className="!w-[256px] !h-[24px] rounded-lg"
             >
-              <h1 className="desktop:text-xl text-2xl font-semibold">{currentProduct?.name}</h1>
+              <h1 className="desktop:text-xl text-2xl font-semibold">
+                {currentProduct?.name}
+              </h1>
             </Skeleton>
             <div className="flex items-center justify-between mx-3 my-4 gap-3 w-full mobile:hidden desktop:flex">
               <button
