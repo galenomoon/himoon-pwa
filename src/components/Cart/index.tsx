@@ -1,14 +1,22 @@
 import React, { useContext } from "react";
 
-import Button from "../Button";
+
+//styles
 import { motion } from "framer-motion";
 import { fade } from "@/animations/fade";
 import { slide } from "@/animations/slide";
 import { IoMdClose } from "react-icons/io";
+
+//components
+import Button from "../Button";
 import { ProductCard } from "../ProductCard";
+
+//context
 import { CartContext } from "@/contexts/cartContext";
+import { AuthContext } from "@/contexts/authContext";
 
 export default function Cart() {
+  const { currentUser } = useContext(AuthContext);
   const { cartItems, isCartOpened, closeCart, totalCartQuantity, totalPrice } =
     useContext(CartContext);
 
@@ -23,25 +31,38 @@ export default function Cart() {
 
       total += Number(cartItem.product.price) * cartItem.quantity;
 
-      return `
-      *${cartItem.product.name}*
-      Qtd: ${cartItem.quantity}
-      Preço: ${price}
-      ____________________
-      `;
+      // return `
+      // *${cartItem.product.name}*
+      // Qtd: ${cartItem.quantity}
+      // Preço: ${price}
+      // ____________________
+      // `;
+
+      return [
+        `*${cartItem.product.name}*`,
+        `Qtd: ${cartItem.quantity}`,
+        `Preço: ${price}`,
+        `____________________`,
+      ].join("\n");
+
     });
 
     const total_price = totalPrice.toLocaleString("pt-BR", {
       style: "currency",
       currency: "BRL",
     });
+    
 
-    const formattedMessage = `
-      *🛒💗 Seu Carrinho 🛒💗:*
-      
-      ${message.join("")}
-      *🎀 Total: R$ ${total_price} 🎀*
-        `;
+    const formattedMessage = [
+      "*🛒💗 Seu Carrinho 🛒💗:*",
+      currentUser?.firstName ? `*Nome:* ${currentUser.firstName} ${currentUser.lastName}` : "",
+      currentUser?.phone ? `*Celular:* ${currentUser.phone}` : "",
+      "\n",
+      ...message,
+      "\n",
+      `*🎀 Total: R$ ${total_price} 🎀*`,
+    ].join("\n");
+  
 
     const encodedMessage = encodeURIComponent(formattedMessage);
     const link = `https://api.whatsapp.com/send?phone=${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}&text=${encodedMessage}`;
