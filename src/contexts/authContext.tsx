@@ -68,7 +68,7 @@ export default function AuthContextProvider({
     try {
       const response = await auth(user);
 
-      if (!response?.id) {
+      if (!response?.firstName) {
         toast("Ocorreu um erro ao entrar na sua conta", {
           icon: "❌",
         });

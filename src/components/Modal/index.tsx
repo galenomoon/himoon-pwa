@@ -28,12 +28,12 @@ export default function Modal({
       animate={fade(isOpen)}
       initial={{ display: "none" }}
       onClick={onClose}
-      className="max-w-screen fixed left-0 top-0 z-[901] flex h-screen max-h-screen w-screen items-center justify-center overflow-hidden bg-black bg-opacity-20 backdrop-blur-md"
+      className="max-w-screen  fixed left-0 top-0 z-[901] flex h-screen max-h-screen w-screen items-center justify-center overflow-hidden bg-black bg-opacity-20 backdrop-blur-md"
     >
       <motion.nav
         animate={slide(isOpen)}
         onClick={(e) => e.stopPropagation()}
-        className={`relative flex flex-col items-center gap-8 overflow-y-auto bg-white p-6 shadow-lg transition-all duration-300 ease-out h-[100dvh] max-h-[100dvh] w-[100dvw] self-start rounded-none ${
+        className={`relative flex flex-col max-w-screen-desktop items-center gap-8 overflow-y-auto bg-white p-6 shadow-lg transition-all duration-300 ease-out h-[100dvh] max-h-[100dvh] desktop:w-[600px] w-[100dvw] self-start rounded-none ${
           className ? className : ""
         }`}
       >

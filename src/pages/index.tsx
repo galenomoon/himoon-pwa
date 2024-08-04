@@ -2,7 +2,9 @@ import { useState } from "react";
 
 //components
 import Header from "@/components/Header";
+import { Carousel } from "@/components/Carousel";
 import ProductGrid from "@/components/ProductGrid";
+import TabNavigator from "@/components/TabNavigation";
 import CategoriesList from "@/components/CategoriesList";
 
 //assets
@@ -11,10 +13,8 @@ import allProducts from "@/assets/banners/products.png";
 import sketchbooks from "@/assets/banners/sketchbooks.png";
 import marcaTextos from "@/assets/banners/marca-textos.png";
 
-//admoon
-import Image from "next/image";
+//hooks
 import { useProducts } from "@/hooks/useProducts";
-import TabNavigator from "@/components/TabNavigation";
 
 export default function LandingPage() {
   const [search, setSearch] = useState<string>("");
@@ -27,19 +27,10 @@ export default function LandingPage() {
   const banners = [sketchbooks, allProducts, marcaTextos, canetas];
 
   return (
-    <main className="flex flex-col h-fit w-screen relative text-typography-primary">
+    <main className="flex flex-col h-fit w-screen relative items-center text-typography-primary">
       <Header searchTerm={search} onChange={setSearch} />
-      <div className="bg-background-purple flex flex-col w-full h-fit">
-        <figure className="mb-4 mt-2 z-20 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
-          {banners?.map((banner, index) => (
-            <Image
-              key={index}
-              alt="product"
-              src={banner as any}
-              className="first:ml-4 last:mr-12 rounded-[42px] w-[90%] overflow-hidden snap-always snap-center flex-shrink-0 object-cover"
-            />
-          ))}
-        </figure>
+      <div className="bg-background-purple desktop:bg-white max-w-screen-desktop flex flex-col w-full h-fit">
+        <Carousel images={banners} />
         <section className="bg-white flex h-fit flex-col items-center relative">
           <section className="bg-white rounded-t-[34px] w-full h-[164px] absolute z-0 -top-[138px]" />
           <article className="flex flex-col gap-1 w-full pl-3 z-10">
@@ -63,3 +54,5 @@ export default function LandingPage() {
     </main>
   );
 }
+
+

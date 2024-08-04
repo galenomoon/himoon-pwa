@@ -31,7 +31,7 @@ export default function AuthModal() {
         onClick={(e) => e.stopPropagation()}
         className="relative flex flex-col items-center z-50  overflow-y-auto bg-white py-6 px-3 shadow-lg transition-all duration-300 ease-out h-[100dvh] max-h-[100dvh] w-[100dvw] self-start rounded-none"
       >
-        <header className="flex w-full items-center pb-3 justify-between">
+        <header className="flex w-full max-w-screen-desktop items-center pb-3 justify-between">
           <br />
           <button onClick={closeModal} className="rounded-lg bg-gray-200 p-0.5">
             <IoMdClose size={28} className="opacity-80" />

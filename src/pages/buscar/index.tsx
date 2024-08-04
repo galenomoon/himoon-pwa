@@ -24,7 +24,7 @@ export default function SearchPage() {
   );
 
   return (
-    <main className="flex flex-col h-fit relative w-full bg-white text-typography-primary">
+    <main className="flex flex-col items-center h-fit relative w-full bg-white text-typography-primary">
       <NextHeader
         statusColorType="default"
         title="Buscar produtos"
@@ -44,7 +44,7 @@ export default function SearchPage() {
         hasMore={hasMore}
         products={products}
         isLoading={isLoading}
-        className="bg-white min-h-[75dvh] pb-3 px-2"
+        className="bg-white min-h-[75dvh]  pb-3 px-2"
         endReached={loadMore}
       />
       <TabNavigator />

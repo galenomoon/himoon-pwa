@@ -33,7 +33,7 @@ export function LoginForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-4 h-full w-full flex-col items-center"
+      className="flex gap-4 h-full max-w-[400px] w-full flex-col items-center"
     >
       <Image src={completeLogo} alt="logo" className="w-[264px] mt-6" />
       <p className="text-4xl font-thin mb-2 mt-4">Bem-vindo de volta!</p>

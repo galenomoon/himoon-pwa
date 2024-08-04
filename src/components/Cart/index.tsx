@@ -61,61 +61,66 @@ export default function Cart() {
         onClick={(e) => e.stopPropagation()}
         className="relative flex flex-col items-center z-50  overflow-y-auto bg-white py-6 px-3 shadow-lg transition-all duration-300 ease-out h-[100dvh] max-h-[100dvh] w-[100dvw] self-start rounded-none"
       >
-        <header className="flex w-full items-center pb-3 justify-between">
-          <h1 className="font-medium text-2xl">
-            Carrinho ({totalCartQuantity})
-          </h1>
-          <button onClick={closeCart} className="rounded-lg bg-gray-200 p-0.5">
-            <IoMdClose size={28} className="opacity-80" />
-          </button>
-        </header>
-        <section className="flex gap-2 h-full w-full flex-col items-center overflow-auto">
-          {cartItems.length > 0 ? (
-            cartItems.map((cartItem, index) => (
-              <div key={index} className="w-full h-fit">
-                <ProductCard
-                  product={cartItem.product}
-                  isCartItem
-                  cartItem={cartItem}
-                />
-              </div>
-            ))
-          ) : (
-            <section className="flex h-full flex-col items-center justify-center text-4xl">
-              <h1>Seu carrinho está vazio</h1>
-              <p className="font-regular text-xl text-typography-black/60">
-                Adicione produtos para continuar
-              </p>
-              <Button
-                href="/buscar"
-                passHref
-                onClick={closeCart}
-                className="font-regular mt-6 flex w-[300px] flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-typography-primary px-6 py-2 text-white duration-200 hover:bg-opacity-90 text-xl"
-              >
-                Ver produtos
-              </Button>
-            </section>
-          )}
-        </section>
+        <section className="flex flex-col items-center max-w-screen-desktop w-full h-full">
+          <header className="flex w-full items-center pb-3 justify-between">
+            <h1 className="font-medium text-2xl">
+              Carrinho ({totalCartQuantity})
+            </h1>
+            <button
+              onClick={closeCart}
+              className="rounded-lg bg-gray-200 p-0.5"
+            >
+              <IoMdClose size={28} className="opacity-80" />
+            </button>
+          </header>
+          <section className="flex gap-2 h-full w-full flex-col items-center overflow-auto">
+            {cartItems.length > 0 ? (
+              cartItems.map((cartItem, index) => (
+                <div key={index} className="w-full h-fit">
+                  <ProductCard
+                    product={cartItem.product}
+                    isCartItem
+                    cartItem={cartItem}
+                  />
+                </div>
+              ))
+            ) : (
+              <section className="flex h-full flex-col items-center justify-center text-4xl">
+                <h1>Seu carrinho está vazio</h1>
+                <p className="font-regular text-xl text-typography-black/60">
+                  Adicione produtos para continuar
+                </p>
+                <Button
+                  href="/buscar"
+                  passHref
+                  onClick={closeCart}
+                  className="font-regular mt-6 flex w-[300px] flex-shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-typography-primary px-6 py-2 text-white duration-200 hover:bg-opacity-90 text-xl"
+                >
+                  Ver produtos
+                </Button>
+              </section>
+            )}
+          </section>
 
-        <footer className=" bottom-0 bg-white left-0 w-full flex flex-col border-t-2 border-background-gray p-3 gap-2">
-          <div className="flex justify-between">
-            <p className="text-2xl font-light">Total</p>
-            <p className="text-2xl font-bold">
-              {totalPrice.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}
-            </p>
-          </div>
-          <Button
-            onClick={sendCartToWhatsApp}
-            disabled={cartItems.length === 0}
-            className="w-full p-4 bg-primary uppercase font-semibold"
-          >
-            Finalizar compra
-          </Button>
-        </footer>
+          <footer className=" bottom-0 bg-white left-0 w-full flex flex-col border-t-2 border-background-gray p-3 gap-2">
+            <div className="flex justify-between">
+              <p className="text-2xl font-light">Total</p>
+              <p className="text-2xl font-bold">
+                {totalPrice.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+              </p>
+            </div>
+            <Button
+              onClick={sendCartToWhatsApp}
+              disabled={cartItems.length === 0}
+              className="w-full p-4 bg-primary uppercase font-semibold"
+            >
+              Finalizar compra
+            </Button>
+          </footer>
+        </section>
       </motion.nav>
     </motion.div>
   );
