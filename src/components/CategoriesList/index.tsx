@@ -82,6 +82,7 @@ export default function CategoriesList({
         return (
           <Element
             {...props}
+            key={index}
             className={`${
               isRow ? "first:ml-3 last:mr-4" : ""
             } snap-center flex flex-col gap-1 items-center justify-center h-fit text- p-0.5`}
