@@ -31,7 +31,7 @@ export default function Button({
   return (
     <Element
       {...props}
-      className={`rounded-full py-3 flex items-center justify-center text-center ${color} ${className}`}
+      className={`rounded-full py-3 flex items-center uppercase justify-center text-center ${color} ${className}`}
     >
       {children}
     </Element>

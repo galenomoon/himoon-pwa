@@ -18,14 +18,19 @@ import TabNavigator from "@/components/TabNavigation";
 
 export default function LandingPage() {
   const [search, setSearch] = useState<string>("");
-  const { products, hasMore, isLoading, loadMore } = useProducts(search, "", () => {},10);
+  const { products, hasMore, isLoading, loadMore } = useProducts(
+    search,
+    "",
+    () => {},
+    10
+  );
   const banners = [sketchbooks, allProducts, marcaTextos, canetas];
 
   return (
     <main className="flex flex-col h-fit w-screen relative text-typography-primary">
       <Header searchTerm={search} onChange={setSearch} />
       <div className="bg-background-purple flex flex-col w-full h-fit">
-        <figure className="my-4 z-20 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
+        <figure className="mb-4 mt-2 z-20 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory">
           {banners?.map((banner, index) => (
             <Image
               key={index}
@@ -36,13 +41,12 @@ export default function LandingPage() {
           ))}
         </figure>
         <section className="bg-white flex h-fit flex-col items-center relative">
-          <section className="bg-white rounded-t-[34px] w-full h-[42px] absolute z-10 -top-[40px]" />
-          <article className="flex flex-col gap-1 w-full pl-3">
+          <section className="bg-white rounded-t-[34px] w-full h-[164px] absolute z-0 -top-[138px]" />
+          <article className="flex flex-col gap-1 w-full pl-3 z-10">
             <h1 className="text-xl font-light">Comece por aqui:</h1>
             <CategoriesList useSearchMode isRow className="bg-white" />
           </article>
-
-          <article className="flex flex-col gap-1 w-full">
+          <article className="flex flex-col gap-1 w-full z-0">
             <h1 className="text-xl font-light px-3">Últimos Lançamentos:</h1>
             <ProductGrid
               useWindowScroll
@@ -55,9 +59,6 @@ export default function LandingPage() {
           </article>
         </section>
       </div>
-      {/* <FirstSection /> */}
-      {/* <ProductsSection products={products} /> */}
-      {/* <SocialMediaSection /> */}
       <TabNavigator />
     </main>
   );
