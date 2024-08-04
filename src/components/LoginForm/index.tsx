@@ -23,7 +23,7 @@ export function LoginForm({
     email: "",
     password: "",
   });
-  const { submit } = useContext(AuthContext);
+  const { submit, isLoading } = useContext(AuthContext);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -63,7 +63,7 @@ export function LoginForm({
           Esqueceu sua senha?
         </button>
       </div>
-      <Button type="submit" className="w-full mt-4">
+      <Button isLoading={isLoading} type="submit" className="w-full mt-4">
         Entrar
       </Button>
       <p>

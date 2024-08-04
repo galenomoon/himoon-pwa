@@ -24,6 +24,7 @@ interface AuthContextInterface {
   currentUser?: IUser | null;
   submit?: (authMode: "login" | "create", user: IUser) => void;
   logout?: () => void;
+  isLoading?: boolean;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -33,6 +34,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   currentUser: null,
   submit: async () => {},
   logout: async () => {},
+  isLoading: false,
 });
 
 export default function AuthContextProvider({
@@ -42,6 +44,7 @@ export default function AuthContextProvider({
 }) {
   const { push } = useRouter();
   const [isOpened, setIsOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -66,6 +69,7 @@ export default function AuthContextProvider({
     ) => Promise<IUser | undefined>;
 
     try {
+      setIsLoading(true);
       const response = await auth(user);
 
       if (!response?.firstName) {
@@ -87,6 +91,8 @@ export default function AuthContextProvider({
       toast("Ocorreu um erro ao entrar na sua conta", {
         icon: "❌",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,6 +112,7 @@ export default function AuthContextProvider({
         logout,
         isOpened,
         currentUser,
+        isLoading,
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
       }}

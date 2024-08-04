@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { PiSpinner } from "react-icons/pi";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface ButtonProps {
   href?: string;
   disabled?: boolean;
   passHref?: boolean;
+  isLoading?: boolean;
 }
 
 export default function Button({
@@ -20,10 +22,14 @@ export default function Button({
   invert,
   disabled,
   href,
-  passHref
+  passHref,
+  isLoading,
 }: ButtonProps) {
   const Element = href ? Link : ("button" as React.ElementType);
-  const props = href ? { href, passHref } : { onClick, type, disabled };
+  const isDisabled = isLoading || disabled;
+  const props = href
+    ? { href: isDisabled ? "#" : href, passHref }
+    : { onClick, type, disabled: isDisabled };
   const color = invert
     ? "bg-typography-secondary text-typography-primary"
     : "bg-background-black text-typography-yellow";
@@ -31,9 +37,11 @@ export default function Button({
   return (
     <Element
       {...props}
-      className={`rounded-full py-3 flex items-center uppercase justify-center text-center ${color} ${className}`}
+      className={`rounded-full py-3 flex items-center uppercase justify-center text-center ${color} ${
+        isDisabled ? "opacity-60" : ""
+      } ${className}`}
     >
-      {children}
+      {isLoading ? <PiSpinner size={24} className="animate-spin" /> : children}
     </Element>
   );
 }
