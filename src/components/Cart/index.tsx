@@ -31,13 +31,6 @@ export default function Cart() {
 
       total += Number(cartItem.product.price) * cartItem.quantity;
 
-      // return `
-      // *${cartItem.product.name}*
-      // Qtd: ${cartItem.quantity}
-      // Preço: ${price}
-      // ____________________
-      // `;
-
       return [
         `*${cartItem.product.name}*`,
         `Qtd: ${cartItem.quantity}`,
