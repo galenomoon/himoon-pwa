@@ -6,9 +6,11 @@ import Skeleton from "../Skeleton";
 export function Carousel({
   images,
   isLoading,
+  squareSize,
 }: {
   images: StaticImageData[] | string[];
   isLoading?: boolean;
+  squareSize?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -31,7 +33,7 @@ export function Carousel({
       </button>
       <figure
         ref={ref}
-        className="z-20 scrollbar-hide overflow-auto flex gap-2 snap-x snap-mandatory"
+        className="z-20 scrollbar-hide overflow-auto h-fit items-center flex gap-2 snap-x snap-mandatory"
       >
         <Skeleton
           length={4}
@@ -45,7 +47,9 @@ export function Carousel({
               src={banner as any}
               width={800}
               height={800}
-              className="desktop:first:pl-0 first:pl-3 last:mr-12 desktop:w-[100%] desktop:rounded-3xl rounded-[42px] w-[90%] overflow-hidden snap-always snap-center flex-shrink-0 object-cover"
+              className={`
+                ${squareSize ? "w-[400px] h-[400px]" : ""}
+                desktop:first:pl-0 first:pl-3 last:mr-12 desktop:w-[100%] desktop:rounded-3xl rounded-[42px] w-[90%] overflow-hidden snap-always snap-center flex-shrink-0 object-cover`}
             />
           ))}
         </Skeleton>

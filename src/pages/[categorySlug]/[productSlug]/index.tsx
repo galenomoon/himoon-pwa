@@ -100,6 +100,7 @@ export default function ProductPage({
       <section className="text-center max-w-screen-desktop items-center  text-typography-primary desktop:py-12 pb-12 min-h-[90dvh] relative">
         <nav className="flex desktop:flex-row flex-col gap-6">
           <Carousel
+          squareSize
             isLoading={isLoading}
             images={currentProduct?.images?.map((image) => image?.url) || []}
           />
