@@ -30,8 +30,10 @@ export default function LandingPage() {
     <main className="flex flex-col h-fit w-screen relative items-center text-typography-primary">
       <Header searchTerm={search} onChange={setSearch} />
       <div className="bg-background-purple desktop:bg-white max-w-screen-desktop flex flex-col w-full h-fit">
-        <Carousel images={banners} />
-        <section className="bg-white flex h-fit flex-col items-center relative">
+        <div className="desktop:hidden mobile:flex">
+          <Carousel images={banners} />
+        </div>
+        <section className="bg-white flex h-fit flex-col items-center relative mt-3">
           <section className="bg-white rounded-t-[34px] w-full h-[164px] absolute z-0 -top-[138px]" />
           <article className="flex flex-col gap-1 w-full pl-3 z-10">
             <h1 className="text-xl font-light">Comece por aqui:</h1>
@@ -54,5 +56,3 @@ export default function LandingPage() {
     </main>
   );
 }
-
-
