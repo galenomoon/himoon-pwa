@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 //components
@@ -42,23 +42,23 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  const slugs = (await getProductSlugs()) as {
-    productSlug: string;
-    categorySlug: string;
-  }[];
-  const paths = slugs?.map(
-    ({
-      productSlug,
-      categorySlug,
-    }: {
-      productSlug: string;
-      categorySlug: string;
-    }) => ({
-      params: { productSlug, categorySlug },
-    })
-  );
+  // const slugs = (await getProductSlugs()) as {
+  //   productSlug: string;
+  //   categorySlug: string;
+  // }[];
+  // const paths = slugs?.map(
+  //   ({
+  //     productSlug,
+  //     categorySlug,
+  //   }: {
+  //     productSlug: string;
+  //     categorySlug: string;
+  //   }) => ({
+  //     params: { productSlug, categorySlug },
+  //   })
+  // );
 
-  return { paths, fallback: "blocking" };
+  return { paths: [], fallback: "blocking" };
 }
 
 export default function ProductPage({
