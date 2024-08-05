@@ -16,9 +16,6 @@ import toast from "react-hot-toast";
 import { LuTrash2 } from "react-icons/lu";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-//hooks
-import { useBlurImage } from "@/hooks/useBlurImage";
-
 interface ProductCardProps {
   product: IProduct;
   isCartItem?: boolean;
@@ -30,9 +27,6 @@ export function ProductCard({
   isCartItem,
   cartItem,
 }: ProductCardProps) {
-  const bluredImages = useBlurImage({
-    images: product.images.map(({ url }) => url),
-  });
   const { addCartItem } = useContext(CartContext);
   const [isAddedToCart, setIsAddedToCart] = useState<boolean>(false);
 
@@ -83,14 +77,14 @@ export function ProductCard({
             : "h-48 w-full min-w-44 rounded-[32px]"
         }`}
       >
-        {bluredImages.map((image, index) => (
+        {product.images.map((image, index) => (
           <Image
             width={264}
             height={264}
             key={index}
-            src={image?.imgUrl}
-            placeholder="blur"
-            blurDataURL={image?.blurHash}
+            src={image.url}
+            // placeholder="blur"
+            // blurDataURL={image?.blurHash}
             alt={product.name}
             className="h-full w-full flex-shrink-0 object-cover snap-always snap-center"
           />

@@ -3,7 +3,7 @@ import { dynamicBlurDataUrl } from "@/utils/dynamicBlurDataURL";
 import { StaticImageData } from "next/image";
 
 export function useBlurImage({
-  images,
+  images = [],
 }: {
   images: StaticImageData[] | string[];
 }) {
@@ -17,15 +17,6 @@ export function useBlurImage({
     return (image as StaticImageData).src !== undefined;
   };
 
-  if (images.some(isStaticImage)) {
-    return images.map((image) => {
-      if (isStaticImage(image)) {
-        return { imgUrl: image.src, blurHash: image.blurDataURL };
-      }
-      return { imgUrl: image, blurHash: "" };
-    });
-  }
-
   useEffect(() => {
     const modifyData = async () => {
       const dataWithBlurHash = await getResources(images as string[]);
@@ -36,6 +27,12 @@ export function useBlurImage({
   }, [images]);
 
   const getResources = async (data: string[]) => {
+    if (data.some(isStaticImage)) {
+      return data.map((image: any) => {
+        return { imgUrl: image.src, blurHash: image.blurDataURL };
+      });
+    }
+
     const resources = await Promise.all(
       data.map(async (photoURL) => ({
         imgUrl: photoURL,

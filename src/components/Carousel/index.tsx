@@ -5,9 +5,6 @@ import Image, { StaticImageData } from "next/image";
 import Skeleton from "../Skeleton";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 
-//hooks
-import { useBlurImage } from "@/hooks/useBlurImage";
-
 export function Carousel({
   images,
   isLoading,
@@ -25,7 +22,6 @@ export function Carousel({
         height: 400,
       };
   const ref = useRef<HTMLDivElement>(null);
-  const bluredImages = useBlurImage({ images });
 
   const controlledScroll = () => {
     if (ref.current) {
@@ -69,13 +65,13 @@ export function Carousel({
             object-cover 
             desktop:first:pl-0 last:mr-12 desktop:w-[100%] rounded-3xl w-[90%] overflow-hidden snap-always snap-center flex-shrink-0`}
         >
-          {bluredImages?.map((banner, index) => (
+          {images?.map((image, index) => (
             <Image
               key={index}
               alt="product"
-              src={banner.imgUrl as any}
-              blurDataURL={(banner.blurHash as string) || ""}
-              placeholder="blur"
+              src={image as any}
+              // blurDataURL={(image.blurHash as string) || ""}
+              // placeholder="blur"
               {...imageSizeProp}
               className={`
                 ${
