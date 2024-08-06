@@ -26,6 +26,7 @@ interface AuthContextInterface {
   logout?: () => void;
   isLoading?: boolean;
   setCurrentUser?: (user: IUser) => void;
+  updateCurrentUser?: () => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -37,6 +38,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   logout: async () => {},
   isLoading: false,
   setCurrentUser: () => {},
+  updateCurrentUser: async () => {},
 });
 
 export default function AuthContextProvider({
@@ -116,6 +118,7 @@ export default function AuthContextProvider({
         currentUser,
         isLoading,
         setCurrentUser,
+        updateCurrentUser,
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
       }}

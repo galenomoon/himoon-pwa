@@ -24,12 +24,12 @@ export default function Profile() {
       href: "/perfil/dados-pessoais",
       description: "Ajuste informações suas informações pessoais, como nome e telefone",
     },
-    // {
-    //   title: "Endereços",
-    //   Icon: PiMapPin,
-    //   href: "/perfil/enderecos",
-    //   description: "Gerencie seus endereços de entrega",
-    // },
+    {
+      title: "Endereços",
+      Icon: PiMapPin,
+      href: "/perfil/enderecos",
+      description: "Gerencie seus endereços de entrega",
+    },
     // {
     //   title: "Cartões",
     //   Icon: PiCreditCard,
