@@ -118,7 +118,7 @@ export function RegisterForm({
       <Image src={completeLogo} alt="logo" className="w-[264px] mt-6" />
       <p className="text-4xl font-thin mb-2 mt-4">Crie sua conta</p>
       {steps[step as number].map((step, index) => (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full" key={index}>
           <label htmlFor={step.label} className="text-typography-primary/80">
             {step.label}
           </label>
