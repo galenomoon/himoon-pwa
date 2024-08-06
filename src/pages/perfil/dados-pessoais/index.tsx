@@ -111,7 +111,7 @@ export default function EditProfile() {
           </Button>
           <Button
             href="/perfil"
-            className="bg-white text-black border-black border-2 font-medium w-full"
+            className="bg-white !text-black border-black border-2 font-medium w-full"
           >
             Cancelar
           </Button>
