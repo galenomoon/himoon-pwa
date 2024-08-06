@@ -118,17 +118,22 @@ export function RegisterForm({
       <Image src={completeLogo} alt="logo" className="w-[264px] mt-6" />
       <p className="text-4xl font-thin mb-2 mt-4">Crie sua conta</p>
       {steps[step as number].map((step, index) => (
-        <Input
-          required
-          key={index}
-          type={step.type}
-          Icon={step.Icon}
-          placeholder={step.placeholder}
-          className="w-full mt-4"
-          value={step.value}
-          maxLength={step.maxLength}
-          onChange={step.onChange}
-        />
+        <div className="flex flex-col w-full">
+          <label htmlFor={step.label} className="text-typography-primary/80">
+            {step.label}
+          </label>
+          <Input
+            required
+            key={index}
+            type={step.type}
+            Icon={step.Icon}
+            placeholder={step.placeholder}
+            className="w-full mt-4"
+            value={step.value}
+            maxLength={step.maxLength}
+            onChange={step.onChange}
+          />
+        </div>
       ))}
       <Button type={"submit"} className="w-full mt-4">
         {step === 1 ? "Próximo" : "Cadastrar"}

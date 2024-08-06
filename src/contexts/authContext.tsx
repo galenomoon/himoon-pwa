@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 import { IUser } from "@/interfaces/user";
 
 //requests
-import { login } from "@/requests/login";
-import { createUser } from "@/requests/createUser";
+import { login } from "@/requests/user/login";
 import destroySession from "@/utils/destroySession";
-import { getCurrentUser } from "@/requests/getCurrentUser";
+import { createUser } from "@/requests/user/createUser";
+import { getCurrentUser } from "@/requests/user/getCurrentUser";
 
 //utils
 import { parseCookies } from "nookies";
@@ -25,6 +25,7 @@ interface AuthContextInterface {
   submit?: (authMode: "login" | "create", user: IUser) => void;
   logout?: () => void;
   isLoading?: boolean;
+  setCurrentUser?: (user: IUser) => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -35,6 +36,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   submit: async () => {},
   logout: async () => {},
   isLoading: false,
+  setCurrentUser: () => {},
 });
 
 export default function AuthContextProvider({
@@ -113,6 +115,7 @@ export default function AuthContextProvider({
         isOpened,
         currentUser,
         isLoading,
+        setCurrentUser,
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
       }}

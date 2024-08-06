@@ -18,7 +18,7 @@ export function Input({ Icon = React.Fragment, type, ...props }: InputProps) {
           type === "password" && isPasswordVisible ? "text" : type || "text"
         }
         {...props}
-        className="w-full h-full placeholder:font-thin outline-none"
+        className="w-full h-full placeholder:font-light outline-none"
       />
       {type === "password" && (
         <button

@@ -22,20 +22,20 @@ export default function Profile() {
       title: "Dados Pessoais",
       Icon: PiUserList,
       href: "/perfil/dados-pessoais",
-      description: "Informações de contato e de acesso a sua conta",
+      description: "Ajuste informações suas informações pessoais, como nome e telefone",
     },
-    {
-      title: "Endereços",
-      Icon: PiMapPin,
-      href: "/perfil/enderecos",
-      description: "Gerencie seus endereços de entrega",
-    },
-    {
-      title: "Cartões",
-      Icon: PiCreditCard,
-      href: "/perfil/cartoes",
-      description: "Gerencie os cartões cadastrados na sua conta",
-    },
+    // {
+    //   title: "Endereços",
+    //   Icon: PiMapPin,
+    //   href: "/perfil/enderecos",
+    //   description: "Gerencie seus endereços de entrega",
+    // },
+    // {
+    //   title: "Cartões",
+    //   Icon: PiCreditCard,
+    //   href: "/perfil/cartoes",
+    //   description: "Gerencie os cartões cadastrados na sua conta",
+    // },
     ...(isAdmin
       ? [
           {
@@ -93,8 +93,8 @@ export default function Profile() {
             return (
               <Link
                 key={title}
-                href={"#"}
-                className="flex w-full items-center h-fit gap-3 opacity-40 cursor-not-allowed"
+                href={href}
+                className="flex w-full items-center h-fit gap-3"
               >
                 <section className="flex w-full gap-3">
                   <div className="w-10 h-10 rounded-full flex-shrink-0 bg-background-purple border-[1.2px] border-typography-primary/10 flex items-center justify-center">
