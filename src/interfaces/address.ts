@@ -1,5 +1,5 @@
 export interface IAddress {
-  id: string;
+  id?: string;
   name: string;
   recipientName: string;
   street: string;
@@ -12,5 +12,5 @@ export interface IAddress {
   default: boolean;
   complement?: string;
   additionalInformation?: string;
-  userId: string;
+  userId?: string;
 }

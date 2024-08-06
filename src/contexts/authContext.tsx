@@ -26,7 +26,7 @@ interface AuthContextInterface {
   logout?: () => void;
   isLoading?: boolean;
   setCurrentUser?: (user: IUser) => void;
-  updateCurrentUser?: () => void;
+  updateCurrentUser?: (isRefresh?: boolean) => void;
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -55,8 +55,8 @@ export default function AuthContextProvider({
     updateCurrentUser();
   }, [currentUser]);
 
-  async function updateCurrentUser() {
-    if (currentUser) return;
+  async function updateCurrentUser(isRefresh = false) {
+    if (currentUser && !isRefresh) return;
     try {
       const { token } = parseCookies();
       const data = await getCurrentUser(token);
@@ -118,7 +118,8 @@ export default function AuthContextProvider({
         currentUser,
         isLoading,
         setCurrentUser,
-        updateCurrentUser,
+        updateCurrentUser: async (isRefresh = true) =>
+          await updateCurrentUser(isRefresh),
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
       }}
