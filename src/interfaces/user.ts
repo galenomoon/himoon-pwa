@@ -1,3 +1,5 @@
+import { IAddress } from "./address";
+
 export interface IUser {
   id?: string;
   firstName: string;
@@ -5,6 +7,7 @@ export interface IUser {
   isAdmin: boolean;
   phone: string;
   email: string;
+  addresses?: IAddress[];
   password: string;
   createdAt?: Date;
   updatedAt?: Date;

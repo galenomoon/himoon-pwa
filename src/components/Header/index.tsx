@@ -4,9 +4,11 @@ import React, { useContext } from "react";
 import Cart from "../Cart";
 
 //icons
-import { RxCaretLeft } from "react-icons/rx";
+import { PiMapPin } from "react-icons/pi";
+import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 
 //contexts
+import { AuthContext } from "@/contexts/authContext";
 import { CartContext } from "@/contexts/cartContext";
 
 //components
@@ -32,6 +34,16 @@ export default function Header({
 }) {
   const router = useRouter();
   const showHeader = useScrollHeader();
+  const { defaultAddress, openModal, currentUser } = useContext(AuthContext);
+  const copleteAddress = [
+    defaultAddress?.name,
+    defaultAddress?.street,
+    defaultAddress?.number,
+  ];
+  const addressLabel = copleteAddress.includes("")
+    ? "Adicione um endereço"
+    : copleteAddress.join(", ") || "Selecione um endereço";
+
   const { openCart = () => {}, totalCartQuantity } = useContext(CartContext);
 
   function onSearch() {
@@ -91,11 +103,26 @@ export default function Header({
             </data>
           </button>
         </div>
-        {showAddress && (
-          <p className="font-medium pb-2 z-10 bg-background-purple w-full text-center">
-            Seja bem vindo a Hi, Moon 🌙
-          </p>
-        )}
+        {showAddress &&
+          (!currentUser?.id ? (
+            <button
+              onClick={openModal}
+              className="font-light pb-2 z-10 bg-background-purple w-full flex justify-center items-center px-5 text-center"
+            >
+              <PiMapPin size={18} className="flex-shrink-0 mr-2" />
+              <p className="line-clamp-1">{addressLabel}</p>
+              <RxCaretRight size={28} className="flex-shrink-0" />
+            </button>
+          ) : (
+            <Link
+              href={"/perfil/enderecos"}
+              className="font-light pb-2 z-10 bg-background-purple w-full flex justify-center items-center px-5 text-center"
+            >
+              <PiMapPin size={18} className="flex-shrink-0 mr-2" />
+              <p className="line-clamp-1">{addressLabel}</p>
+              <RxCaretRight size={28} className="flex-shrink-0" />
+            </Link>
+          ))}
         {showCategories && (
           <CategoriesList
             selectUnique

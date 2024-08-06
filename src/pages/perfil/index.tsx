@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import TabNavigator from "@/components/TabNavigation";
 import {
-  PiCreditCard,
   PiEnvelope,
   PiMapPin,
   PiPhone,
@@ -15,6 +14,10 @@ import { AuthContext } from "@/contexts/authContext";
 
 export default function Profile() {
   const { currentUser, logout } = useContext(AuthContext);
+  const defaultAddress = currentUser?.addresses?.find(
+    (address) => address.default
+  ) ||
+    currentUser?.addresses?.[0] || { id: "", street: "", number: "", name: "" };
   const isAdmin = currentUser?.isAdmin;
 
   const options = [
@@ -22,20 +25,15 @@ export default function Profile() {
       title: "Dados Pessoais",
       Icon: PiUserList,
       href: "/perfil/dados-pessoais",
-      description: "Ajuste informações suas informações pessoais, como nome e telefone",
+      description:
+        "Ajuste informações suas informações pessoais, como nome e telefone",
     },
-    // {
-    //   title: "Endereços",
-    //   Icon: PiMapPin,
-    //   href: "/perfil/enderecos",
-    //   description: "Gerencie seus endereços de entrega",
-    // },
-    // {
-    //   title: "Cartões",
-    //   Icon: PiCreditCard,
-    //   href: "/perfil/cartoes",
-    //   description: "Gerencie os cartões cadastrados na sua conta",
-    // },
+    {
+      title: "Endereços",
+      Icon: PiMapPin,
+      href: "/perfil/enderecos",
+      description: "Gerencie seus endereços de entrega",
+    },
     ...(isAdmin
       ? [
           {
@@ -79,12 +77,18 @@ export default function Profile() {
               <PiPhone size={18} />
               <p>{currentUser?.phone}</p>
             </div>
-            {/* <div className="text-typography-primary/60 flex gap-1 items-center justify-center">
-            <PiMapPin size={18} />
-            <p className="underline">
-              Alterar endereço
-            </p>
-          </div> */}
+            <Link
+              href="/perfil/enderecos"
+              className="text-typography-primary/60 flex gap-1 items-center justify-center"
+            >
+              <PiMapPin size={18} />
+              <p className="underline">
+                {!defaultAddress?.id
+                  ? "Definir endereço"
+                  : defaultAddress?.name ||
+                    defaultAddress?.street + ", " + defaultAddress?.number}
+              </p>
+            </Link>
           </article>
         </section>
         <section className="flex flex-col items-center w-full px-4 gap-4 justify-center">

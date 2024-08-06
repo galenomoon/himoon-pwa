@@ -26,6 +26,8 @@ interface AuthContextInterface {
   logout?: () => void;
   isLoading?: boolean;
   setCurrentUser?: (user: IUser) => void;
+  updateCurrentUser?: (isRefresh?: boolean) => void;
+  defaultAddress?: { id: string; street: string; number: string; name: string };
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -37,6 +39,8 @@ export const AuthContext = createContext<AuthContextInterface>({
   logout: async () => {},
   isLoading: false,
   setCurrentUser: () => {},
+  updateCurrentUser: async () => {},
+  defaultAddress: { id: "", street: "", number: "", name: "" },
 });
 
 export default function AuthContextProvider({
@@ -53,8 +57,8 @@ export default function AuthContextProvider({
     updateCurrentUser();
   }, [currentUser]);
 
-  async function updateCurrentUser() {
-    if (currentUser) return;
+  async function updateCurrentUser(isRefresh = false) {
+    if (currentUser && !isRefresh) return;
     try {
       const { token } = parseCookies();
       const data = await getCurrentUser(token);
@@ -80,8 +84,7 @@ export default function AuthContextProvider({
         });
         return;
       }
-
-      setCurrentUser(response as IUser);
+      await updateCurrentUser(true)
       setIsOpened(false);
       push("/perfil");
       setIsOpened(false);
@@ -116,8 +119,11 @@ export default function AuthContextProvider({
         currentUser,
         isLoading,
         setCurrentUser,
+        updateCurrentUser: async (isRefresh = true) =>
+          await updateCurrentUser(isRefresh),
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
+        defaultAddress: currentUser?.addresses?.find(address => address.default) || currentUser?.addresses?.[0] || { id: "", street: "", number: "", name: "" } as any
       }}
     >
       {children}
