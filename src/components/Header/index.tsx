@@ -115,7 +115,7 @@ export default function Header({
             </button>
           ) : (
             <Link
-              href={"/perfil/enderecos"}
+              href={addressLabel === "Adicione um endereço" ? "/perfil/enderecos/criar" : "/perfil/enderecos"}
               className="font-light pb-2 z-10 bg-background-purple w-full flex justify-center items-center px-5 text-center"
             >
               <PiMapPin size={18} className="flex-shrink-0 mr-2" />
