@@ -27,6 +27,7 @@ interface AuthContextInterface {
   isLoading?: boolean;
   setCurrentUser?: (user: IUser) => void;
   updateCurrentUser?: (isRefresh?: boolean) => void;
+  defaultAddress?: { id: string; street: string; number: string; name: string };
 }
 
 export const AuthContext = createContext<AuthContextInterface>({
@@ -39,6 +40,7 @@ export const AuthContext = createContext<AuthContextInterface>({
   isLoading: false,
   setCurrentUser: () => {},
   updateCurrentUser: async () => {},
+  defaultAddress: { id: "", street: "", number: "", name: "" },
 });
 
 export default function AuthContextProvider({
@@ -82,8 +84,7 @@ export default function AuthContextProvider({
         });
         return;
       }
-
-      setCurrentUser(response as IUser);
+      await updateCurrentUser(true)
       setIsOpened(false);
       push("/perfil");
       setIsOpened(false);
@@ -122,6 +123,7 @@ export default function AuthContextProvider({
           await updateCurrentUser(isRefresh),
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
+        defaultAddress: currentUser?.addresses?.find(address => address.default) || currentUser?.addresses?.[0] || { id: "", street: "", number: "", name: "" } as any
       }}
     >
       {children}
