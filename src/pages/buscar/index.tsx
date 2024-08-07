@@ -42,7 +42,7 @@ export default function SearchPage() {
         showCategories
         backTo="/"
       />
-      <div className="grid grid-cols-2 px-3 gap-3 mt-3">
+      <div className="grid grid-cols-2 desktop:grid-cols-4 px-3 gap-3 mt-3">
         <ProductSkeleton length={30} conditional={!!products.length || false} />
       </div>
       <ProductGrid

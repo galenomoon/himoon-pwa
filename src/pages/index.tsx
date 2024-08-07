@@ -42,7 +42,7 @@ export default function LandingPage() {
           </article>
           <article className="flex flex-col gap-1 w-full z-0">
             <h1 className="text-xl font-light px-3">Últimos Lançamentos:</h1>
-            <div className="grid grid-cols-2 px-3 gap-3 mt-3">
+            <div className="grid grid-cols-2 desktop:grid-cols-4 px-3 gap-3 mt-3">
               <ProductSkeleton
                 length={30}
                 conditional={!!products.length || false}
