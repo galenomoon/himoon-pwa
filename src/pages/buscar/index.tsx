@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 //components
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import NextHeader from "@/components/NextHeader";
 import ProductGrid from "@/components/ProductGrid";
 import TabNavigator from "@/components/TabNavigation";
@@ -53,6 +54,7 @@ export default function SearchPage() {
         className="bg-white min-h-[75dvh]  pb-3 px-2"
         endReached={loadMore}
       />
+      <Footer />
       <TabNavigator />
     </main>
   );

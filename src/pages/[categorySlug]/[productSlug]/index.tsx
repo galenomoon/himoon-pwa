@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import Modal from "@/components/Modal";
 import Header from "@/components/Header";
 import Button from "@/components/Button";
+import Footer from "@/components/Footer";
 import Skeleton from "@/components/Skeleton";
 import NextHeader from "@/components/NextHeader";
 import { Carousel } from "@/components/Carousel";
 import ProductGrid from "@/components/ProductGrid";
 import TabNavigator from "@/components/TabNavigation";
-// import CategoriesList from "@/components/CategoriesList";
 
 //styles
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ import { SiWhatsapp } from "react-icons/si";
 import { PiHeart, PiSpinner } from "react-icons/pi";
 
 //admoon
-import { getProduct, getProducts, getProductSlugs, IProduct } from "admoon";
+import { getProduct, getProducts, IProduct } from "admoon";
 
 //context
 import { CartContext } from "@/contexts/cartContext";
@@ -42,22 +42,6 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  // const slugs = (await getProductSlugs()) as {
-  //   productSlug: string;
-  //   categorySlug: string;
-  // }[];
-  // const paths = slugs?.map(
-  //   ({
-  //     productSlug,
-  //     categorySlug,
-  //   }: {
-  //     productSlug: string;
-  //     categorySlug: string;
-  //   }) => ({
-  //     params: { productSlug, categorySlug },
-  //   })
-  // );
-
   return { paths: [], fallback: "blocking" };
 }
 
@@ -229,6 +213,7 @@ export default function ProductPage({
           </div>
         </section>
       </Modal>
+      <Footer />
       <TabNavigator product={currentProduct} />
     </main>
   );

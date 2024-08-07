@@ -2,6 +2,7 @@ import { useState } from "react";
 
 //components
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { Carousel } from "@/components/Carousel";
 import ProductGrid from "@/components/ProductGrid";
 import TabNavigator from "@/components/TabNavigation";
@@ -59,6 +60,7 @@ export default function LandingPage() {
           </article>
         </section>
       </div>
+      <Footer />
       <TabNavigator />
     </main>
   );
