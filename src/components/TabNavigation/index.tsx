@@ -11,6 +11,7 @@ import AuthModal from "../AuthModal";
 
 //styles
 import toast from "react-hot-toast";
+import { ImSpinner8 } from "react-icons/im";
 import { GoHome, GoHomeFill } from "react-icons/go";
 import { BsBox2Heart, BsBox2HeartFill } from "react-icons/bs";
 import {
@@ -27,6 +28,9 @@ import {
 import { CartContext } from "@/contexts/cartContext";
 import { AuthContext } from "@/contexts/authContext";
 
+//requests
+import { createFavorite } from "@/requests/favorite/createFavorite";
+
 export default function TabNavigator({
   product,
   isLoading,
@@ -35,7 +39,9 @@ export default function TabNavigator({
   isLoading?: boolean;
 }) {
   const pathname = usePathname();
-  const { openModal, currentUser } = useContext(AuthContext);
+  const { openModal = () => {}, currentUser } = useContext(AuthContext);
+  const [isFavorite, setIsFavorite] = React.useState(currentUser?.favorites?.includes(product?.id));
+  const [isFavoriteLoading, setIsFavoriteLoading] = React.useState(false);
   const { addCartItem } = useContext(CartContext);
   const isAuthenticated = !!currentUser?.id;
 
@@ -103,23 +109,39 @@ export default function TabNavigator({
     },
   ];
 
+  const handleFavorite = async () => {
+    if (!isAuthenticated) {
+      openModal();
+      return;
+    }
+
+    try {
+      if (!product?.id) return;
+      await createFavorite(String(product?.id) as string);
+      toast("Produto favoritado com sucesso!", { icon: "❤️" });
+      setIsFavorite(true);
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao favoritar produto");
+    } finally {
+      setIsFavoriteLoading(false);
+    }
+  };
+
   return (
     <>
       <AuthModal />
-      <section className={`z-30 flex items-center shadow-2xl tabnavigation-shadow justify-around h-24 w-full fixed bottom-0 bg-white ${product ? "desktop:hidden": ""}`}>
+      <section
+        className={`z-30 flex items-center shadow-2xl tabnavigation-shadow justify-around h-24 w-full fixed bottom-0 bg-white ${
+          product ? "desktop:hidden" : ""
+        }`}
+      >
         <nav className="flex items-center justify-around h-full w-full max-w-screen-desktop">
           {/*   */}
           {product ? (
             <div className="flex items-center justify-between mx-3 mb-4 gap-3 w-full">
-              <button
-                onClick={() => {
-                  toast("Em breve você poderá favoritar produtos!", {
-                    icon: "❤️",
-                  });
-                }}
-                className="flex-shrink-0"
-              >
-                <PiHeart size={34} />
+              <button onClick={handleFavorite} className="flex-shrink-0">
+                {isFavoriteLoading ? <ImSpinner8 size={34} className="animate-spin" /> : isFavorite ? <PiHeartFill size={34} /> : <PiHeart size={34} />}
               </button>
               <Button
                 onClick={() => {

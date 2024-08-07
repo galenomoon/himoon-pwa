@@ -8,6 +8,7 @@ export interface IUser {
   phone: string;
   email: string;
   addresses?: IAddress[];
+  favorites?: string[];
   password: string;
   createdAt?: Date;
   updatedAt?: Date;
