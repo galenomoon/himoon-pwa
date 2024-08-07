@@ -29,7 +29,6 @@ import { formatCEP } from "@/utils/formatCEP";
 import { IAddress } from "@/interfaces/address";
 import { getAddresses } from "@/requests/address/getAddresses";
 
-
 export default function AddressEditPage() {
   const { push, query } = useRouter();
   const { addressId } = query;
@@ -60,6 +59,12 @@ export default function AddressEditPage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if(!address.name) {
+      toast.error("Selecione o como deseja salvar o endereço");
+      return;
+    }
+
     setIsLoaded(false);
     try {
       await updateAddress(address);
@@ -77,14 +82,14 @@ export default function AddressEditPage() {
   const fetchData = async () => {
     if (!addressId) return;
     try {
-      const [currentAddress] = await getAddresses(addressId as string) || [];
+      const [currentAddress] = (await getAddresses(addressId as string)) || [];
       setAddress(currentAddress);
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoaded(true);
     }
-  }
+  };
 
   const handleCep = async (cep: string) => {
     if (cep.length < 9 || isLoaded) return;
@@ -285,7 +290,7 @@ export default function AddressEditPage() {
                   onClick={(e) =>
                     setAddress({
                       ...address,
-                      name: address.name === "Casa" ? "" : "Casa",
+                      name: "Casa",
                     })
                   }
                   className={`flex gap-2 items-center w-full h-fit p-3 border-2 border-typography-primary/10 rounded-2xl
@@ -304,7 +309,7 @@ export default function AddressEditPage() {
                   onClick={(e) =>
                     setAddress({
                       ...address,
-                      name: address.name === "Trabalho" ? "" : "Trabalho",
+                      name: "Trabalho",
                     })
                   }
                   className={`flex gap-2 items-center w-full h-fit p-3 border-2 border-typography-primary/10 rounded-2xl
@@ -336,7 +341,7 @@ export default function AddressEditPage() {
               Salvar
             </Button>
             <Button
-              href="/perfil/endereco"
+              href="/perfil/enderecos"
               className="bg-white !text-black border-black border-2 font-medium w-full"
             >
               Cancelar

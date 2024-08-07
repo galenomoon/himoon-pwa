@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-
+import { useRouter } from "next/router";
 
 //styles
+import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { fade } from "@/animations/fade";
 import { slide } from "@/animations/slide";
@@ -15,53 +16,43 @@ import { ProductCard } from "../ProductCard";
 import { CartContext } from "@/contexts/cartContext";
 import { AuthContext } from "@/contexts/authContext";
 
+//interfaces
+import { IUser } from "@/interfaces/user";
+import { IAddress } from "@/interfaces/address";
+
+//utils
+import { sendCartToWhatsApp } from "@/utils/sendCartToWhatsApp";
+
 export default function Cart() {
-  const { currentUser } = useContext(AuthContext);
+  const { push } = useRouter();
+  const { currentUser, defaultAddress , openModal = () => {} } = useContext(AuthContext);
   const { cartItems, isCartOpened, closeCart, totalCartQuantity, totalPrice } =
     useContext(CartContext);
 
-  function sendCartToWhatsApp() {
-    let total = 0;
-
-    const message = cartItems.map((cartItem) => {
-      const price = cartItem.product.price.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
+  const handleSubmit = () => {
+    if (!currentUser?.id) {
+      toast("Você precisa estar logado para finalizar a compra", {
+        icon: "🔒",
       });
+      openModal();
+      return;
+    }
 
-      total += Number(cartItem.product.price) * cartItem.quantity;
+    if (!defaultAddress?.id) {
+      toast("Você precisa ter um endereço padrão para finalizar a compra", {
+        icon: "📍",
+      });
+      push("/perfil/enderecos/criar");
+      return
+    }
 
-      return [
-        `*${cartItem.product.name}*`,
-        `Qtd: ${cartItem.quantity}`,
-        `Preço: ${price}`,
-        `____________________`,
-      ].join("\n");
-
+    sendCartToWhatsApp({
+      cartItems,
+      totalPrice,
+      defaultAddress: defaultAddress as IAddress,
+      currentUser: currentUser as IUser,
     });
-
-    const total_price = totalPrice.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    });
-    
-
-    const formattedMessage = [
-      "*🛒💗 Seu Carrinho 🛒💗:*",
-      currentUser?.firstName ? `*Nome:* ${currentUser.firstName} ${currentUser.lastName}` : "",
-      currentUser?.phone ? `*Celular:* ${currentUser.phone}` : "",
-      "\n",
-      ...message,
-      "\n",
-      `*🎀 Total: R$ ${total_price} 🎀*`,
-    ].join("\n");
-  
-
-    const encodedMessage = encodeURIComponent(formattedMessage);
-    const link = `https://api.whatsapp.com/send?phone=${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}&text=${encodedMessage}`;
-
-    window.open(link, "_blank");
-  }
+  };
 
   return (
     <motion.div
@@ -127,7 +118,7 @@ export default function Cart() {
               </p>
             </div>
             <Button
-              onClick={sendCartToWhatsApp}
+              onClick={handleSubmit}
               disabled={cartItems.length === 0}
               className="w-full p-4 bg-primary uppercase font-semibold"
             >

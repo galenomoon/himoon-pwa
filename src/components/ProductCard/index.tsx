@@ -64,8 +64,8 @@ export function ProductCard({
 
   return (
     <Link
-      key={product.id}
-      href={`/${product.category?.slug}/${product.slug}`}
+      key={product?.id}
+      href={`/${product?.category?.slug}/${product?.slug}`}
       className={`flex flex-shrink-0 gap-3 relative rounded-2xl ${
         isCartItem ? "flex-row" : "flex-col min-h-[300px]"
       }`}
@@ -77,7 +77,7 @@ export function ProductCard({
             : "h-48 w-full min-w-44 rounded-[32px]"
         }`}
       >
-        {product.images.map((image, index) => (
+        {product?.images?.map((image, index) => (
           <Image
             width={264}
             height={264}
@@ -85,7 +85,7 @@ export function ProductCard({
             src={image.url}
             // placeholder="blur"
             // blurDataURL={image?.blurHash}
-            alt={product.name}
+            alt={product?.name}
             className="h-full w-full flex-shrink-0 object-cover snap-always snap-center"
           />
         ))}
@@ -93,38 +93,30 @@ export function ProductCard({
       <div className="flex h-full w-full flex-col items-start justify-between text-start">
         <article className="flex w-full h-full justify-between flex-col">
           <h1
-            title={product.name}
+            title={product?.name}
             className="text-sm font-medium w-full leading-5 line-clamp-2"
           >
-            {product.name}
+            {product?.name}
           </h1>
           <span className="flex items-center gap-2">
             {isCartItem ? (
               <></>
             ) : (
               <h1 className="font-light whitespace-nowrap text-2xl">
-                {product.price.toLocaleString("pt-BR", {
+                {(product?.price || 0).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </h1>
             )}
           </span>
-          {/* 
-            <p
-              title={product.description}
-              className="font-regular line-clamp-1 w-[85%] text-xs opacity-60"
-            >
-              {product.description}
-            </p> 
-          */}
           <div className="flex gap-2 absolute bottom-3 right-0">
             {isCartItem ? <></> : <AddCartButton />}
           </div>
           {isCartItem ? (
             <div className="flex gap-2 w-full items-center justify-between">
               <h1 className="font-bold whitespace-nowrap text-xl">
-                {product.price.toLocaleString("pt-BR", {
+                {(product?.price || 0).toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
@@ -153,7 +145,7 @@ export function ProductCartCounter({
       <button
         onClick={() =>
           cartItem?.quantity === 1
-            ? removeCartItem(product.id)
+            ? removeCartItem(product?.id)
             : decrementCartItem(product)
         }
         className="flex items-center rounded-l-lg justify-center px-2 py-1 w-full h-full bg-background-gray"

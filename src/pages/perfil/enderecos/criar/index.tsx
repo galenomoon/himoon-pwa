@@ -43,7 +43,7 @@ export default function AddressCreatePage() {
     number: "",
     contact: currentUser?.phone || "",
     additionalInformation: "",
-    default: false,
+    default: currentUser?.addresses?.length === 0,
   });
 
   useEffect(() => {
@@ -52,6 +52,12 @@ export default function AddressCreatePage() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if(!address.name) {
+      toast.error("Selecione o como deseja salvar o endereço");
+      return;
+    }
+
     setIsLoaded(false);
     try {
       await createAddress(address);
@@ -265,7 +271,7 @@ export default function AddressCreatePage() {
                   onClick={(e) =>
                     setAddress({
                       ...address,
-                      name: address.name === "Casa" ? "" : "Casa",
+                      name: "Casa",
                     })
                   }
                   className={`flex gap-2 items-center w-full h-fit p-3 border-2 border-typography-primary/10 rounded-2xl
@@ -284,7 +290,7 @@ export default function AddressCreatePage() {
                   onClick={(e) =>
                     setAddress({
                       ...address,
-                      name: address.name === "Trabalho" ? "" : "Trabalho",
+                      name: "Trabalho",
                     })
                   }
                   className={`flex gap-2 items-center w-full h-fit p-3 border-2 border-typography-primary/10 rounded-2xl
@@ -316,7 +322,7 @@ export default function AddressCreatePage() {
               Salvar
             </Button>
             <Button
-              href="/perfil/endereco"
+              href="/perfil/enderecos"
               className="bg-white !text-black border-black border-2 font-medium w-full"
             >
               Cancelar

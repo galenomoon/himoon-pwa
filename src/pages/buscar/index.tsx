@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import NextHeader from "@/components/NextHeader";
 import ProductGrid from "@/components/ProductGrid";
 import TabNavigator from "@/components/TabNavigation";
+import { ProductSkeleton } from "@/components/Skeleton";
 
 //hooks
 import { useProducts } from "@/hooks/useProducts";
@@ -15,7 +16,9 @@ export default function SearchPage() {
   const { query } = router;
   const [search, setSearch] = useState<string>(query?.search as string);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [categorySlug, setCategorySlug] = useState<string | undefined>(query?.category as string);
+  const [categorySlug, setCategorySlug] = useState<string | undefined>(
+    query?.category as string
+  );
   const { products, hasMore, isLoading, loadMore } = useProducts(
     search,
     categorySlug,
@@ -39,6 +42,9 @@ export default function SearchPage() {
         showCategories
         backTo="/"
       />
+      <div className="grid grid-cols-2 px-3 gap-3 mt-3">
+        <ProductSkeleton length={30} conditional={!!products.length || false} />
+      </div>
       <ProductGrid
         useWindowScroll
         hasMore={hasMore}

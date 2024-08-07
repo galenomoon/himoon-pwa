@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getCategories, ICategory } from "admoon";
 import { categoriesEmojis } from "@/constants/categoriesEmojis";
+import Skeleton from "../Skeleton";
 
 export default function CategoriesList({
   isRow = false,
@@ -70,48 +71,67 @@ export default function CategoriesList({
           : "flex-wrap items-baseline justify-center text-center !h-fit"
       } ${isCenter ? "justify-center" : "justify-start"} ${className}`}
     >
-      {categories.map((category, index) => {
-        const isSelected = selectedCategoryIds.includes(category.id);
-        const Element = useSearchMode ? "a" : "button";
-        const props = useSearchMode
-          ? { href: `/buscar?category=${category.slug}`, key: index }
-          : {
-              onClick: () => (isCenter ? {} : handleSelectCategory(category)),
-              key: index,
-            };
-        return (
-          <Element
-            {...props}
-            key={index}
-            className={`${
-              isRow ? "first:ml-3 last:mr-4" : ""
-            } snap-center flex flex-col gap-1 items-center justify-center h-fit text- p-0.5`}
-          >
+      {categories.length
+        ? categories.map((category, index) => {
+            const isSelected = selectedCategoryIds.includes(category.id);
+            const Element = useSearchMode ? "a" : "button";
+            const props = useSearchMode
+              ? { href: `/buscar?category=${category.slug}`, key: index }
+              : {
+                  onClick: () =>
+                    isCenter ? {} : handleSelectCategory(category),
+                  key: index,
+                };
+            return (
+              <Element
+                {...props}
+                key={index}
+                className={`${
+                  isRow ? "first:ml-3 last:mr-4" : ""
+                } snap-center flex flex-col gap-1 items-center justify-center h-fit p-0.5`}
+              >
+                <div
+                  className={
+                    "text-3xl border-2 w-14 h-14 flex items-center justify-center rounded-full bg-white " +
+                    (isSelected
+                      ? "border-typography-purpleDark/60 bg-typography-yellow"
+                      : "")
+                  }
+                >
+                  {categoriesEmojis[
+                    category.slug as keyof typeof categoriesEmojis
+                  ] || "📦"}
+                </div>
+                <span
+                  className={
+                    "text-[10px] opacity-60 leading-[10px] w-12 text-center flex flex-col items-center justify-center " +
+                    (isSelected
+                      ? "text-typography-purpleDark font-semibold"
+                      : "font-normal")
+                  }
+                >
+                  {category.name}
+                </span>
+              </Element>
+            );
+          })
+        : Array.from({ length: 12 }).map((_, index) => (
             <div
-              className={
-                "text-3xl border-2 w-14 h-14 flex items-center justify-center rounded-full bg-white " +
-                (isSelected
-                  ? "border-typography-purpleDark/60 bg-typography-yellow"
-                  : "")
-              }
+              key={index}
+              className="snap-center flex flex-col gap-1 items-center justify-center h-fit p-0.5 first:ml-3"
             >
-              {categoriesEmojis[
-                category.slug as keyof typeof categoriesEmojis
-              ] || "📦"}
+              <Skeleton
+                conditional={false}
+                key={index}
+                className="!w-14 !h-14 flex-shrink-0 !rounded-full"
+              />
+              <Skeleton
+                conditional={false}
+                key={index}
+                className="!h-[10px] opacity-60 leading-[10px] !w-12"
+              />
             </div>
-            <span
-              className={
-                "text-[10px] opacity-60 leading-[10px] w-12 text-center flex flex-col items-center justify-center " +
-                (isSelected
-                  ? "text-typography-purpleDark font-semibold"
-                  : "font-normal")
-              }
-            >
-              {category.name}
-            </span>
-          </Element>
-        );
-      })}
+          ))}
     </section>
   );
 }

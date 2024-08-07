@@ -1,8 +1,8 @@
 interface SkeletonProps {
-  conditional: boolean
-  children?: React.ReactNode
-  length?: number
-  className?: string
+  conditional: boolean;
+  children?: React.ReactNode;
+  length?: number;
+  className?: string;
 }
 
 export default function Skeleton({
@@ -18,47 +18,38 @@ export default function Skeleton({
         .map((_, index) => (
           <div
             key={index}
-            className={`h-fit w-fit animate-[pulse_1230ms_ease-in-out_infinite] rounded-[42px] bg-gray-300 ${className}`}
+            className={`h-fit w-fit animate-[pulse_1230ms_ease-in-out_infinite] rounded-[18px] bg-gray-300 ${className}`}
           >
             <div className="invisible"> {children} </div>
           </div>
-        ))
+        ));
 }
 
-export function ProductSkeleton({ isGrid = false, length = 1 }) {
+export function ProductSkeleton({ length = 1, conditional = false }) {
+  if (conditional) return null;
   return Array(length)
     .fill(0)
     .map((_, index) => (
-      <div
+      <section
         key={index}
-        className={`relative flex  ${
-          isGrid
-            ? "flex-col sm:!h-[260px] sm:!w-full md:!h-[370px] md:!w-[235px]"
-            : "!h-fit !w-full gap-6"
-        } bg-gray-100 p-2`}
+        className="flex w-[180px] flex-shrink-0 gap-3 relative rounded-2xl flex-col h-[300px]"
       >
         <Skeleton
-          className={`${
-            isGrid ? "!h-[220px] !w-full !max-w-[220px]" : "!h-[124px] !w-[124px]"
-          }`}
+          className="!h-48 flex-shrink-0 w-full min-w-44 rounded-[18px]"
           conditional={false}
         />
-        <footer
-          className={`flex gap-2 py-2 ${
-            isGrid ? "md:w-full" : "sm:w-[40%] md:w-[80%]"
-          } flex-col`}
-        >
-          <Skeleton className="!h-4 !w-[50%]" conditional={false} />
-          <Skeleton className="!h-4 !w-[30%]" conditional={false} />
-        </footer>
-        <section
-          className={`absolute right-3 ${
-            isGrid ? "bottom-3" : "top-3"
-          } z-10 flex items-center justify-center gap-2`}
-        >
-          <Skeleton className="!h-[32px] !w-[32px]" conditional={false} />
-          <Skeleton className="!h-[32px] !w-[32px]" conditional={false} />
-        </section>
-      </div>
-    ))
+        <div className="flex h-full w-full flex-col items-start justify-between text-start">
+          <article className="flex w-full h-full justify-between flex-col">
+            <div className="flex flex-col gap-2">
+              <Skeleton conditional={false} className="!w-[100px] !h-[18px]" />
+              <Skeleton conditional={false} className="!w-[86px] !h-[28px]" />
+            </div>
+            <Skeleton
+              conditional={false}
+              className="w-[38px] h-[30px] absolute bottom-3 right-0"
+            />
+          </article>
+        </div>
+      </section>
+    ));
 }
