@@ -7,6 +7,7 @@ import {
   PiPencilSimple,
   PiPushPin,
   PiPushPinSlash,
+  PiSpinner,
   PiTrash,
 } from "react-icons/pi";
 import toast from "react-hot-toast";
@@ -22,18 +23,19 @@ import { AuthContext } from "@/contexts/authContext";
 
 //requests
 import { deleteAddress } from "@/requests/address/deleteAddress";
+import { updateAddress } from "@/requests/address/updateAddress";
 
 //interfaces
 import { IAddress } from "@/interfaces/address";
-import { updateAddress } from "@/requests/address/updateAddress";
 
 export default function AddressesPage() {
   const { currentUser, updateCurrentUser = () => {} } = useContext(AuthContext);
   const [popoverOpened, setPopoverOpened] = useState("");
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoadedDefault, setIsLoadedDefault] = useState(true);
+  const [isLoadedDelete, setIsLoadedDelete] = useState(true);
 
   const handleDelete = async (id: string) => {
-    setIsLoaded(false);
+    setIsLoadedDelete(false);
     try {
       await deleteAddress(id);
       await updateCurrentUser();
@@ -42,24 +44,28 @@ export default function AddressesPage() {
       console.error(error);
       toast.error("Erro ao deletar endereço");
     } finally {
-      setIsLoaded(true);
+      setIsLoadedDelete(true);
       setPopoverOpened("");
     }
-  }
+  };
 
   const handleDefault = async (address: IAddress) => {
+    setIsLoadedDefault(false);
     try {
       const isDefault = address.default;
       await updateAddress({ ...address, default: !isDefault });
       await updateCurrentUser();
-      toast.success(`Endereço ${isDefault ? "desmarcado" : "marcado"} como padrão`);
+      toast.success(
+        `Endereço ${isDefault ? "desmarcado" : "marcado"} como padrão`
+      );
     } catch (error) {
       console.error(error);
       toast.error("Erro ao definir endereço padrão");
     } finally {
+      setIsLoadedDefault(true);
       setPopoverOpened("");
     }
-  }
+  };
 
   return (
     <main className="flex flex-col items-center">
@@ -129,12 +135,20 @@ export default function AddressesPage() {
                   {popoverOpened === address.id && (
                     <nav className="shadow-lg text-start rounded-2xl border text-typography-primary py-2 border-typography-primary/20 right-0 w-fit h-hit absolute bg-white z-20">
                       <button
+                        disabled={!isLoadedDefault}
                         onClick={() => {
                           handleDefault(address);
                         }}
-                        className="gap-2 w-full px-4 py-1 flex items-center"
+                        className="gap-2 w-full px-4 py-1 flex items-center disabled:opacity-40 duration-200 transition-opacity"
                       >
-                        <PinIcon size={20} className="flex-shrink-0" />
+                        {isLoadedDefault ? (
+                          <PiPushPin size={20} className="flex-shrink-0" />
+                        ) : (
+                          <PiSpinner
+                            size={20}
+                            className="flex-shrink-0 animate-spin"
+                          />
+                        )}
                         <p className="whitespace-nowrap">
                           {isDefault ? "Desmarcar" : "Marcar"} como padrão
                         </p>
@@ -147,12 +161,20 @@ export default function AddressesPage() {
                         <p>Editar</p>
                       </Link>
                       <button
+                        disabled={!isLoadedDelete}
                         onClick={() => {
                           handleDelete(address.id as string);
                         }}
-                        className="gap-2 w-full text-red-500 px-4 py-1 flex items-center"
+                        className="gap-2 w-full text-red-500 px-4 py-1 flex items-center disabled:opacity-40 duration-200 transition-opacity"
                       >
-                        <PiTrash size={20} className="flex-shrink-0" />
+                        {isLoadedDelete ? (
+                          <PiTrash size={20} className="flex-shrink-0" />
+                        ) : (
+                          <PiSpinner
+                            size={20}
+                            className="flex-shrink-0 animate-spin"
+                          />
+                        )}
                         <p>Deletar</p>
                       </button>
                     </nav>
@@ -163,10 +185,7 @@ export default function AddressesPage() {
           })}
         </article>
         <div className="flex flex-col gap-3 w-full">
-          <Button
-            href="/perfil/enderecos/criar"
-            className="w-full"
-          >
+          <Button href="/perfil/enderecos/criar" className="w-full">
             Adicionar Endereço
           </Button>
         </div>
