@@ -8,6 +8,7 @@ import Button from "../Button";
 import { Input } from "../Input";
 
 //styles
+import toast from "react-hot-toast";
 import { MdOutlinePhoneAndroid } from "react-icons/md";
 import { PiEnvelope, PiLock, PiUser } from "react-icons/pi";
 
@@ -19,6 +20,8 @@ import { formatPhoneNumber } from "@/utils/formatPhoneNumber";
 
 //context
 import { AuthContext } from "@/contexts/authContext";
+
+//interfaces
 import { IUser } from "@/interfaces/user";
 
 export function RegisterForm({
@@ -28,6 +31,8 @@ export function RegisterForm({
 }) {
   const { isOpened, submit } = useContext(AuthContext);
   const [step, setStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -59,6 +64,14 @@ export function RegisterForm({
         placeholder: "Senha",
         value: form.password,
         onChange: (e: any) => setForm({ ...form, password: e.target.value }),
+      },
+      {
+        label: "Confirme sua senha",
+        type: "password",
+        Icon: PiLock,
+        placeholder: "Confirme sua senha",
+        value: confirmPassword,
+        onChange: (e: any) => setConfirmPassword(e.target.value),
       },
     ],
     2: [
@@ -104,10 +117,23 @@ export function RegisterForm({
   async function handleSteps(e: any) {
     e.preventDefault();
     if (step === 1) {
+      if (form.password !== confirmPassword) {
+        toast.error("As senhas não coincidem");
+        return;
+      }
+
       setStep(2);
       return;
     }
-    await submit!("create", form as IUser);
+
+    setIsLoading(true);
+    try {
+      await submit!("create", form as IUser);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -135,7 +161,7 @@ export function RegisterForm({
           />
         </div>
       ))}
-      <Button type={"submit"} className="w-full mt-4">
+      <Button isLoading={isLoading} type={"submit"} className="w-full mt-4">
         {step === 1 ? "Próximo" : "Cadastrar"}
       </Button>
       {step === 1 ? (

@@ -22,7 +22,7 @@ interface AuthContextInterface {
   openModal?: () => void;
   closeModal?: () => void;
   currentUser?: IUser | null;
-  submit?: (authMode: "login" | "create", user: IUser) => void;
+  submit?: (authMode: "login" | "create", user: IUser) => Promise<void>;
   logout?: () => void;
   isLoading?: boolean;
   setCurrentUser?: (user: IUser) => void;
@@ -84,13 +84,25 @@ export default function AuthContextProvider({
         });
         return;
       }
-      await updateCurrentUser(true)
+      await updateCurrentUser(true);
       setIsOpened(false);
-      push("/perfil");
+
+      const navigate = authMode === "create" ? "/perfil/enderecos/criar" : "/";
+      push(navigate);
+
       setIsOpened(false);
-      toast("Você entrou na sua conta", {
-        icon: "🎉",
-      });
+
+      toast(
+        `Olá, ${response.firstName}!
+        ${
+          authMode === "create"
+            ? "Registre seu endereço para continuar"
+            : "Seu login foi realizado com sucesso!"
+        }`,
+        {
+          icon: "🎉",
+        }
+      );
     } catch (error) {
       console.error(error);
       toast("Ocorreu um erro ao entrar na sua conta", {
@@ -123,7 +135,10 @@ export default function AuthContextProvider({
           await updateCurrentUser(isRefresh),
         openModal: () => setIsOpened(true),
         closeModal: () => setIsOpened(false),
-        defaultAddress: currentUser?.addresses?.find(address => address.default) || currentUser?.addresses?.[0] || { id: "", street: "", number: "", name: "" } as any
+        defaultAddress:
+          currentUser?.addresses?.find((address) => address.default) ||
+          currentUser?.addresses?.[0] ||
+          ({ id: "", street: "", number: "", name: "" } as any),
       }}
     >
       {children}
