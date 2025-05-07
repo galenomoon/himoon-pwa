@@ -19,7 +19,7 @@ import { SiWhatsapp } from "react-icons/si";
 import { PiHeart, PiSpinner } from "react-icons/pi";
 
 //admoon
-import { getProduct, getProducts, IProduct } from "admoon";
+import { getCategories, getProduct, getProducts, ICategory, IProduct } from "admoon";
 
 //context
 import { CartContext } from "@/contexts/cartContext";
@@ -35,7 +35,6 @@ export async function getStaticProps({
     const { results: products } = await getProducts({
       category_slug: params?.categorySlug as string,
     });
-    console.log({ currentProduct });
     return { props: { currentProduct, products }, revalidate: 60 };
   } catch (error) {
     console.error(error);
@@ -44,7 +43,19 @@ export async function getStaticProps({
 }
 
 export async function getStaticPaths() {
-  return { paths: [], fallback: "blocking" };
+  const { results } = await getProducts({ perPage: 100 }); // buscar todos os produtos
+
+  const paths = results.map((product) => ({
+    params: {
+      categorySlug: product.category?.slug, // ou o campo correto
+      productSlug: product.slug,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: 'blocking',
+  };
 }
 
 export default function ProductPage({
