@@ -53,9 +53,9 @@ export default function AuthContextProvider({
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
 
-  useEffect(() => {
-    updateCurrentUser();
-  }, [currentUser]);
+  // useEffect(() => {
+  //   updateCurrentUser();
+  // }, [currentUser]);
 
   async function updateCurrentUser(isRefresh = false) {
     if (currentUser && !isRefresh) return;
