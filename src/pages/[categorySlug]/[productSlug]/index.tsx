@@ -35,9 +35,11 @@ export async function getStaticProps({
     const { results: products } = await getProducts({
       category_slug: params?.categorySlug as string,
     });
-    return { props: { currentProduct, products } };
+    console.log({ currentProduct });
+    return { props: { currentProduct, products }, revalidate: 60 };
   } catch (error) {
-    return { props: {} };
+    console.error(error);
+    return { props: {}, revalidate: 60 }; // opcional: revalidação automática };
   }
 }
 
@@ -70,6 +72,10 @@ export default function ProductPage({
     toast("Link copiado com sucesso!", {
       icon: "🔗",
     });
+  }
+
+  if (!currentProduct) {
+    return <div>Produto não encontrado.</div>; // ou redirecionar
   }
 
   return (
