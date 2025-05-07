@@ -28,23 +28,23 @@ export default function Profile() {
       description:
         "Ajuste informações suas informações pessoais, como nome e telefone",
     },
-    {
-      title: "Endereços",
-      Icon: PiMapPin,
-      href: "/perfil/enderecos",
-      description: "Gerencie seus endereços de entrega",
-    },
-    ...(isAdmin
-      ? [
-          {
-            title: "Acessar Modo Administrador",
-            isRestricted: true,
-            Icon: PiUserSwitch,
-            href: "/perfil/administrador",
-            description: "Acesse o painel de controle da sua loja virtual",
-          },
-        ]
-      : []),
+    // {
+    //   title: "Endereços",
+    //   Icon: PiMapPin,
+    //   href: "/perfil/enderecos",
+    //   description: "Gerencie seus endereços de entrega",
+    // },
+    // ...(isAdmin
+    //   ? [
+    //       {
+    //         title: "Acessar Modo Administrador",
+    //         isRestricted: true,
+    //         Icon: PiUserSwitch,
+    //         href: "/perfil/administrador",
+    //         description: "Acesse o painel de controle da sua loja virtual",
+    //       },
+    //     ]
+    //   : []),
   ];
 
   return (
@@ -77,7 +77,7 @@ export default function Profile() {
               <PiPhone size={18} />
               <p>{currentUser?.phone}</p>
             </div>
-            <Link
+            {/* <Link
               href="/perfil/enderecos"
               className="text-typography-primary/60 flex gap-1 items-center justify-center"
             >
@@ -88,12 +88,12 @@ export default function Profile() {
                   : defaultAddress?.name ||
                     defaultAddress?.street + ", " + defaultAddress?.number}
               </p>
-            </Link>
+            </Link> */}
           </article>
         </section>
         <section className="flex flex-col items-center w-full px-4 gap-4 justify-center">
           {options.map((option) => {
-            const { Icon, title, href, description, isRestricted } = option;
+            const { Icon, title, href, description } = option;
             return (
               <Link
                 key={title}
@@ -102,17 +102,17 @@ export default function Profile() {
               >
                 <section className="flex w-full gap-3">
                   <div className="w-10 h-10 rounded-full flex-shrink-0 bg-background-purple border-[1.2px] border-typography-primary/10 flex items-center justify-center">
-                    <Icon size={24} color="#493B83" />
+                    <Icon size={24} color="#493B83" className="!text-white/60" />
                   </div>
                   <article className="flex w-full flex-col text-base">
                     <h2 className=" w-fit flex relative gap-1 items-center">
                       {title}
-                      {isRestricted && (
+                      {/* {isRestricted && (
                         <PiSealCheckFill
                           size={18}
                           className="absolute -top-0 -right-[21px] text-typography-purpleDark"
                         />
-                      )}
+                      )} */}
                     </h2>
                     <p className="text-typography-primary/40 text-sm leading-[16px]">
                       {description}

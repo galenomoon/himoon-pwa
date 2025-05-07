@@ -10,10 +10,7 @@ import { ProductSkeleton } from "@/components/Skeleton";
 import CategoriesList from "@/components/CategoriesList";
 
 //assets
-import canetas from "@/assets/banners/canetas.png";
-import allProducts from "@/assets/banners/products.png";
-import sketchbooks from "@/assets/banners/sketchbooks.png";
-import marcaTextos from "@/assets/banners/marca-textos.png";
+import promotional_slide_1 from "@/assets/banners/promotional_slide_1.png";
 
 //hooks
 import { useProducts } from "@/hooks/useProducts";
@@ -26,7 +23,7 @@ export default function LandingPage() {
     () => {},
     10
   );
-  const banners = [sketchbooks, allProducts, marcaTextos, canetas];
+  const banners = [promotional_slide_1];
 
   return (
     <main className="flex flex-col h-fit w-screen relative items-center text-typography-primary">
@@ -39,7 +36,7 @@ export default function LandingPage() {
           <section className="bg-white rounded-t-[34px] w-full h-[164px] absolute z-0 -top-[138px]" />
           <article className="flex flex-col gap-1 w-full pl-3 z-10">
             <h1 className="text-xl font-light">Comece por aqui:</h1>
-            <CategoriesList useSearchMode isRow className="bg-white" />
+            <CategoriesList useSearchMode isRow className="bg-white !text-black" />
           </article>
           <article className="flex flex-col gap-1 w-full z-0">
             <h1 className="text-xl font-light px-3">Últimos Lançamentos:</h1>

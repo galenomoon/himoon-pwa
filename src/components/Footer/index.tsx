@@ -17,7 +17,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="flex flex-col w-full h-fit border-t-2 bg-white/80 border-background-purple/20 pb-28">
+    <footer className="flex flex-col w-full h-fit border-t-2 bg-gray-200 border-background-purple/20 pb-28">
       <div className="max-w-screen-desktop w-full flex flex-col self-center">
         <section className="flex desktop:flex-row flex-col w-full justify-between p-8">
           <figure className="w-full flex saturate-0 desktop:justify-start desktop:items-start mobile:justify-center mobile:items-center opacity-60 ">
@@ -41,7 +41,7 @@ export default function Footer() {
             </Link>
           </aside>
         </section>
-        <section className="flex desktop:flex-row mobile:flex-col w-full justify-between px-8 opacity-60 text-center text-sm">
+        <section className="flex pb-4 desktop:flex-row mobile:flex-col w-full justify-between px-8 opacity-60 text-center text-sm">
           <p>
             © {currentYear} - <span>Todos os direitos reservados</span>
           </p>
@@ -63,7 +63,7 @@ export default function Footer() {
               />
             </a>
             <a
-              href={"https://www.instagram.com/himoonstore/"}
+              href={"https://www.instagram.com/lunedanca/"}
               target="_blank"
               rel="noreferrer"
             >
@@ -73,7 +73,7 @@ export default function Footer() {
               />
             </a>
             <a
-              href={"https://www.tiktok.com/@eu.lua.santiago"}
+              href={"https://www.tiktok.com/@lune.escola.de.danca"}
               target="_blank"
               rel="noreferrer"
             >
@@ -84,7 +84,7 @@ export default function Footer() {
             </a>
           </div>
         </section>
-        <section className="flex flex-col w-full justify-center p-8 gap-2 items-center border-t-2 border-white/10">
+        {/* <section className="flex flex-col w-full justify-center p-8 gap-2 items-center border-t-2 border-white/10">
           <p className="opacity-60 font-light text-xs">Desenvolvido por:</p>
           <a href="https://galenomoon.com" target="_blank" rel="noreferrer">
             <Image
@@ -95,7 +95,7 @@ export default function Footer() {
               className="opacity-40 invert"
             />
           </a>
-        </section>
+        </section> */}
       </div>
     </footer>
   );

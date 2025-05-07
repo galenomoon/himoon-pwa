@@ -94,20 +94,20 @@ export default function CategoriesList({
                   className={
                     "text-3xl border-2 w-14 h-14 flex items-center justify-center rounded-full bg-white " +
                     (isSelected
-                      ? "border-typography-purpleDark/60 bg-typography-yellow"
+                      ? "border-yellow/60 !bg-typography-yellow"
                       : "")
                   }
                 >
                   {categoriesEmojis[
                     category.slug as keyof typeof categoriesEmojis
-                  ] || "📦"}
+                  ] || "🩰"}
                 </div>
                 <span
                   className={
                     "text-[10px] opacity-60 leading-[10px] w-12 text-center flex flex-col items-center justify-center " +
                     (isSelected
-                      ? "text-typography-purpleDark font-semibold"
-                      : "font-normal")
+                      ? "text-yellow font-bold"
+                      : `font-normal text-white ${className}`)
                   }
                 >
                   {category.name}

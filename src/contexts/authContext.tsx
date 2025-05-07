@@ -87,7 +87,7 @@ export default function AuthContextProvider({
       await updateCurrentUser(true);
       setIsOpened(false);
 
-      const navigate = authMode === "create" ? "/perfil/enderecos/criar" : "/";
+      const navigate = "/"; //authMode === "create" ? "/perfil/enderecos/criar" :
       push(navigate);
 
       setIsOpened(false);
@@ -96,7 +96,7 @@ export default function AuthContextProvider({
         `Olá, ${response.firstName}!
         ${
           authMode === "create"
-            ? "Registre seu endereço para continuar"
+            ? "Seu login foi realizado com sucesso!" //"Registre seu endereço para continuar"
             : "Seu login foi realizado com sucesso!"
         }`,
         {

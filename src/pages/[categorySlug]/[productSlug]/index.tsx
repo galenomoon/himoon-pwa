@@ -57,7 +57,7 @@ export default function ProductPage({
   const { productSlug, categorySlug } = router.query;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpenShareModal, setIsOpenShareModal] = useState<boolean>(false);
-  const url = `https://himoonstore.com/${categorySlug}/${productSlug}`;
+  const url = `https://loja.luneescoladedanca.com/${categorySlug}/${productSlug}`;
 
   function copyURL(type: "whatsapp" | "link") {
     if (type === "whatsapp" && window !== undefined) {
@@ -80,8 +80,8 @@ export default function ProductPage({
         image={currentProduct?.images?.[0]?.url}
         description={currentProduct?.description}
       />
-      <Header backTo="/buscar" />
-      <section className="text-center max-w-screen-desktop items-center  text-typography-primary desktop:py-12 pb-12 min-h-[90dvh] relative">
+      <Header backTo="/buscar" hideSearch label={currentProduct?.name} />
+      <section className="text-center w-[90%] max-w-screen-desktop items-center text-typography-primary desktop:py-12 pb-12 min-h-[90dvh] relative">
         <nav className="flex desktop:flex-row flex-col gap-6">
           <Carousel
             squareSize

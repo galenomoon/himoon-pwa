@@ -36,25 +36,25 @@ export function sendCartToWhatsApp({
     currency: "BRL",
   });
 
-  const address = currentUser?.addresses?.find(
-    (address) => address.id === defaultAddress?.id
-  );
+  // const address = currentUser?.addresses?.find(
+  //   (address) => address.id === defaultAddress?.id
+  // );
 
   const formattedMessage = [
-    "*🛒💗 Seu Carrinho 🛒💗:*",
+    "*🛒🌙 Seu Carrinho 🛒🌙:*",
     currentUser?.firstName
       ? `*Nome:* ${currentUser.firstName} ${currentUser.lastName}`
       : "",
     currentUser?.phone ? `*Celular:* ${currentUser.phone}` : "",
-    address?.zip ? `*CEP:* ${address.zip}` : "",
-    address?.street ? `*Endereço:* ${address.street}, ${address.number}` : "",
-    address?.complement ? `*Complemento:* ${address.complement}` : "",
-    address?.neighborhood ? `*Bairro:* ${address.neighborhood}` : "",
-    address?.city ? `*Cidade:* ${address.city} - ${address.state}` : "",
+    // address?.zip ? `*CEP:* ${address.zip}` : "",
+    // address?.street ? `*Endereço:* ${address.street}, ${address.number}` : "",
+    // address?.complement ? `*Complemento:* ${address.complement}` : "",
+    // address?.neighborhood ? `*Bairro:* ${address.neighborhood}` : "",
+    // address?.city ? `*Cidade:* ${address.city} - ${address.state}` : "",
     "\n",
     ...message,
     "\n",
-    `*🎀 Total: R$ ${total_price} 🎀*`,
+    `*Total: R$ ${total_price}*`,
   ].join("\n");
 
   const encodedMessage = encodeURIComponent(formattedMessage);

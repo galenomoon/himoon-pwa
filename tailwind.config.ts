@@ -20,10 +20,13 @@ const config: Config = {
       },
       colors: {
         background: {
-          purple: "#D6CBFF",
+          purple: "#5D0C56",
           purpleLight: "#EDE8FF",
           black: "#000000",
           gray: "#ECECEC"
+        },
+        yellow: {
+          DEFAULT: "#FFB202"
         },
         typography: {
           primary: "#000000",

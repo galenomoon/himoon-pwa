@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import logo from "@/assets/text-logo.png";
+import logo from "@/assets/complete-logo.png";
 
 export default function Logo({ size = 600 }) {
   const className = `w-[${size}px] object-contain`;

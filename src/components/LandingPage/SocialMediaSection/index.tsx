@@ -28,12 +28,12 @@ export default function SocialMediaSection() {
             nossas novidades!
           </h1>
         </article>
-        <Button
+        {/* <Button
           href="https://gatree.vercel.app/tree/himoon"
           className="font-bold w-full"
         >
           NOS SIGA!
-        </Button>
+        </Button> */}
       </div>
       <Image src={footer} alt="footer" objectFit="fill" />
     </section>

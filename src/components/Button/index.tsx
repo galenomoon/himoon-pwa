@@ -32,7 +32,7 @@ export default function Button({
     : { onClick, type, disabled: isDisabled };
   const color = invert
     ? "bg-typography-secondary text-typography-primary"
-    : "bg-background-black text-typography-yellow";
+    : "bg-yellow text-white";
 
   return (
     <Element

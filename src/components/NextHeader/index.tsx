@@ -2,8 +2,8 @@ import Head from "next/head";
 import React from "react";
 
 export default function NextHeader({
-  title = "Hi, Moon Store 🌙💖 - Sua papelaria criativa!",
-  description = "A Moon Store é uma papelaria criativa que tem como objetivo trazer produtos de qualidade e com um preço acessível para você!",
+  title = "Lune Store - A loja oficial da Lune Escola de dança",
+  description = "Loja oficial da Lune Escola de Dança, Uniformes, artigos de dança, figurinos e muito mais!",
   image = "/banner.png",
   statusColorType = "default"// "black-translucent",
 }) {
@@ -26,7 +26,7 @@ export default function NextHeader({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:site_name" content={title} />
-      <meta property="og:url" content="https://www.himoonstore.com/" />
+      <meta property="og:url" content="https://loja.luneescoladedanca.com/" />
       <meta property="og:image" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />

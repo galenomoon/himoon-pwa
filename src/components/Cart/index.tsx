@@ -22,6 +22,7 @@ import { IAddress } from "@/interfaces/address";
 
 //utils
 import { sendCartToWhatsApp } from "@/utils/sendCartToWhatsApp";
+import { BsWhatsapp } from "react-icons/bs";
 
 export default function Cart() {
   const { push } = useRouter();
@@ -38,13 +39,13 @@ export default function Cart() {
       return;
     }
 
-    if (!defaultAddress?.id) {
-      toast("Você precisa ter um endereço padrão para finalizar a compra", {
-        icon: "📍",
-      });
-      push("/perfil/enderecos/criar");
-      return
-    }
+    // if (!defaultAddress?.id) {
+    //   toast("Você precisa ter um endereço padrão para finalizar a compra", {
+    //     icon: "📍",
+    //   });
+    //   push("/perfil/enderecos/criar");
+    //   return
+    // }
 
     sendCartToWhatsApp({
       cartItems,
@@ -120,9 +121,10 @@ export default function Cart() {
             <Button
               onClick={handleSubmit}
               disabled={cartItems.length === 0}
-              className="w-full p-4 bg-primary uppercase font-semibold"
+              className="w-full gap-3 p-4 bg-green-600 bg-primary uppercase font-semibold"
             >
-              Finalizar compra
+              <BsWhatsapp/>
+              Fazer Pedido
             </Button>
           </footer>
         </section>

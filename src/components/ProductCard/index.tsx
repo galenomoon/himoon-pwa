@@ -32,7 +32,7 @@ export function ProductCard({
 
   const AddCartButton = () => {
     const colors = isAddedToCart
-      ? "bg-background-black text-typography-yellow"
+      ? "bg-background-purple text-yellow"
       : "";
     const Icon = isAddedToCart ? TbBasketCheck : TbBasketPlus;
     return (

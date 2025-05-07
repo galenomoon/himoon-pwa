@@ -1,33 +1,16 @@
-import React, { useContext } from "react";
-import { IProduct } from "admoon";
-
-//next
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-//components
-import Button from "../Button";
-import AuthModal from "../AuthModal";
-
-//styles
-import toast from "react-hot-toast";
-import { GoHome, GoHomeFill } from "react-icons/go";
-import { BsBox2Heart, BsBox2HeartFill } from "react-icons/bs";
-import {
-  PiBell,
-  PiBellFill,
-  PiHeart,
-  PiHeartFill,
-  PiSpinner,
-  PiUserCircle,
-  PiUserCircleFill,
-} from "react-icons/pi";
-
-//context
 import { CartContext } from "@/contexts/cartContext";
 import { AuthContext } from "@/contexts/authContext";
+import { usePathname } from "next/navigation";
+import { Bell, Heart, House, Package, Student, User } from "@phosphor-icons/react";
+import Link from "next/link";
+import { useContext, useEffect } from "react";
+import { IProduct } from "admoon";
+import AuthModal from "../AuthModal";
+import { PiHeart, PiSpinner } from "react-icons/pi";
+import Button from "../Button";
+import toast from "react-hot-toast";
 
-export default function TabNavigator({
+export default function TabNavigatior({
   product,
   isLoading,
 }: {
@@ -39,141 +22,137 @@ export default function TabNavigator({
   const { addCartItem } = useContext(CartContext);
   const isAuthenticated = !!currentUser?.id;
 
-  const tabs = [
-    {
-      isAuthRequired: false,
-      icon: {
-        disabled: GoHome,
-        active: GoHomeFill,
-        props: {
-          size: 28,
-        },
+  const pages = [
+    [
+      {
+        label: "Início",
+        icon: House,
+        path: pathname === "/buscar" ? "/" : "/buscar",
       },
-      label: "Início",
-      href: pathname === "/buscar" ? "/" : "/buscar",
-    },
-    {
-      isAuthRequired: false,
-      icon: {
-        disabled: PiHeart,
-        active: PiHeartFill,
-        props: {
-          size: 28,
-        },
+      {
+        label: "Favoritos",
+        icon: Heart,
+        path: "/favoritos",
+        isAuthRequired: true,
       },
-      label: "Favoritos",
-      href: "/favoritos",
-    },
-    {
-      isAuthRequired: false,
-      icon: {
-        disabled: BsBox2Heart,
-        active: BsBox2HeartFill,
-        props: {
-          size: 22,
-          className: "px-2",
-        },
+      {
+        label: "Meus pedidos",
+        icon: Package,
+        path: "/pedidos",
+        isAuthRequired: true,
       },
-      label: "Meus pedidos",
-      href: "/pedidos",
-    },
-    {
-      isAuthRequired: false,
-      icon: {
-        disabled: PiBell,
-        active: PiBellFill,
-        props: {
-          size: 28,
-        },
+      {
+        label: "Notificações",
+        icon: Bell,
+        path: "/notificacoes",
+        isAuthRequired: true,
       },
-      label: "Notificações",
-      href: "/notificacoes",
-    },
-    {
-      isAuthRequired: true,
-      icon: {
-        disabled: PiUserCircle,
-        active: PiUserCircleFill,
-        props: {
-          size: 28,
-        },
+      {
+        label: "Perfil",
+        icon: Student,
+        path: "/perfil",
+        isAuthRequired: true,
       },
-      label: "Perfil",
-      href: "/perfil",
-    },
+    ],
   ];
+
+  useEffect(() => {
+    const secondPagePaths = pages?.[1]
+      ?.map((item) => item.path)
+      .filter(Boolean);
+    const shouldScrollToSecondPage = secondPagePaths?.includes(pathname);
+
+    if (shouldScrollToSecondPage) {
+      setTimeout(() => {
+        const container = document.querySelector(".overflow-x-scroll");
+        if (container) {
+          container.scrollTo({
+            left: container.scrollWidth,
+            behavior: "smooth",
+          });
+        }
+      }, 100);
+    }
+  }, [pathname, pages]);
 
   return (
     <>
       <AuthModal />
-      <section className={`z-30 flex items-center shadow-2xl tabnavigation-shadow justify-around h-24 w-full fixed bottom-0 bg-white ${product ? "desktop:hidden": ""}`}>
-        <nav className="flex items-center justify-around h-full w-full max-w-screen-desktop">
-          {/*   */}
-          {product ? (
-            <div className="flex items-center justify-between mx-3 mb-4 gap-3 w-full">
-              <button
-                onClick={() => {
-                  toast("Em breve você poderá favoritar produtos!", {
-                    icon: "❤️",
-                  });
-                }}
-                className="flex-shrink-0"
-              >
-                <PiHeart size={34} />
-              </button>
-              <Button
-                onClick={() => {
-                  addCartItem(product as IProduct, 1);
-                  toast("Produto adicionado ao carrinho!", {
-                    icon: "🛒",
-                  });
-                }}
-                disabled={isLoading}
-                className="w-full uppercase font-bold"
-              >
-                {isLoading ? (
-                  <PiSpinner size={24} className="animate-spin" />
-                ) : (
-                  "Adicionar ao carrinho"
-                )}
-              </Button>
-            </div>
-          ) : (
-            tabs.map((tab, index) => {
-              const isActive =
-                (pathname === "/buscar" || pathname === "/") &&
-                (tab.href === "/" || tab.href === "/buscar")
-                  ? true
-                  : pathname === tab.href;
-              const Icon = tab.icon[isActive ? "active" : "disabled"];
-              const props = tab.icon.props;
-
-              const Element =
-                tab.isAuthRequired && !isAuthenticated
-                  ? "button"
-                  : (Link as unknown as React.ElementType);
-
-              const elementProps =
-                tab.isAuthRequired && !isAuthenticated
-                  ? { onClick: openModal }
-                  : { href: tab.href };
-
-              return (
-                <Element
-                  key={index}
-                  {...elementProps}
-                  className="flex text-center h-full min-w-16 flex-col pt-2 pb-10 items-center justify-between"
-                >
-                  <div className="h-12 flex items-center justify-center">
-                    <Icon {...props} className="flex-shrink-0" />
-                  </div>
-                  <span className="text-xs whitespace-nowrap">{tab.label}</span>
-                </Element>
-              );
-            })
-          )}
+      {product ? (
+        <nav className="fixed flex bottom-0 left-0 right-0 snap-x snap-mandatory overflow-x-scroll scrollbar-hide bg-white shadow-sm z-90 pt-2 pb-10">
+          <div className="flex items-center justify-between mx-3 mb-4 gap-3 w-full">
+            <button
+              onClick={() => {
+                toast("Em breve você poderá favoritar produtos!", {
+                  icon: "❤️",
+                });
+              }}
+              className="flex-shrink-0"
+            >
+              <PiHeart size={34} />
+            </button>
+            <Button
+              onClick={() => {
+                addCartItem(product as IProduct, 1);
+                toast("Produto adicionado ao carrinho!", {
+                  icon: "🛒",
+                });
+              }}
+              disabled={isLoading}
+              className="w-full uppercase font-bold"
+            >
+              {isLoading ? (
+                <PiSpinner size={24} className="animate-spin" />
+              ) : (
+                "Adicionar ao carrinho"
+              )}
+            </Button>
+          </div>
         </nav>
-      </section>
+      ) : (
+        <nav className="fixed flex bottom-0 left-0 right-0 snap-x snap-mandatory overflow-x-scroll scrollbar-hide bg-background-purple shadow-sm z-90 pt-2 pb-10">
+          {pages.map((page, index) => (
+            <section
+              key={index}
+              className="flex justify-evenly snap-start flex-shrink-0 w-full"
+            >
+              {page.map(({ label, path, icon: Icon, isAuthRequired }: any) => {
+                const isActive =
+                  (pathname === "/buscar" || pathname === "/") &&
+                  (path === "/" || path === "/buscar")
+                    ? true
+                    : pathname === path;
+
+                const Element =
+                  isAuthRequired && !isAuthenticated
+                    ? "button"
+                    : (Link as unknown as React.ElementType);
+                const elementProps =
+                  isAuthRequired && !isAuthenticated
+                    ? { onClick: openModal }
+                    : { href: path };
+
+                return (
+                  <Element
+                    key={path || label}
+                    className={`flex flex-col items-center text-xs transition-all ${
+                      isActive ? "text-yellow font-semibold" : "text-white/60"
+                    } disabled:opacity-30`}
+                    {...elementProps}
+                  >
+                    <Icon
+                      size={24}
+                      weight={isActive ? "fill" : "regular"}
+                      className={isActive ? "text-yellow" : "text-white/60"}
+                    />
+                    <span>{label}</span>
+                  </Element>
+                );
+              })}
+            </section>
+          ))}
+        </nav>
+      )}
     </>
   );
 }
