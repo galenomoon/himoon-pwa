@@ -110,48 +110,49 @@ export default function TabNavigatior({
           </div>
         </nav>
       ) : (
-        <nav className="fixed flex bottom-0 left-0 right-0 snap-x snap-mandatory overflow-x-scroll scrollbar-hide bg-background-purple shadow-sm z-90 pt-2 pb-10">
-          {pages.map((page, index) => (
-            <section
-              key={index}
-              className="flex justify-evenly snap-start flex-shrink-0 w-full"
-            >
-              {page.map(({ label, path, icon: Icon, isAuthRequired }: any) => {
-                const isActive =
-                  (pathname === "/buscar" || pathname === "/") &&
-                  (path === "/" || path === "/buscar")
-                    ? true
-                    : pathname === path;
+        <></>
+        // <nav className="fixed flex bottom-0 left-0 right-0 snap-x snap-mandatory overflow-x-scroll scrollbar-hide bg-background-purple shadow-sm z-90 pt-2 pb-10">
+        //   {pages.map((page, index) => (
+        //     <section
+        //       key={index}
+        //       className="flex justify-evenly snap-start flex-shrink-0 w-full"
+        //     >
+        //       {page.map(({ label, path, icon: Icon, isAuthRequired }: any) => {
+        //         const isActive =
+        //           (pathname === "/buscar" || pathname === "/") &&
+        //           (path === "/" || path === "/buscar")
+        //             ? true
+        //             : pathname === path;
 
-                const Element =
-                  isAuthRequired && !isAuthenticated
-                    ? "button"
-                    : (Link as unknown as React.ElementType);
-                const elementProps =
-                  isAuthRequired && !isAuthenticated
-                    ? { onClick: openModal }
-                    : { href: path };
+        //         const Element =
+        //           isAuthRequired && !isAuthenticated
+        //             ? "button"
+        //             : (Link as unknown as React.ElementType);
+        //         const elementProps =
+        //           isAuthRequired && !isAuthenticated
+        //             ? { onClick: openModal }
+        //             : { href: path };
 
-                return (
-                  <Element
-                    key={path || label}
-                    className={`flex flex-col items-center text-xs transition-all ${
-                      isActive ? "text-yellow font-semibold" : "text-white/60"
-                    } disabled:opacity-30`}
-                    {...elementProps}
-                  >
-                    <Icon
-                      size={24}
-                      weight={isActive ? "fill" : "regular"}
-                      className={isActive ? "text-yellow" : "text-white/60"}
-                    />
-                    <span>{label}</span>
-                  </Element>
-                );
-              })}
-            </section>
-          ))}
-        </nav>
+        //         return (
+        //           <Element
+        //             key={path || label}
+        //             className={`flex flex-col items-center text-xs transition-all ${
+        //               isActive ? "text-yellow font-semibold" : "text-white/60"
+        //             } disabled:opacity-30`}
+        //             {...elementProps}
+        //           >
+        //             <Icon
+        //               size={24}
+        //               weight={isActive ? "fill" : "regular"}
+        //               className={isActive ? "text-yellow" : "text-white/60"}
+        //             />
+        //             <span>{label}</span>
+        //           </Element>
+        //         );
+        //       })}
+        //     </section>
+        //   ))}
+        // </nav>
       )}
     </>
   );
