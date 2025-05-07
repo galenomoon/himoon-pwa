@@ -31,13 +31,13 @@ export default function Cart() {
     useContext(CartContext);
 
   const handleSubmit = () => {
-    if (!currentUser?.id) {
-      toast("Você precisa estar logado para finalizar a compra", {
-        icon: "🔒",
-      });
-      openModal();
-      return;
-    }
+    // if (!currentUser?.id) {
+    //   toast("Você precisa estar logado para finalizar a compra", {
+    //     icon: "🔒",
+    //   });
+    //   openModal();
+    //   return;
+    // }
 
     // if (!defaultAddress?.id) {
     //   toast("Você precisa ter um endereço padrão para finalizar a compra", {

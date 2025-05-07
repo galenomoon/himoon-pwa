@@ -42,10 +42,10 @@ export function sendCartToWhatsApp({
 
   const formattedMessage = [
     "*🛒🌙 Seu Carrinho 🛒🌙:*",
-    currentUser?.firstName
-      ? `*Nome:* ${currentUser.firstName} ${currentUser.lastName}`
-      : "",
-    currentUser?.phone ? `*Celular:* ${currentUser.phone}` : "",
+    // currentUser?.firstName
+      // ? `*Nome:* ${currentUser.firstName} ${currentUser.lastName}`
+      // : "",
+    // currentUser?.phone ? `*Celular:* ${currentUser.phone}` : "",
     // address?.zip ? `*CEP:* ${address.zip}` : "",
     // address?.street ? `*Endereço:* ${address.street}, ${address.number}` : "",
     // address?.complement ? `*Complemento:* ${address.complement}` : "",

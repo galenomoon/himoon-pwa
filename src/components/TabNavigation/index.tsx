@@ -33,26 +33,26 @@ export default function TabNavigatior({
         label: "Favoritos",
         icon: Heart,
         path: "/favoritos",
-        isAuthRequired: true,
+        // isAuthRequired: true,
       },
       {
         label: "Meus pedidos",
         icon: Package,
         path: "/pedidos",
-        isAuthRequired: true,
+        // isAuthRequired: true,
       },
       {
         label: "Notificações",
         icon: Bell,
         path: "/notificacoes",
-        isAuthRequired: true,
+        // isAuthRequired: true,
       },
-      {
-        label: "Perfil",
-        icon: Student,
-        path: "/perfil",
-        isAuthRequired: true,
-      },
+      // {
+      //   label: "Perfil",
+      //   icon: Student,
+      //   path: "/perfil",
+        // isAuthRequired: true,
+      // },
     ],
   ];
 
