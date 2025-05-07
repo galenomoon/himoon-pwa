@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 //components
@@ -19,63 +19,51 @@ import { SiWhatsapp } from "react-icons/si";
 import { PiHeart, PiSpinner } from "react-icons/pi";
 
 //admoon
-import { getCategories, getProduct, getProducts, ICategory, IProduct } from "admoon";
+import { getProduct, getProducts, IProduct } from "admoon";
 
 //context
 import { CartContext } from "@/contexts/cartContext";
 
-export async function getStaticProps({
-  params,
-}: {
-  params: { productSlug: string; categorySlug: string };
-}) {
-  if (!params || !params?.productSlug) return { props: {} };
-  try {
-    const currentProduct = await getProduct(params.productSlug);
-    const { results: products } = await getProducts({
-      category_slug: params?.categorySlug as string,
-    });
-    return { props: { currentProduct, products }, revalidate: 60 };
-  } catch (error) {
-    console.error(error);
-    return { props: {}, revalidate: 60 }; // opcional: revalidação automática };
-  }
-}
-
-export async function getStaticPaths() {
-  const { results } = await getProducts({ perPage: 100 }); // buscar todos os produtos
-
-  const paths = results.map((product) => ({
-    params: {
-      categorySlug: product.category?.slug, // ou o campo correto
-      productSlug: product.slug,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: 'blocking',
-  };
-}
-
-export default function ProductPage({
-  products = [],
-  currentProduct,
-}: {
-  products: IProduct[];
-  currentProduct: IProduct;
-}) {
+export default function ProductPage() {
   const router = useRouter();
-  const { addCartItem } = useContext(CartContext);
   const { productSlug, categorySlug } = router.query;
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isOpenShareModal, setIsOpenShareModal] = useState<boolean>(false);
+
+  const { addCartItem } = useContext(CartContext);
+  const [currentProduct, setCurrentProduct] = useState<IProduct | null>(null);
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isOpenShareModal, setIsOpenShareModal] = useState(false);
+
   const url = `https://loja.luneescoladedanca.com/${categorySlug}/${productSlug}`;
 
+  useEffect(() => {
+    if (!router.isReady) return;
+
+    async function loadData() {
+      setIsLoading(true);
+      try {
+        const product = await getProduct(productSlug as string);
+        const { results } = await getProducts({
+          category_slug: categorySlug as string,
+        });
+
+        setCurrentProduct(product);
+        setProducts(results);
+      } catch (error) {
+        toast.error("Erro ao carregar produto.");
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadData();
+  }, [router.isReady, productSlug, categorySlug]);
+
   function copyURL(type: "whatsapp" | "link") {
-    if (type === "whatsapp" && window !== undefined) {
+    if (type === "whatsapp" && typeof window !== "undefined") {
       const whatsAppUrl = `https://api.whatsapp.com/send?text=${url}`;
-      window?.open(whatsAppUrl, "_blank");
+      window.open(whatsAppUrl, "_blank");
       return;
     }
 
@@ -83,10 +71,6 @@ export default function ProductPage({
     toast("Link copiado com sucesso!", {
       icon: "🔗",
     });
-  }
-
-  if (!currentProduct) {
-    return <div>Produto não encontrado.</div>; // ou redirecionar
   }
 
   return (
@@ -231,7 +215,7 @@ export default function ProductPage({
         </section>
       </Modal>
       <Footer />
-      <TabNavigator product={currentProduct} />
+      <TabNavigator product={currentProduct as any} />
     </main>
   );
 }
