@@ -82,7 +82,7 @@ export default function ProductPage() {
         description={currentProduct?.description}
       />
       <Header backTo="/buscar" hideSearch label={currentProduct?.name} />
-      <section className="text-center w-[90%] max-w-screen-desktop items-center text-typography-primary desktop:py-12 pb-12 min-h-[90dvh] relative">
+      <section className="text-center w-full max-w-screen-desktop items-center text-typography-primary desktop:py-12 pb-12 min-h-[90dvh] relative">
         <nav className="flex desktop:flex-row flex-col gap-6">
           <Carousel
             squareSize
