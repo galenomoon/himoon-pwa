@@ -121,7 +121,7 @@ export default function Cart() {
             <Button
               onClick={handleSubmit}
               disabled={cartItems.length === 0}
-              className="w-full gap-3 p-4 bg-green-600 bg-primary uppercase font-semibold"
+              className="w-full gap-3 p-4 !bg-green-600 bg-primary uppercase font-semibold"
             >
               <BsWhatsapp/>
               Fazer Pedido
