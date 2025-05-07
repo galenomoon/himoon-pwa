@@ -143,7 +143,7 @@ export default function Header({
           className="font-light pb-2 z-10 text-white bg-background-purple w-full flex justify-center items-center px-5 text-center"
         >
           <MdVerified size={18} className="flex-shrink-0 mr-2 text-yellow" />
-          <p className="font-bold uppercase mono tracking-[3px] text-yellow whitespace-nowrap text-xs">
+          <p className="font-bold uppercase mono tracking-[3px] text-yellow whitespace-nowrap text-[10px]">
             Loja oficial da LUNE Escola de dança
           </p>
         </div>
