@@ -139,7 +139,7 @@ export default function Header({
             </Link>
           ))} */}
         <div
-          onClick={openModal}
+          // onClick={openModal}
           className="font-light pb-2 z-10 text-white bg-background-purple w-full flex justify-center items-center px-5 text-center"
         >
           <MdVerified size={18} className="flex-shrink-0 mr-2 text-yellow" />
